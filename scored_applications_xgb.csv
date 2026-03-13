@@ -1,0 +1,6 @@
+Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,Credit_History,Property_Area,Total_Income,DTI,Predicted_Status,Approval_Probability
+Male,Yes,0,Graduate,No,5000,1500,1200,360,1,Urban,6500,0.18458698661744347,0,0.09643868
+Female,No,1,Graduate,No,3800,0,50,360,1,Rural,3800,0.013154433043935806,1,0.91569066
+Male,Yes,2,Not Graduate,Yes,7200,2000,1600,300,0,Semiurban,9200,0.17389414194109337,0,0.15369757
+Female,No,0,Graduate,No,2600,1300,3110,360,1,Urban,3900,0.797231479107921,0,0.15088849
+Male,Yes,3+,Graduate,No,4500,0,100,180,1,Rural,4500,0.02221728504776716,1,0.5139897
