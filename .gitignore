@@ -1,6 +1,2 @@
-/shap_dependence_ApplicantIncome.png
-/shap_dependence_Credit_History.png
-/shap_dependence_DTI.png
-/shap_dependence_LoanAmount.png
-/shap_feature_importance.png
-/shap_summary_plot.png
+__pycache__/
+.env

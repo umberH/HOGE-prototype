@@ -18,8 +18,10 @@ df = pd.read_csv("df1_loan.csv")
 # Drop generated index column
 df = df.drop(columns=["Unnamed: 0"], errors="ignore")
 
-# Clean Total_Income (“$1234.0” → 1234.0)
-df["Total_Income"] = df["Total_Income"].astype(str).str.replace("$", "", regex=False)
+# Clean Total_Income ("$5,849.00" → 5849.0)
+df["Total_Income"] = (df["Total_Income"].astype(str)
+                      .str.replace("$", "", regex=False)
+                      .str.replace(",", "", regex=False))
 df["Total_Income"] = pd.to_numeric(df["Total_Income"], errors="coerce")
 
 # Convert Loan_Status Y/N → 1/0

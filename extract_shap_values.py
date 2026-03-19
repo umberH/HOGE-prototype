@@ -33,8 +33,10 @@ else:
 # Drop index / ID columns from feature set
 df = df.drop(columns=["Unnamed: 0"], errors="ignore")
 
-# Clean Total_Income: "$5849.0" -> 5849.0
-df["Total_Income"] = df["Total_Income"].astype(str).str.replace("$", "", regex=False)
+# Clean Total_Income: "$5,849.00" -> 5849.0
+df["Total_Income"] = (df["Total_Income"].astype(str)
+                      .str.replace("$", "", regex=False)
+                      .str.replace(",", "", regex=False))
 df["Total_Income"] = pd.to_numeric(df["Total_Income"], errors="coerce")
 
 # Map Loan_Status to numeric

@@ -20,8 +20,10 @@ print("Model loaded ✔")
 df = pd.read_csv(DATA_FILE)
 df = df.drop(columns=["Unnamed: 0", "Loan_ID"], errors="ignore")
 
-# Clean Total Income
-df["Total_Income"] = df["Total_Income"].astype(str).replace({"$": ""}, regex=True)
+# Clean Total Income: "$5,849.00" -> 5849.0
+df["Total_Income"] = (df["Total_Income"].astype(str)
+                      .str.replace("$", "", regex=False)
+                      .str.replace(",", "", regex=False))
 df["Total_Income"] = pd.to_numeric(df["Total_Income"], errors="coerce")
 
 # Convert Loan_Status

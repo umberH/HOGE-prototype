@@ -1,0 +1,2440 @@
+{
+  "evaluation_timestamp": "2026-03-19T09:28:42.501083+00:00",
+  "alignment_results": [
+    {
+      "application_id": "LP002170",
+      "actual_label": 1,
+      "predicted_label": 1,
+      "approval_probability": 0.9438,
+      "prediction_correct": true,
+      "total_shap_sum": 2.0427,
+      "positive_shap_sum": 3.9517,
+      "negative_shap_sum": -1.909,
+      "shap_pred_aligned": true,
+      "top_1_feature": "CoapplicantIncome",
+      "top_1_shap": 1.344,
+      "top_1_direction": "supports_approval",
+      "top_2_feature": "LoanAmount",
+      "top_2_shap": -0.977,
+      "top_2_direction": "supports_decline",
+      "top_3_feature": "Total_Income",
+      "top_3_shap": -0.8577,
+      "top_3_direction": "supports_decline",
+      "top5_features": "CoapplicantIncome, LoanAmount, Total_Income, Dependents_2, Property_Area_Semiurban"
+    },
+    {
+      "application_id": "LP001250",
+      "actual_label": 0,
+      "predicted_label": 0,
+      "approval_probability": 0.036,
+      "prediction_correct": true,
+      "total_shap_sum": -4.0645,
+      "positive_shap_sum": 1.8382,
+      "negative_shap_sum": -5.9027,
+      "shap_pred_aligned": true,
+      "top_1_feature": "Credit_History",
+      "top_1_shap": -3.3208,
+      "top_1_direction": "supports_decline",
+      "top_2_feature": "CoapplicantIncome",
+      "top_2_shap": -1.0719,
+      "top_2_direction": "supports_decline",
+      "top_3_feature": "Property_Area_Semiurban",
+      "top_3_shap": 0.7501,
+      "top_3_direction": "supports_approval",
+      "top5_features": "Credit_History, CoapplicantIncome, Property_Area_Semiurban, Education_Graduate, Total_Income"
+    },
+    {
+      "application_id": "LP002209",
+      "actual_label": 1,
+      "predicted_label": 1,
+      "approval_probability": 0.9402,
+      "prediction_correct": true,
+      "total_shap_sum": 1.9763,
+      "positive_shap_sum": 2.8355,
+      "negative_shap_sum": -0.8593,
+      "shap_pred_aligned": true,
+      "top_1_feature": "Total_Income",
+      "top_1_shap": 0.7466,
+      "top_1_direction": "supports_approval",
+      "top_2_feature": "Credit_History",
+      "top_2_shap": 0.6374,
+      "top_2_direction": "supports_approval",
+      "top_3_feature": "CoapplicantIncome",
+      "top_3_shap": 0.5007,
+      "top_3_direction": "supports_approval",
+      "top5_features": "Total_Income, Credit_History, CoapplicantIncome, ApplicantIncome, Property_Area_Semiurban"
+    },
+    {
+      "application_id": "LP001536",
+      "actual_label": 1,
+      "predicted_label": 1,
+      "approval_probability": 0.7809,
+      "prediction_correct": true,
+      "total_shap_sum": 0.4931,
+      "positive_shap_sum": 5.3705,
+      "negative_shap_sum": -4.8774,
+      "shap_pred_aligned": true,
+      "top_1_feature": "Credit_History",
+      "top_1_shap": -2.2933,
+      "top_1_direction": "supports_decline",
+      "top_2_feature": "ApplicantIncome",
+      "top_2_shap": 1.7663,
+      "top_2_direction": "supports_approval",
+      "top_3_feature": "Loan_Amount_Term",
+      "top_3_shap": 1.1015,
+      "top_3_direction": "supports_approval",
+      "top5_features": "Credit_History, ApplicantIncome, Loan_Amount_Term, Total_Income, LoanAmount"
+    },
+    {
+      "application_id": "LP001357",
+      "actual_label": 1,
+      "predicted_label": 1,
+      "approval_probability": 0.8168,
+      "prediction_correct": true,
+      "total_shap_sum": 0.717,
+      "positive_shap_sum": 1.8584,
+      "negative_shap_sum": -1.1414,
+      "shap_pred_aligned": true,
+      "top_1_feature": "Credit_History",
+      "top_1_shap": 0.637,
+      "top_1_direction": "supports_approval",
+      "top_2_feature": "CoapplicantIncome",
+      "top_2_shap": 0.5697,
+      "top_2_direction": "supports_approval",
+      "top_3_feature": "Property_Area_Semiurban",
+      "top_3_shap": -0.3488,
+      "top_3_direction": "supports_decline",
+      "top5_features": "Credit_History, CoapplicantIncome, Property_Area_Semiurban, ApplicantIncome, DTI"
+    },
+    {
+      "application_id": "LP002266",
+      "actual_label": 1,
+      "predicted_label": 1,
+      "approval_probability": 0.9046,
+      "prediction_correct": true,
+      "total_shap_sum": 1.4715,
+      "positive_shap_sum": 2.4581,
+      "negative_shap_sum": -0.9866,
+      "shap_pred_aligned": true,
+      "top_1_feature": "Credit_History",
+      "top_1_shap": 0.6686,
+      "top_1_direction": "supports_approval",
+      "top_2_feature": "CoapplicantIncome",
+      "top_2_shap": 0.6207,
+      "top_2_direction": "supports_approval",
+      "top_3_feature": "ApplicantIncome",
+      "top_3_shap": -0.4995,
+      "top_3_direction": "supports_decline",
+      "top5_features": "Credit_History, CoapplicantIncome, ApplicantIncome, Dependents_2, Property_Area_Semiurban"
+    },
+    {
+      "application_id": "LP002223",
+      "actual_label": 1,
+      "predicted_label": 1,
+      "approval_probability": 0.8814,
+      "prediction_correct": true,
+      "total_shap_sum": 1.2273,
+      "positive_shap_sum": 2.6871,
+      "negative_shap_sum": -1.4598,
+      "shap_pred_aligned": true,
+      "top_1_feature": "CoapplicantIncome",
+      "top_1_shap": -1.0223,
+      "top_1_direction": "supports_decline",
+      "top_2_feature": "Property_Area_Semiurban",
+      "top_2_shap": 0.8793,
+      "top_2_direction": "supports_approval",
+      "top_3_feature": "Credit_History",
+      "top_3_shap": 0.6254,
+      "top_3_direction": "supports_approval",
+      "top5_features": "CoapplicantIncome, Property_Area_Semiurban, Credit_History, ApplicantIncome, Total_Income"
+    },
+    {
+      "application_id": "LP001439",
+      "actual_label": 1,
+      "predicted_label": 1,
+      "approval_probability": 0.686,
+      "prediction_correct": true,
+      "total_shap_sum": 0.0032,
+      "positive_shap_sum": 2.1412,
+      "negative_shap_sum": -2.138,
+      "shap_pred_aligned": true,
+      "top_1_feature": "CoapplicantIncome",
+      "top_1_shap": 1.0841,
+      "top_1_direction": "supports_approval",
+      "top_2_feature": "LoanAmount",
+      "top_2_shap": -0.646,
+      "top_2_direction": "supports_decline",
+      "top_3_feature": "Credit_History",
+      "top_3_shap": 0.6046,
+      "top_3_direction": "supports_approval",
+      "top5_features": "CoapplicantIncome, LoanAmount, Credit_History, Property_Area_Semiurban, ApplicantIncome"
+    },
+    {
+      "application_id": "LP001238",
+      "actual_label": 1,
+      "predicted_label": 1,
+      "approval_probability": 0.9571,
+      "prediction_correct": true,
+      "total_shap_sum": 2.3271,
+      "positive_shap_sum": 4.4973,
+      "negative_shap_sum": -2.1702,
+      "shap_pred_aligned": true,
+      "top_1_feature": "ApplicantIncome",
+      "top_1_shap": 1.7121,
+      "top_1_direction": "supports_approval",
+      "top_2_feature": "CoapplicantIncome",
+      "top_2_shap": -0.8317,
+      "top_2_direction": "supports_decline",
+      "top_3_feature": "Education_Graduate",
+      "top_3_shap": -0.6796,
+      "top_3_direction": "supports_decline",
+      "top5_features": "ApplicantIncome, CoapplicantIncome, Education_Graduate, Loan_Amount_Term, Dependents_3+"
+    },
+    {
+      "application_id": "LP002446",
+      "actual_label": 0,
+      "predicted_label": 0,
+      "approval_probability": 0.0122,
+      "prediction_correct": true,
+      "total_shap_sum": -5.1759,
+      "positive_shap_sum": 1.4403,
+      "negative_shap_sum": -6.6162,
+      "shap_pred_aligned": true,
+      "top_1_feature": "Credit_History",
+      "top_1_shap": -4.5341,
+      "top_1_direction": "supports_decline",
+      "top_2_feature": "Total_Income",
+      "top_2_shap": 0.8887,
+      "top_2_direction": "supports_approval",
+      "top_3_feature": "ApplicantIncome",
+      "top_3_shap": -0.6736,
+      "top_3_direction": "supports_decline",
+      "top5_features": "Credit_History, Total_Income, ApplicantIncome, Education_Graduate, Property_Area_Semiurban"
+    }
+  ],
+  "intermediate_outcomes": [
+    {
+      "application_id": "LP002170",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "5000",
+        "CoapplicantIncome": 3667.0,
+        "LoanAmount": 236.0,
+        "Loan_Amount_Term": 360.0,
+        "Credit_History": 1.0,
+        "Total_Income": "$8,667.00",
+        "Gender": "Male",
+        "Married": "Yes",
+        "Dependents": "2",
+        "Education": "Graduate",
+        "Self_Employed": "No",
+        "Property_Area": "Semiurban"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.027227
+      },
+      "stage_3_model_output": {
+        "prediction": 1,
+        "prediction_label": "Approved",
+        "approval_probability": 0.943792,
+        "actual_label": 1
+      },
+      "stage_4_shap_values": {
+        "CoapplicantIncome": {
+          "shap_value": 1.343991,
+          "abs_shap": 1.343991,
+          "direction": "supports_approval",
+          "rank": 1
+        },
+        "LoanAmount": {
+          "shap_value": -0.977043,
+          "abs_shap": 0.977043,
+          "direction": "supports_decline",
+          "rank": 2
+        },
+        "Total_Income": {
+          "shap_value": -0.857664,
+          "abs_shap": 0.857664,
+          "direction": "supports_decline",
+          "rank": 3
+        },
+        "Dependents_2": {
+          "shap_value": 0.819415,
+          "abs_shap": 0.819415,
+          "direction": "supports_approval",
+          "rank": 4
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": 0.658453,
+          "abs_shap": 0.658453,
+          "direction": "supports_approval",
+          "rank": 5
+        },
+        "Credit_History": {
+          "shap_value": 0.582687,
+          "abs_shap": 0.582687,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "Dependents_1": {
+          "shap_value": 0.171415,
+          "abs_shap": 0.171415,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "Dependents_0": {
+          "shap_value": 0.114837,
+          "abs_shap": 0.114837,
+          "direction": "supports_approval",
+          "rank": 8
+        },
+        "Property_Area_Rural": {
+          "shap_value": 0.088958,
+          "abs_shap": 0.088958,
+          "direction": "supports_approval",
+          "rank": 9
+        },
+        "Property_Area_Urban": {
+          "shap_value": 0.06611,
+          "abs_shap": 0.06611,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Education_Graduate": {
+          "shap_value": 0.047783,
+          "abs_shap": 0.047783,
+          "direction": "supports_approval",
+          "rank": 11
+        },
+        "ApplicantIncome": {
+          "shap_value": 0.03899,
+          "abs_shap": 0.03899,
+          "direction": "supports_approval",
+          "rank": 12
+        },
+        "Dependents_3+": {
+          "shap_value": -0.025862,
+          "abs_shap": 0.025862,
+          "direction": "supports_decline",
+          "rank": 13
+        },
+        "Gender_Female": {
+          "shap_value": -0.014728,
+          "abs_shap": 0.014728,
+          "direction": "supports_decline",
+          "rank": 14
+        },
+        "Loan_Amount_Term": {
+          "shap_value": -0.013488,
+          "abs_shap": 0.013488,
+          "direction": "supports_decline",
+          "rank": 15
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.008769,
+          "abs_shap": 0.008769,
+          "direction": "supports_approval",
+          "rank": 16
+        },
+        "Gender_Male": {
+          "shap_value": -0.007132,
+          "abs_shap": 0.007132,
+          "direction": "supports_decline",
+          "rank": 17
+        },
+        "Self_Employed_Yes": {
+          "shap_value": -0.007073,
+          "abs_shap": 0.007073,
+          "direction": "supports_decline",
+          "rank": 18
+        },
+        "Married_Yes": {
+          "shap_value": 0.006576,
+          "abs_shap": 0.006576,
+          "direction": "supports_approval",
+          "rank": 19
+        },
+        "Education_Not Graduate": {
+          "shap_value": 0.003736,
+          "abs_shap": 0.003736,
+          "direction": "supports_approval",
+          "rank": 20
+        },
+        "Married_No": {
+          "shap_value": -0.00328,
+          "abs_shap": 0.00328,
+          "direction": "supports_decline",
+          "rank": 21
+        },
+        "DTI": {
+          "shap_value": -0.002707,
+          "abs_shap": 0.002707,
+          "direction": "supports_decline",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 1.0,
+          "threshold": 1,
+          "violated": false
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.027227,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was approved with a high probability of 94.4%, indicating strong confidence in the applicant's ability to meet the loan obligations. Several factors contributed positively to this decision. The coapplicant's income was a significant factor in supporting the approval, providing assurance of financial stability. Additionally, having two dependents was viewed favorably, suggesting a stable family situation. The property's location in a semiurban area also contributed positively, as such areas are often seen as having good potential for property value appreciation. Furthermore, the applicant's clean credit history was a crucial factor in supporting the approval, as it indicates a reliable financial track record.\n\nOn the other hand, there were some factors that could have negatively impacted the decision. The requested loan amount was relatively high, which typically poses a greater risk to lenders. Additionally, while the total income was substantial, it was considered less favorable in the context of this application, possibly due to the high loan amount requested.\n\nNo policy rules were violated in this application, which further facilitated the approval. For future applications, it is advisable to maintain a strong credit history and consider managing loan amounts relative to income to enhance the likelihood of approval.",
+      "stage_7_llm_features_used": [
+        "CoapplicantIncome",
+        "Dependents_2",
+        "Property_Area_Semiurban",
+        "Credit_History",
+        "LoanAmount",
+        "Total_Income"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The coapplicant's income significantly supports the approval of the loan.",
+        "Having two dependents positively influences the loan approval.",
+        "The property being located in a semiurban area is favorable for approval.",
+        "A clean credit history supports the approval of the loan."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The requested loan amount is relatively high, which could have negatively impacted the decision.",
+        "The total income, while substantial, was considered less favorable in the context of this application."
+      ],
+      "stage_7_llm_policy_violations": [],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": false,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": true,
+        "raw_Loan_Amount_Term_mentioned": false,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": true,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_CoapplicantIncome_mentioned": true,
+        "shap_top5_LoanAmount_mentioned": true,
+        "shap_top5_Total_Income_mentioned": true,
+        "shap_top5_Dependents_2_mentioned": true,
+        "shap_top5_Property_Area_Semiurban_mentioned": true,
+        "shap_top5_coverage": 1.0,
+        "overall_coverage": 0.5882352941176471
+      }
+    },
+    {
+      "application_id": "LP001250",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "4755",
+        "CoapplicantIncome": 0.0,
+        "LoanAmount": 95.0,
+        "Loan_Amount_Term": NaN,
+        "Credit_History": 0.0,
+        "Total_Income": "$4,755.00",
+        "Gender": "Male",
+        "Married": "Yes",
+        "Dependents": "3+",
+        "Education": "Not Graduate",
+        "Self_Employed": "No",
+        "Property_Area": "Semiurban"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.019975
+      },
+      "stage_3_model_output": {
+        "prediction": 0,
+        "prediction_label": "Declined",
+        "approval_probability": 0.03604,
+        "actual_label": 0
+      },
+      "stage_4_shap_values": {
+        "Credit_History": {
+          "shap_value": -3.320771,
+          "abs_shap": 3.320771,
+          "direction": "supports_decline",
+          "rank": 1
+        },
+        "CoapplicantIncome": {
+          "shap_value": -1.071923,
+          "abs_shap": 1.071923,
+          "direction": "supports_decline",
+          "rank": 2
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": 0.750133,
+          "abs_shap": 0.750133,
+          "direction": "supports_approval",
+          "rank": 3
+        },
+        "Education_Graduate": {
+          "shap_value": -0.579758,
+          "abs_shap": 0.579758,
+          "direction": "supports_decline",
+          "rank": 4
+        },
+        "Total_Income": {
+          "shap_value": -0.505528,
+          "abs_shap": 0.505528,
+          "direction": "supports_decline",
+          "rank": 5
+        },
+        "Dependents_3+": {
+          "shap_value": 0.49829,
+          "abs_shap": 0.49829,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "LoanAmount": {
+          "shap_value": 0.287166,
+          "abs_shap": 0.287166,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "Loan_Amount_Term": {
+          "shap_value": -0.123361,
+          "abs_shap": 0.123361,
+          "direction": "supports_decline",
+          "rank": 8
+        },
+        "Married_No": {
+          "shap_value": -0.111928,
+          "abs_shap": 0.111928,
+          "direction": "supports_decline",
+          "rank": 9
+        },
+        "Dependents_1": {
+          "shap_value": 0.083766,
+          "abs_shap": 0.083766,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Property_Area_Rural": {
+          "shap_value": 0.08236,
+          "abs_shap": 0.08236,
+          "direction": "supports_approval",
+          "rank": 11
+        },
+        "Dependents_2": {
+          "shap_value": -0.079521,
+          "abs_shap": 0.079521,
+          "direction": "supports_decline",
+          "rank": 12
+        },
+        "ApplicantIncome": {
+          "shap_value": 0.068805,
+          "abs_shap": 0.068805,
+          "direction": "supports_approval",
+          "rank": 13
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.052704,
+          "abs_shap": 0.052704,
+          "direction": "supports_approval",
+          "rank": 14
+        },
+        "Education_Not Graduate": {
+          "shap_value": -0.048932,
+          "abs_shap": 0.048932,
+          "direction": "supports_decline",
+          "rank": 15
+        },
+        "Gender_Female": {
+          "shap_value": -0.035237,
+          "abs_shap": 0.035237,
+          "direction": "supports_decline",
+          "rank": 16
+        },
+        "Dependents_0": {
+          "shap_value": 0.0128,
+          "abs_shap": 0.0128,
+          "direction": "supports_approval",
+          "rank": 17
+        },
+        "Married_Yes": {
+          "shap_value": -0.01137,
+          "abs_shap": 0.01137,
+          "direction": "supports_decline",
+          "rank": 18
+        },
+        "DTI": {
+          "shap_value": -0.007536,
+          "abs_shap": 0.007536,
+          "direction": "supports_decline",
+          "rank": 19
+        },
+        "Property_Area_Urban": {
+          "shap_value": -0.003998,
+          "abs_shap": 0.003998,
+          "direction": "supports_decline",
+          "rank": 20
+        },
+        "Gender_Male": {
+          "shap_value": -0.002874,
+          "abs_shap": 0.002874,
+          "direction": "supports_decline",
+          "rank": 21
+        },
+        "Self_Employed_Yes": {
+          "shap_value": 0.002209,
+          "abs_shap": 0.002209,
+          "direction": "supports_approval",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 0.0,
+          "threshold": 1,
+          "violated": true
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.019975,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was declined due to a violation of the credit history policy rule, which requires applicants to have a clean credit history. This was the primary reason for the decline. Despite some positive aspects, such as the property being located in a semiurban area and having three or more dependents, these were not sufficient to outweigh the negative factors.\n\nThe lack of credit history was a significant negative driver, as it directly violated a hard policy rule. Additionally, the absence of coapplicant income and the applicant's non-graduate status contributed to the decision. The total income was also considered low relative to the loan amount requested.\n\nTo improve the chances of approval in the future, it is recommended to establish a clean credit history. This could involve opening and responsibly managing a credit account to demonstrate creditworthiness.",
+      "stage_7_llm_features_used": [
+        "Credit_History",
+        "CoapplicantIncome",
+        "Property_Area_Semiurban",
+        "Education_Graduate",
+        "Total_Income",
+        "Dependents_3+",
+        "LoanAmount"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The property is located in a semiurban area, which is favorable.",
+        "Having three or more dependents is seen as a positive factor.",
+        "The requested loan amount is relatively modest."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The applicant has no credit history, which negatively impacts the decision.",
+        "There is no coapplicant income to support the loan.",
+        "The applicant has not graduated, which is a negative factor.",
+        "The total income is considered low for the requested loan."
+      ],
+      "stage_7_llm_policy_violations": [
+        "The applicant must have a clean credit history, which was not met."
+      ],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": false,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": true,
+        "raw_Loan_Amount_Term_mentioned": false,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": true,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_Credit_History_mentioned": true,
+        "shap_top5_CoapplicantIncome_mentioned": true,
+        "shap_top5_Property_Area_Semiurban_mentioned": true,
+        "shap_top5_Education_Graduate_mentioned": true,
+        "shap_top5_Total_Income_mentioned": true,
+        "policy_RULE_CREDIT_001_mentioned": false,
+        "shap_top5_coverage": 1.0,
+        "overall_coverage": 0.5555555555555556
+      }
+    },
+    {
+      "application_id": "LP002209",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "2764",
+        "CoapplicantIncome": 1459.0,
+        "LoanAmount": 110.0,
+        "Loan_Amount_Term": 360.0,
+        "Credit_History": 1.0,
+        "Total_Income": "$4,223.00",
+        "Gender": "Female",
+        "Married": "No",
+        "Dependents": "0",
+        "Education": "Graduate",
+        "Self_Employed": NaN,
+        "Property_Area": "Urban"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.026042
+      },
+      "stage_3_model_output": {
+        "prediction": 1,
+        "prediction_label": "Approved",
+        "approval_probability": 0.940159,
+        "actual_label": 1
+      },
+      "stage_4_shap_values": {
+        "Total_Income": {
+          "shap_value": 0.746636,
+          "abs_shap": 0.746636,
+          "direction": "supports_approval",
+          "rank": 1
+        },
+        "Credit_History": {
+          "shap_value": 0.637379,
+          "abs_shap": 0.637379,
+          "direction": "supports_approval",
+          "rank": 2
+        },
+        "CoapplicantIncome": {
+          "shap_value": 0.500686,
+          "abs_shap": 0.500686,
+          "direction": "supports_approval",
+          "rank": 3
+        },
+        "ApplicantIncome": {
+          "shap_value": -0.390176,
+          "abs_shap": 0.390176,
+          "direction": "supports_decline",
+          "rank": 4
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": -0.287674,
+          "abs_shap": 0.287674,
+          "direction": "supports_decline",
+          "rank": 5
+        },
+        "LoanAmount": {
+          "shap_value": 0.283407,
+          "abs_shap": 0.283407,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "Gender_Female": {
+          "shap_value": 0.170647,
+          "abs_shap": 0.170647,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "Property_Area_Rural": {
+          "shap_value": 0.11072,
+          "abs_shap": 0.11072,
+          "direction": "supports_approval",
+          "rank": 8
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.093707,
+          "abs_shap": 0.093707,
+          "direction": "supports_approval",
+          "rank": 9
+        },
+        "Education_Graduate": {
+          "shap_value": 0.090375,
+          "abs_shap": 0.090375,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Dependents_1": {
+          "shap_value": 0.080746,
+          "abs_shap": 0.080746,
+          "direction": "supports_approval",
+          "rank": 11
+        },
+        "Dependents_2": {
+          "shap_value": -0.05763,
+          "abs_shap": 0.05763,
+          "direction": "supports_decline",
+          "rank": 12
+        },
+        "Dependents_0": {
+          "shap_value": -0.045822,
+          "abs_shap": 0.045822,
+          "direction": "supports_decline",
+          "rank": 13
+        },
+        "Gender_Male": {
+          "shap_value": 0.04537,
+          "abs_shap": 0.04537,
+          "direction": "supports_approval",
+          "rank": 14
+        },
+        "Married_No": {
+          "shap_value": -0.044965,
+          "abs_shap": 0.044965,
+          "direction": "supports_decline",
+          "rank": 15
+        },
+        "DTI": {
+          "shap_value": 0.040401,
+          "abs_shap": 0.040401,
+          "direction": "supports_approval",
+          "rank": 16
+        },
+        "Dependents_3+": {
+          "shap_value": -0.022048,
+          "abs_shap": 0.022048,
+          "direction": "supports_decline",
+          "rank": 17
+        },
+        "Property_Area_Urban": {
+          "shap_value": 0.013325,
+          "abs_shap": 0.013325,
+          "direction": "supports_approval",
+          "rank": 18
+        },
+        "Married_Yes": {
+          "shap_value": -0.010946,
+          "abs_shap": 0.010946,
+          "direction": "supports_decline",
+          "rank": 19
+        },
+        "Loan_Amount_Term": {
+          "shap_value": 0.01089,
+          "abs_shap": 0.01089,
+          "direction": "supports_approval",
+          "rank": 20
+        },
+        "Self_Employed_Yes": {
+          "shap_value": 0.006421,
+          "abs_shap": 0.006421,
+          "direction": "supports_approval",
+          "rank": 21
+        },
+        "Education_Not Graduate": {
+          "shap_value": 0.004823,
+          "abs_shap": 0.004823,
+          "direction": "supports_approval",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 1.0,
+          "threshold": 1,
+          "violated": false
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.026042,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was approved with a high probability of 94.0%. Several factors contributed positively to this decision. The combined total income of $4,223.00 was a strong positive factor, indicating a good capacity to repay the loan. Additionally, the applicant's clean credit history was crucial in supporting the approval, as it demonstrates reliability in managing past credit obligations. The co-applicant's income of $1,459.00 further strengthened the application, providing additional financial support. The requested loan amount of $110.00 was considered reasonable, and the applicant's gender also contributed positively to the decision.\n\nOn the other hand, there were some factors that slightly supported a decline. The applicant's individual income of $2,764.00 was noted as a less strong point, suggesting room for improvement in future applications. The property being located in a semiurban area and having zero dependents were also noted as slight negatives. Additionally, being unmarried was a minor factor in supporting a decline.\n\nImportantly, no policy rules were violated in this application, which further facilitated the approval. To strengthen future applications, the applicant might consider increasing their individual income, which could further enhance their financial profile.\n\nOverall, the combination of a strong total income, clean credit history, and additional financial support from a co-applicant were key in securing the loan approval.",
+      "stage_7_llm_features_used": [
+        "Total_Income",
+        "Credit_History",
+        "CoapplicantIncome",
+        "LoanAmount",
+        "Gender_Female",
+        "ApplicantIncome",
+        "Property_Area_Semiurban",
+        "Dependents_0",
+        "Married_No"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The total income of $4,223.00 supports the approval.",
+        "A clean credit history supports the approval.",
+        "The co-applicant's income of $1,459.00 supports the approval.",
+        "The requested loan amount of $110.00 supports the approval.",
+        "Being female supports the approval."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The applicant's individual income of $2,764.00 slightly supports a decline.",
+        "The property being in a semiurban area slightly supports a decline.",
+        "Having zero dependents slightly supports a decline.",
+        "Being unmarried slightly supports a decline."
+      ],
+      "stage_7_llm_policy_violations": [],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": true,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": true,
+        "raw_Loan_Amount_Term_mentioned": false,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": true,
+        "raw_Married_mentioned": true,
+        "raw_Dependents_mentioned": true,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_Total_Income_mentioned": true,
+        "shap_top5_Credit_History_mentioned": true,
+        "shap_top5_CoapplicantIncome_mentioned": true,
+        "shap_top5_ApplicantIncome_mentioned": true,
+        "shap_top5_Property_Area_Semiurban_mentioned": true,
+        "shap_top5_coverage": 1.0,
+        "overall_coverage": 0.7647058823529411
+      }
+    },
+    {
+      "application_id": "LP001536",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "39999",
+        "CoapplicantIncome": 0.0,
+        "LoanAmount": 600.0,
+        "Loan_Amount_Term": 180.0,
+        "Credit_History": 0.0,
+        "Total_Income": "$39,999.00",
+        "Gender": "Male",
+        "Married": "Yes",
+        "Dependents": "3+",
+        "Education": "Graduate",
+        "Self_Employed": "No",
+        "Property_Area": "Semiurban"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.015
+      },
+      "stage_3_model_output": {
+        "prediction": 1,
+        "prediction_label": "Approved",
+        "approval_probability": 0.780948,
+        "actual_label": 1
+      },
+      "stage_4_shap_values": {
+        "Credit_History": {
+          "shap_value": -2.293312,
+          "abs_shap": 2.293312,
+          "direction": "supports_decline",
+          "rank": 1
+        },
+        "ApplicantIncome": {
+          "shap_value": 1.766315,
+          "abs_shap": 1.766315,
+          "direction": "supports_approval",
+          "rank": 2
+        },
+        "Loan_Amount_Term": {
+          "shap_value": 1.101504,
+          "abs_shap": 1.101504,
+          "direction": "supports_approval",
+          "rank": 3
+        },
+        "Total_Income": {
+          "shap_value": -1.032725,
+          "abs_shap": 1.032725,
+          "direction": "supports_decline",
+          "rank": 4
+        },
+        "LoanAmount": {
+          "shap_value": -0.823274,
+          "abs_shap": 0.823274,
+          "direction": "supports_decline",
+          "rank": 5
+        },
+        "Dependents_3+": {
+          "shap_value": 0.777496,
+          "abs_shap": 0.777496,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "DTI": {
+          "shap_value": 0.645684,
+          "abs_shap": 0.645684,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "CoapplicantIncome": {
+          "shap_value": -0.556735,
+          "abs_shap": 0.556735,
+          "direction": "supports_decline",
+          "rank": 8
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": 0.49895,
+          "abs_shap": 0.49895,
+          "direction": "supports_approval",
+          "rank": 9
+        },
+        "Dependents_1": {
+          "shap_value": 0.169815,
+          "abs_shap": 0.169815,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Education_Graduate": {
+          "shap_value": 0.161526,
+          "abs_shap": 0.161526,
+          "direction": "supports_approval",
+          "rank": 11
+        },
+        "Property_Area_Rural": {
+          "shap_value": 0.133529,
+          "abs_shap": 0.133529,
+          "direction": "supports_approval",
+          "rank": 12
+        },
+        "Dependents_2": {
+          "shap_value": -0.073969,
+          "abs_shap": 0.073969,
+          "direction": "supports_decline",
+          "rank": 13
+        },
+        "Married_No": {
+          "shap_value": -0.06512,
+          "abs_shap": 0.06512,
+          "direction": "supports_decline",
+          "rank": 14
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.05329,
+          "abs_shap": 0.05329,
+          "direction": "supports_approval",
+          "rank": 15
+        },
+        "Dependents_0": {
+          "shap_value": 0.0521,
+          "abs_shap": 0.0521,
+          "direction": "supports_approval",
+          "rank": 16
+        },
+        "Gender_Female": {
+          "shap_value": -0.023586,
+          "abs_shap": 0.023586,
+          "direction": "supports_decline",
+          "rank": 17
+        },
+        "Education_Not Graduate": {
+          "shap_value": 0.008058,
+          "abs_shap": 0.008058,
+          "direction": "supports_approval",
+          "rank": 18
+        },
+        "Gender_Male": {
+          "shap_value": -0.006104,
+          "abs_shap": 0.006104,
+          "direction": "supports_decline",
+          "rank": 19
+        },
+        "Property_Area_Urban": {
+          "shap_value": -0.002537,
+          "abs_shap": 0.002537,
+          "direction": "supports_decline",
+          "rank": 20
+        },
+        "Self_Employed_Yes": {
+          "shap_value": 0.001744,
+          "abs_shap": 0.001744,
+          "direction": "supports_approval",
+          "rank": 21
+        },
+        "Married_Yes": {
+          "shap_value": 0.000459,
+          "abs_shap": 0.000459,
+          "direction": "supports_approval",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 0.0,
+          "threshold": 1,
+          "violated": true
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.015,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was approved with a probability of 78.1%, despite a significant policy violation regarding credit history. The applicant's credit history did not meet the required standard for a clean record, which is a critical factor typically leading to a decline. However, several positive factors contributed to the approval decision. The applicant's high income and favorable loan term were strong supports for approval. Additionally, having more than three dependents and a low debt-to-income ratio further bolstered the application. The property's location in a semiurban area also positively influenced the decision.\n\nOn the other hand, some factors supported a decline. The absence of a clean credit history was a major negative factor. The total income, when considered against the loan amount requested, was relatively low, and the lack of coapplicant income further contributed to the risk assessment. Despite these negative aspects, the positive factors were strong enough to outweigh them, leading to the approval decision.\n\nFor future applications, improving the credit history would be beneficial. Addressing this key area could enhance the likelihood of approval and potentially lead to more favorable loan terms.",
+      "stage_7_llm_features_used": [
+        "Credit_History",
+        "ApplicantIncome",
+        "Loan_Amount_Term",
+        "Dependents_3+",
+        "DTI",
+        "Property_Area_Semiurban",
+        "Total_Income",
+        "LoanAmount",
+        "CoapplicantIncome"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The applicant's income is high, which supports approval.",
+        "The loan term is favorable, which supports approval.",
+        "Having more than three dependents supports approval.",
+        "The applicant's debt-to-income ratio is low, which supports approval.",
+        "The property is located in a semiurban area, which supports approval."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The applicant does not have a clean credit history, which typically supports decline.",
+        "The total income is considered low relative to the loan amount, which supports decline.",
+        "The loan amount requested is high, which supports decline.",
+        "There is no coapplicant income, which supports decline."
+      ],
+      "stage_7_llm_policy_violations": [
+        "The applicant does not meet the requirement for a clean credit history."
+      ],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": true,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": true,
+        "raw_Loan_Amount_Term_mentioned": true,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": true,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_Credit_History_mentioned": true,
+        "shap_top5_ApplicantIncome_mentioned": true,
+        "shap_top5_Loan_Amount_Term_mentioned": true,
+        "shap_top5_Total_Income_mentioned": true,
+        "shap_top5_LoanAmount_mentioned": true,
+        "policy_RULE_CREDIT_001_mentioned": false,
+        "shap_top5_coverage": 1.0,
+        "overall_coverage": 0.6666666666666666
+      }
+    },
+    {
+      "application_id": "LP001357",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "3816",
+        "CoapplicantIncome": 754.0,
+        "LoanAmount": 160.0,
+        "Loan_Amount_Term": 360.0,
+        "Credit_History": 1.0,
+        "Total_Income": "$4,570.00",
+        "Gender": "Male",
+        "Married": NaN,
+        "Dependents": NaN,
+        "Education": "Graduate",
+        "Self_Employed": "No",
+        "Property_Area": "Urban"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.035003
+      },
+      "stage_3_model_output": {
+        "prediction": 1,
+        "prediction_label": "Approved",
+        "approval_probability": 0.816839,
+        "actual_label": 1
+      },
+      "stage_4_shap_values": {
+        "Credit_History": {
+          "shap_value": 0.636977,
+          "abs_shap": 0.636977,
+          "direction": "supports_approval",
+          "rank": 1
+        },
+        "CoapplicantIncome": {
+          "shap_value": 0.569705,
+          "abs_shap": 0.569705,
+          "direction": "supports_approval",
+          "rank": 2
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": -0.348753,
+          "abs_shap": 0.348753,
+          "direction": "supports_decline",
+          "rank": 3
+        },
+        "ApplicantIncome": {
+          "shap_value": -0.333088,
+          "abs_shap": 0.333088,
+          "direction": "supports_decline",
+          "rank": 4
+        },
+        "DTI": {
+          "shap_value": -0.178071,
+          "abs_shap": 0.178071,
+          "direction": "supports_decline",
+          "rank": 5
+        },
+        "Education_Graduate": {
+          "shap_value": 0.161142,
+          "abs_shap": 0.161142,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "Total_Income": {
+          "shap_value": 0.155733,
+          "abs_shap": 0.155733,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "Property_Area_Rural": {
+          "shap_value": 0.125142,
+          "abs_shap": 0.125142,
+          "direction": "supports_approval",
+          "rank": 8
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.071256,
+          "abs_shap": 0.071256,
+          "direction": "supports_approval",
+          "rank": 9
+        },
+        "Dependents_1": {
+          "shap_value": 0.067449,
+          "abs_shap": 0.067449,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Dependents_0": {
+          "shap_value": -0.062207,
+          "abs_shap": 0.062207,
+          "direction": "supports_decline",
+          "rank": 11
+        },
+        "LoanAmount": {
+          "shap_value": -0.054724,
+          "abs_shap": 0.054724,
+          "direction": "supports_decline",
+          "rank": 12
+        },
+        "Dependents_2": {
+          "shap_value": -0.051828,
+          "abs_shap": 0.051828,
+          "direction": "supports_decline",
+          "rank": 13
+        },
+        "Property_Area_Urban": {
+          "shap_value": -0.04045,
+          "abs_shap": 0.04045,
+          "direction": "supports_decline",
+          "rank": 14
+        },
+        "Gender_Female": {
+          "shap_value": -0.039382,
+          "abs_shap": 0.039382,
+          "direction": "supports_decline",
+          "rank": 15
+        },
+        "Dependents_3+": {
+          "shap_value": -0.029447,
+          "abs_shap": 0.029447,
+          "direction": "supports_decline",
+          "rank": 16
+        },
+        "Married_No": {
+          "shap_value": 0.029304,
+          "abs_shap": 0.029304,
+          "direction": "supports_approval",
+          "rank": 17
+        },
+        "Married_Yes": {
+          "shap_value": 0.016381,
+          "abs_shap": 0.016381,
+          "direction": "supports_approval",
+          "rank": 18
+        },
+        "Loan_Amount_Term": {
+          "shap_value": 0.013597,
+          "abs_shap": 0.013597,
+          "direction": "supports_approval",
+          "rank": 19
+        },
+        "Education_Not Graduate": {
+          "shap_value": 0.006388,
+          "abs_shap": 0.006388,
+          "direction": "supports_approval",
+          "rank": 20
+        },
+        "Self_Employed_Yes": {
+          "shap_value": 0.005341,
+          "abs_shap": 0.005341,
+          "direction": "supports_approval",
+          "rank": 21
+        },
+        "Gender_Male": {
+          "shap_value": -0.003484,
+          "abs_shap": 0.003484,
+          "direction": "supports_decline",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 1.0,
+          "threshold": 1,
+          "violated": false
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.035003,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was approved with a high probability of 81.7%, indicating a strong likelihood of approval. Several factors contributed positively to this decision. The applicant's clean credit history is a significant positive factor, as it meets the essential requirement for approval. Additionally, the coapplicant's income is a substantial positive contributor, enhancing the financial profile of the application. The applicant being a graduate also supports the approval, as it is generally associated with better financial stability. Furthermore, the combined total income of the applicant and coapplicant is favorable, adding to the application's strength. The fact that the property is not located in a rural area also supports the approval.\n\nHowever, there are some factors that slightly reduced the approval likelihood. The property's location in a semiurban area is less favorable compared to urban areas. The applicant's individual income is lower than ideal, which slightly impacts the financial assessment. The debt-to-income ratio, while not violating any policy rules, is not optimal and could be improved. Additionally, having no dependents slightly reduces the approval likelihood, as does the requested loan amount, which is slightly higher than ideal.\n\nNo policy rules were violated in this application, which further supports the approval decision. For future applications, it may be beneficial for the applicant to consider increasing their individual income or reducing the loan amount requested to strengthen their financial profile.",
+      "stage_7_llm_features_used": [
+        "Credit_History",
+        "CoapplicantIncome",
+        "Education_Graduate",
+        "Total_Income",
+        "Property_Area_Rural",
+        "Property_Area_Semiurban",
+        "ApplicantIncome",
+        "DTI",
+        "Dependents_0",
+        "LoanAmount"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The applicant has a clean credit history.",
+        "The coapplicant's income contributes positively to the application.",
+        "The applicant is a graduate, which supports the approval.",
+        "The combined total income of the applicant and coapplicant is favorable.",
+        "The property is not located in a rural area, which supports approval."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The property is located in a semiurban area, which slightly reduces the approval likelihood.",
+        "The applicant's individual income is lower than ideal.",
+        "The debt-to-income ratio is not optimal.",
+        "Having no dependents slightly reduces the approval likelihood.",
+        "The requested loan amount is slightly higher than ideal."
+      ],
+      "stage_7_llm_policy_violations": [],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": true,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": true,
+        "raw_Loan_Amount_Term_mentioned": false,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": true,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_Credit_History_mentioned": true,
+        "shap_top5_CoapplicantIncome_mentioned": true,
+        "shap_top5_Property_Area_Semiurban_mentioned": true,
+        "shap_top5_ApplicantIncome_mentioned": true,
+        "shap_top5_DTI_mentioned": true,
+        "shap_top5_coverage": 1.0,
+        "overall_coverage": 0.6470588235294118
+      }
+    },
+    {
+      "application_id": "LP002266",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "3100",
+        "CoapplicantIncome": 1400.0,
+        "LoanAmount": 113.0,
+        "Loan_Amount_Term": 360.0,
+        "Credit_History": 1.0,
+        "Total_Income": "$4,500.00",
+        "Gender": "Male",
+        "Married": "Yes",
+        "Dependents": "2",
+        "Education": "Graduate",
+        "Self_Employed": "No",
+        "Property_Area": "Urban"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.025106
+      },
+      "stage_3_model_output": {
+        "prediction": 1,
+        "prediction_label": "Approved",
+        "approval_probability": 0.904618,
+        "actual_label": 1
+      },
+      "stage_4_shap_values": {
+        "Credit_History": {
+          "shap_value": 0.668616,
+          "abs_shap": 0.668616,
+          "direction": "supports_approval",
+          "rank": 1
+        },
+        "CoapplicantIncome": {
+          "shap_value": 0.620732,
+          "abs_shap": 0.620732,
+          "direction": "supports_approval",
+          "rank": 2
+        },
+        "ApplicantIncome": {
+          "shap_value": -0.499467,
+          "abs_shap": 0.499467,
+          "direction": "supports_decline",
+          "rank": 3
+        },
+        "Dependents_2": {
+          "shap_value": 0.356727,
+          "abs_shap": 0.356727,
+          "direction": "supports_approval",
+          "rank": 4
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": -0.351799,
+          "abs_shap": 0.351799,
+          "direction": "supports_decline",
+          "rank": 5
+        },
+        "LoanAmount": {
+          "shap_value": 0.285131,
+          "abs_shap": 0.285131,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "Property_Area_Rural": {
+          "shap_value": 0.112511,
+          "abs_shap": 0.112511,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "Education_Graduate": {
+          "shap_value": 0.102811,
+          "abs_shap": 0.102811,
+          "direction": "supports_approval",
+          "rank": 8
+        },
+        "Dependents_0": {
+          "shap_value": 0.090069,
+          "abs_shap": 0.090069,
+          "direction": "supports_approval",
+          "rank": 9
+        },
+        "Dependents_1": {
+          "shap_value": 0.070118,
+          "abs_shap": 0.070118,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.05903,
+          "abs_shap": 0.05903,
+          "direction": "supports_approval",
+          "rank": 11
+        },
+        "Property_Area_Urban": {
+          "shap_value": -0.046587,
+          "abs_shap": 0.046587,
+          "direction": "supports_decline",
+          "rank": 12
+        },
+        "DTI": {
+          "shap_value": 0.045579,
+          "abs_shap": 0.045579,
+          "direction": "supports_approval",
+          "rank": 13
+        },
+        "Total_Income": {
+          "shap_value": -0.03034,
+          "abs_shap": 0.03034,
+          "direction": "supports_decline",
+          "rank": 14
+        },
+        "Dependents_3+": {
+          "shap_value": -0.027363,
+          "abs_shap": 0.027363,
+          "direction": "supports_decline",
+          "rank": 15
+        },
+        "Gender_Female": {
+          "shap_value": -0.027204,
+          "abs_shap": 0.027204,
+          "direction": "supports_decline",
+          "rank": 16
+        },
+        "Loan_Amount_Term": {
+          "shap_value": 0.017047,
+          "abs_shap": 0.017047,
+          "direction": "supports_approval",
+          "rank": 17
+        },
+        "Married_Yes": {
+          "shap_value": 0.010446,
+          "abs_shap": 0.010446,
+          "direction": "supports_approval",
+          "rank": 18
+        },
+        "Married_No": {
+          "shap_value": 0.00935,
+          "abs_shap": 0.00935,
+          "direction": "supports_approval",
+          "rank": 19
+        },
+        "Education_Not Graduate": {
+          "shap_value": 0.006654,
+          "abs_shap": 0.006654,
+          "direction": "supports_approval",
+          "rank": 20
+        },
+        "Gender_Male": {
+          "shap_value": -0.003833,
+          "abs_shap": 0.003833,
+          "direction": "supports_decline",
+          "rank": 21
+        },
+        "Self_Employed_Yes": {
+          "shap_value": 0.003302,
+          "abs_shap": 0.003302,
+          "direction": "supports_approval",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 1.0,
+          "threshold": 1,
+          "violated": false
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.025106,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was approved with a high probability of 90.5%. Several factors contributed positively to this decision. The applicant's clean credit history was a significant positive factor, ensuring trust in the applicant's financial reliability. Additionally, the coapplicant's income provided a substantial boost to the application, indicating a strong combined financial capacity. Having two dependents was also viewed positively, suggesting a stable family situation. The requested loan amount was deemed reasonable, further supporting the approval decision. Furthermore, the property not being located in a rural area was seen as a favorable aspect.\n\nHowever, there were some factors that could have negatively impacted the decision. The applicant's individual income was not very high, which could have been a concern if not for the coapplicant's contribution. The property being located in an urban area was less favorable compared to other locations. Additionally, the total income of the applicant and coapplicant was not very high, which could have been a limiting factor.\n\nNo policy rules were violated in this application, which further supported the approval decision. For future applications, it might be beneficial to consider increasing the applicant's income or reducing the loan amount to secure even better terms.",
+      "stage_7_llm_features_used": [
+        "Credit_History",
+        "CoapplicantIncome",
+        "Dependents_2",
+        "LoanAmount",
+        "Property_Area_Rural",
+        "ApplicantIncome",
+        "Property_Area_Urban",
+        "Total_Income"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The applicant has a clean credit history.",
+        "The coapplicant's income contributes positively to the application.",
+        "Having two dependents is seen as a positive factor.",
+        "The requested loan amount is considered reasonable.",
+        "The property is not located in a rural area, which is favorable."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The applicant's income alone is not very high.",
+        "The property is located in an urban area, which is less favorable.",
+        "The total income of the applicant and coapplicant is not very high."
+      ],
+      "stage_7_llm_policy_violations": [],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": true,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": true,
+        "raw_Loan_Amount_Term_mentioned": false,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": true,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_Credit_History_mentioned": true,
+        "shap_top5_CoapplicantIncome_mentioned": true,
+        "shap_top5_ApplicantIncome_mentioned": true,
+        "shap_top5_Dependents_2_mentioned": true,
+        "shap_top5_Property_Area_Semiurban_mentioned": false,
+        "shap_top5_coverage": 0.8,
+        "overall_coverage": 0.5882352941176471
+      }
+    },
+    {
+      "application_id": "LP002223",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "4310",
+        "CoapplicantIncome": 0.0,
+        "LoanAmount": 130.0,
+        "Loan_Amount_Term": 360.0,
+        "Credit_History": NaN,
+        "Total_Income": "$4,310.00",
+        "Gender": "Male",
+        "Married": "Yes",
+        "Dependents": "0",
+        "Education": "Graduate",
+        "Self_Employed": "No",
+        "Property_Area": "Semiurban"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.030155
+      },
+      "stage_3_model_output": {
+        "prediction": 1,
+        "prediction_label": "Approved",
+        "approval_probability": 0.881364,
+        "actual_label": 1
+      },
+      "stage_4_shap_values": {
+        "CoapplicantIncome": {
+          "shap_value": -1.022287,
+          "abs_shap": 1.022287,
+          "direction": "supports_decline",
+          "rank": 1
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": 0.879349,
+          "abs_shap": 0.879349,
+          "direction": "supports_approval",
+          "rank": 2
+        },
+        "Credit_History": {
+          "shap_value": 0.625359,
+          "abs_shap": 0.625359,
+          "direction": "supports_approval",
+          "rank": 3
+        },
+        "ApplicantIncome": {
+          "shap_value": -0.363367,
+          "abs_shap": 0.363367,
+          "direction": "supports_decline",
+          "rank": 4
+        },
+        "Total_Income": {
+          "shap_value": 0.261338,
+          "abs_shap": 0.261338,
+          "direction": "supports_approval",
+          "rank": 5
+        },
+        "LoanAmount": {
+          "shap_value": 0.214019,
+          "abs_shap": 0.214019,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "Education_Graduate": {
+          "shap_value": 0.197371,
+          "abs_shap": 0.197371,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "Dependents_1": {
+          "shap_value": 0.118926,
+          "abs_shap": 0.118926,
+          "direction": "supports_approval",
+          "rank": 8
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.087319,
+          "abs_shap": 0.087319,
+          "direction": "supports_approval",
+          "rank": 9
+        },
+        "Property_Area_Rural": {
+          "shap_value": 0.082231,
+          "abs_shap": 0.082231,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Married_No": {
+          "shap_value": 0.079847,
+          "abs_shap": 0.079847,
+          "direction": "supports_approval",
+          "rank": 11
+        },
+        "Property_Area_Urban": {
+          "shap_value": 0.068237,
+          "abs_shap": 0.068237,
+          "direction": "supports_approval",
+          "rank": 12
+        },
+        "Dependents_2": {
+          "shap_value": -0.045009,
+          "abs_shap": 0.045009,
+          "direction": "supports_decline",
+          "rank": 13
+        },
+        "DTI": {
+          "shap_value": 0.030877,
+          "abs_shap": 0.030877,
+          "direction": "supports_approval",
+          "rank": 14
+        },
+        "Married_Yes": {
+          "shap_value": 0.01963,
+          "abs_shap": 0.01963,
+          "direction": "supports_approval",
+          "rank": 15
+        },
+        "Education_Not Graduate": {
+          "shap_value": 0.013473,
+          "abs_shap": 0.013473,
+          "direction": "supports_approval",
+          "rank": 16
+        },
+        "Dependents_3+": {
+          "shap_value": -0.012784,
+          "abs_shap": 0.012784,
+          "direction": "supports_decline",
+          "rank": 17
+        },
+        "Gender_Female": {
+          "shap_value": -0.010716,
+          "abs_shap": 0.010716,
+          "direction": "supports_decline",
+          "rank": 18
+        },
+        "Self_Employed_Yes": {
+          "shap_value": 0.006256,
+          "abs_shap": 0.006256,
+          "direction": "supports_approval",
+          "rank": 19
+        },
+        "Dependents_0": {
+          "shap_value": -0.004314,
+          "abs_shap": 0.004314,
+          "direction": "supports_decline",
+          "rank": 20
+        },
+        "Gender_Male": {
+          "shap_value": 0.002858,
+          "abs_shap": 0.002858,
+          "direction": "supports_approval",
+          "rank": 21
+        },
+        "Loan_Amount_Term": {
+          "shap_value": -0.001294,
+          "abs_shap": 0.001294,
+          "direction": "supports_decline",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": NaN,
+          "threshold": 1,
+          "violated": true
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.030155,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was approved with a high probability, primarily due to several positive factors. The property being located in a semiurban area is a significant advantage, as it typically indicates a lower risk for the lender. Additionally, the applicant's total income is sufficient to support the loan, and the requested loan amount is considered reasonable. Furthermore, the applicant's status as a graduate contributes positively to the decision.\n\nHowever, there are some negative factors that were considered. The absence of coapplicant income is a notable concern, as it reduces the overall financial strength of the application. Additionally, the applicant's individual income is on the lower side, which could be a potential risk factor.\n\nDespite these concerns, the application was approved. It is important to note that the applicant violated a hard policy rule by not having a clean credit history. This is a critical factor that could have led to a decline under different circumstances.\n\nFor future applications, it is recommended to maintain a clean credit history to avoid violating hard policy rules, which can significantly impact the decision outcome.",
+      "stage_7_llm_features_used": [
+        "Property_Area_Semiurban",
+        "Total_Income",
+        "LoanAmount",
+        "Education_Graduate",
+        "CoapplicantIncome",
+        "ApplicantIncome",
+        "Credit_History"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The property is located in a semiurban area, which is favorable for approval.",
+        "The applicant's total income supports the loan approval.",
+        "The requested loan amount is reasonable and supports approval.",
+        "The applicant is a graduate, which positively influences the decision."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "There is no coapplicant income, which negatively impacts the decision.",
+        "The applicant's individual income is relatively low, which is a concern."
+      ],
+      "stage_7_llm_policy_violations": [
+        "The applicant does not have a clean credit history, violating a hard policy rule."
+      ],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": true,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": true,
+        "raw_Loan_Amount_Term_mentioned": false,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": false,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_CoapplicantIncome_mentioned": true,
+        "shap_top5_Property_Area_Semiurban_mentioned": true,
+        "shap_top5_Credit_History_mentioned": true,
+        "shap_top5_ApplicantIncome_mentioned": true,
+        "shap_top5_Total_Income_mentioned": true,
+        "policy_RULE_CREDIT_001_mentioned": false,
+        "shap_top5_coverage": 1.0,
+        "overall_coverage": 0.5555555555555556
+      }
+    },
+    {
+      "application_id": "LP001439",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "4300",
+        "CoapplicantIncome": 2014.0,
+        "LoanAmount": 194.0,
+        "Loan_Amount_Term": 360.0,
+        "Credit_History": 1.0,
+        "Total_Income": "$6,314.00",
+        "Gender": "Male",
+        "Married": "Yes",
+        "Dependents": "0",
+        "Education": "Not Graduate",
+        "Self_Employed": "No",
+        "Property_Area": "Rural"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.030721
+      },
+      "stage_3_model_output": {
+        "prediction": 1,
+        "prediction_label": "Approved",
+        "approval_probability": 0.685953,
+        "actual_label": 1
+      },
+      "stage_4_shap_values": {
+        "CoapplicantIncome": {
+          "shap_value": 1.084063,
+          "abs_shap": 1.084063,
+          "direction": "supports_approval",
+          "rank": 1
+        },
+        "LoanAmount": {
+          "shap_value": -0.64601,
+          "abs_shap": 0.64601,
+          "direction": "supports_decline",
+          "rank": 2
+        },
+        "Credit_History": {
+          "shap_value": 0.604594,
+          "abs_shap": 0.604594,
+          "direction": "supports_approval",
+          "rank": 3
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": -0.411901,
+          "abs_shap": 0.411901,
+          "direction": "supports_decline",
+          "rank": 4
+        },
+        "ApplicantIncome": {
+          "shap_value": -0.342635,
+          "abs_shap": 0.342635,
+          "direction": "supports_decline",
+          "rank": 5
+        },
+        "Total_Income": {
+          "shap_value": 0.284279,
+          "abs_shap": 0.284279,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "Education_Graduate": {
+          "shap_value": -0.25616,
+          "abs_shap": 0.25616,
+          "direction": "supports_decline",
+          "rank": 7
+        },
+        "Property_Area_Rural": {
+          "shap_value": -0.227342,
+          "abs_shap": 0.227342,
+          "direction": "supports_decline",
+          "rank": 8
+        },
+        "Dependents_1": {
+          "shap_value": 0.102132,
+          "abs_shap": 0.102132,
+          "direction": "supports_approval",
+          "rank": 9
+        },
+        "Dependents_2": {
+          "shap_value": -0.071949,
+          "abs_shap": 0.071949,
+          "direction": "supports_decline",
+          "rank": 10
+        },
+        "Dependents_0": {
+          "shap_value": -0.060451,
+          "abs_shap": 0.060451,
+          "direction": "supports_decline",
+          "rank": 11
+        },
+        "Dependents_3+": {
+          "shap_value": -0.056082,
+          "abs_shap": 0.056082,
+          "direction": "supports_decline",
+          "rank": 12
+        },
+        "Property_Area_Urban": {
+          "shap_value": 0.048895,
+          "abs_shap": 0.048895,
+          "direction": "supports_approval",
+          "rank": 13
+        },
+        "Gender_Female": {
+          "shap_value": -0.021316,
+          "abs_shap": 0.021316,
+          "direction": "supports_decline",
+          "rank": 14
+        },
+        "DTI": {
+          "shap_value": -0.018408,
+          "abs_shap": 0.018408,
+          "direction": "supports_decline",
+          "rank": 15
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.015232,
+          "abs_shap": 0.015232,
+          "direction": "supports_approval",
+          "rank": 16
+        },
+        "Education_Not Graduate": {
+          "shap_value": -0.013162,
+          "abs_shap": 0.013162,
+          "direction": "supports_decline",
+          "rank": 17
+        },
+        "Gender_Male": {
+          "shap_value": -0.005403,
+          "abs_shap": 0.005403,
+          "direction": "supports_decline",
+          "rank": 18
+        },
+        "Loan_Amount_Term": {
+          "shap_value": -0.004003,
+          "abs_shap": 0.004003,
+          "direction": "supports_decline",
+          "rank": 19
+        },
+        "Married_No": {
+          "shap_value": -0.003005,
+          "abs_shap": 0.003005,
+          "direction": "supports_decline",
+          "rank": 20
+        },
+        "Self_Employed_Yes": {
+          "shap_value": 0.001973,
+          "abs_shap": 0.001973,
+          "direction": "supports_approval",
+          "rank": 21
+        },
+        "Married_Yes": {
+          "shap_value": -0.000171,
+          "abs_shap": 0.000171,
+          "direction": "supports_decline",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 1.0,
+          "threshold": 1,
+          "violated": false
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.030721,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was approved with a probability of 68.6%. Several factors contributed positively to this decision. The presence of a co-applicant with an income of 2014.0 was a significant positive factor. Additionally, the applicant's clean credit history and a total income of $6,314.00 further supported the approval. The fact that the applicant has no dependents and the property being in an urban area also contributed positively.\n\nHowever, there were some factors that could have led to a decline. The requested loan amount of 194.0 was one such factor. The property being in a semiurban area and the applicant's income of 4300 were also factors that could have negatively impacted the decision. Furthermore, the applicant not being a graduate and the property being in a rural area were additional negative factors.\n\nNo policy rules were violated in this application, which further supported the approval. For future applications, it might be beneficial to consider increasing the applicant's income or reducing the loan amount to strengthen the application further.",
+      "stage_7_llm_features_used": [
+        "CoapplicantIncome",
+        "Credit_History",
+        "Total_Income",
+        "Dependents_1",
+        "Property_Area_Urban",
+        "LoanAmount",
+        "Property_Area_Semiurban",
+        "ApplicantIncome",
+        "Education_Graduate",
+        "Property_Area_Rural"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The presence of a co-applicant with an income of 2014.0 supports the approval.",
+        "The applicant has a clean credit history, which supports the approval.",
+        "The total income of $6,314.00 supports the approval.",
+        "The fact that the applicant has no dependents supports the approval.",
+        "The property being in an urban area supports the approval."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The loan amount of 194.0 is a factor that could have led to a decline.",
+        "The property being in a semiurban area is a factor that could have led to a decline.",
+        "The applicant's income of 4300 is a factor that could have led to a decline.",
+        "The applicant not being a graduate is a factor that could have led to a decline.",
+        "The property being in a rural area is a factor that could have led to a decline."
+      ],
+      "stage_7_llm_policy_violations": [],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": true,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": true,
+        "raw_Loan_Amount_Term_mentioned": false,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": true,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_CoapplicantIncome_mentioned": true,
+        "shap_top5_LoanAmount_mentioned": true,
+        "shap_top5_Credit_History_mentioned": true,
+        "shap_top5_Property_Area_Semiurban_mentioned": true,
+        "shap_top5_ApplicantIncome_mentioned": true,
+        "shap_top5_coverage": 1.0,
+        "overall_coverage": 0.6470588235294118
+      }
+    },
+    {
+      "application_id": "LP001238",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "7100",
+        "CoapplicantIncome": 0.0,
+        "LoanAmount": 125.0,
+        "Loan_Amount_Term": 60.0,
+        "Credit_History": 1.0,
+        "Total_Income": "$7,100.00",
+        "Gender": "Male",
+        "Married": "Yes",
+        "Dependents": "3+",
+        "Education": "Not Graduate",
+        "Self_Employed": "Yes",
+        "Property_Area": "Urban"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.017603
+      },
+      "stage_3_model_output": {
+        "prediction": 1,
+        "prediction_label": "Approved",
+        "approval_probability": 0.957106,
+        "actual_label": 1
+      },
+      "stage_4_shap_values": {
+        "ApplicantIncome": {
+          "shap_value": 1.712112,
+          "abs_shap": 1.712112,
+          "direction": "supports_approval",
+          "rank": 1
+        },
+        "CoapplicantIncome": {
+          "shap_value": -0.831726,
+          "abs_shap": 0.831726,
+          "direction": "supports_decline",
+          "rank": 2
+        },
+        "Education_Graduate": {
+          "shap_value": -0.679604,
+          "abs_shap": 0.679604,
+          "direction": "supports_decline",
+          "rank": 3
+        },
+        "Loan_Amount_Term": {
+          "shap_value": 0.555973,
+          "abs_shap": 0.555973,
+          "direction": "supports_approval",
+          "rank": 4
+        },
+        "Dependents_3+": {
+          "shap_value": 0.508023,
+          "abs_shap": 0.508023,
+          "direction": "supports_approval",
+          "rank": 5
+        },
+        "Total_Income": {
+          "shap_value": 0.436172,
+          "abs_shap": 0.436172,
+          "direction": "supports_approval",
+          "rank": 6
+        },
+        "Credit_History": {
+          "shap_value": 0.435474,
+          "abs_shap": 0.435474,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "Dependents_0": {
+          "shap_value": 0.36049,
+          "abs_shap": 0.36049,
+          "direction": "supports_approval",
+          "rank": 8
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": -0.312794,
+          "abs_shap": 0.312794,
+          "direction": "supports_decline",
+          "rank": 9
+        },
+        "DTI": {
+          "shap_value": 0.220046,
+          "abs_shap": 0.220046,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Dependents_2": {
+          "shap_value": -0.108085,
+          "abs_shap": 0.108085,
+          "direction": "supports_decline",
+          "rank": 11
+        },
+        "LoanAmount": {
+          "shap_value": 0.101079,
+          "abs_shap": 0.101079,
+          "direction": "supports_approval",
+          "rank": 12
+        },
+        "Property_Area_Urban": {
+          "shap_value": -0.094255,
+          "abs_shap": 0.094255,
+          "direction": "supports_decline",
+          "rank": 13
+        },
+        "Property_Area_Rural": {
+          "shap_value": 0.087408,
+          "abs_shap": 0.087408,
+          "direction": "supports_approval",
+          "rank": 14
+        },
+        "Education_Not Graduate": {
+          "shap_value": -0.063052,
+          "abs_shap": 0.063052,
+          "direction": "supports_decline",
+          "rank": 15
+        },
+        "Gender_Female": {
+          "shap_value": -0.062083,
+          "abs_shap": 0.062083,
+          "direction": "supports_decline",
+          "rank": 16
+        },
+        "Married_No": {
+          "shap_value": 0.054108,
+          "abs_shap": 0.054108,
+          "direction": "supports_approval",
+          "rank": 17
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.021424,
+          "abs_shap": 0.021424,
+          "direction": "supports_approval",
+          "rank": 18
+        },
+        "Gender_Male": {
+          "shap_value": -0.010585,
+          "abs_shap": 0.010585,
+          "direction": "supports_decline",
+          "rank": 19
+        },
+        "Self_Employed_Yes": {
+          "shap_value": -0.007995,
+          "abs_shap": 0.007995,
+          "direction": "supports_decline",
+          "rank": 20
+        },
+        "Married_Yes": {
+          "shap_value": 0.004705,
+          "abs_shap": 0.004705,
+          "direction": "supports_approval",
+          "rank": 21
+        },
+        "Dependents_1": {
+          "shap_value": 0.000246,
+          "abs_shap": 0.000246,
+          "direction": "supports_approval",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 1.0,
+          "threshold": 1,
+          "violated": false
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.017603,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was approved with a high probability, primarily due to several positive factors. The applicant's high income was a significant contributor to the approval decision, as it indicates a strong ability to repay the loan. Additionally, the favorable loan term and the presence of three or more dependents further supported the approval, as these factors suggest a stable financial situation. The applicant's clean credit history also played a crucial role in securing the approval, as it aligns with the bank's policy requirements.\n\nOn the other hand, there were some factors that slightly supported a decline. The absence of a co-applicant's income was noted as a potential risk, as additional income could provide more financial security. Furthermore, the applicant not being a graduate and the property's location in a semiurban area were minor considerations against the application. However, these factors were not strong enough to outweigh the positive aspects.\n\nImportantly, no policy rules were violated in this application, which further facilitated the approval. The applicant's debt-to-income ratio was well within acceptable limits, and the clean credit history met the bank's stringent requirements.\n\nFor future applications, it may be beneficial to include a co-applicant with income, as this could further strengthen the financial profile and increase the likelihood of approval.",
+      "stage_7_llm_features_used": [
+        "ApplicantIncome",
+        "Loan_Amount_Term",
+        "Dependents_3+",
+        "Total_Income",
+        "Credit_History",
+        "CoapplicantIncome",
+        "Education_Graduate",
+        "Property_Area_Semiurban",
+        "Dependents_2",
+        "Property_Area_Urban"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The applicant's income is high, which supports approval.",
+        "The loan term is favorable for approval.",
+        "Having three or more dependents supports approval.",
+        "The total income is sufficient to support approval.",
+        "A clean credit history supports approval."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The absence of a co-applicant's income slightly supports decline.",
+        "The applicant not being a graduate slightly supports decline.",
+        "The property being in a semiurban area slightly supports decline.",
+        "Having no dependents in the category of two slightly supports decline.",
+        "The property being in an urban area slightly supports decline."
+      ],
+      "stage_7_llm_policy_violations": [],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": true,
+        "raw_CoapplicantIncome_mentioned": true,
+        "raw_LoanAmount_mentioned": false,
+        "raw_Loan_Amount_Term_mentioned": true,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": true,
+        "raw_Education_mentioned": false,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_ApplicantIncome_mentioned": true,
+        "shap_top5_CoapplicantIncome_mentioned": true,
+        "shap_top5_Education_Graduate_mentioned": true,
+        "shap_top5_Loan_Amount_Term_mentioned": true,
+        "shap_top5_Dependents_3+_mentioned": true,
+        "shap_top5_coverage": 1.0,
+        "overall_coverage": 0.6470588235294118
+      }
+    },
+    {
+      "application_id": "LP002446",
+      "stage_1_raw_features": {
+        "ApplicantIncome": "2309",
+        "CoapplicantIncome": 1255.0,
+        "LoanAmount": 125.0,
+        "Loan_Amount_Term": 360.0,
+        "Credit_History": 0.0,
+        "Total_Income": "$3,564.00",
+        "Gender": "Male",
+        "Married": "Yes",
+        "Dependents": "2",
+        "Education": "Not Graduate",
+        "Self_Employed": "No",
+        "Property_Area": "Rural"
+      },
+      "stage_2_engineered_features": {
+        "DTI": 0.035063
+      },
+      "stage_3_model_output": {
+        "prediction": 0,
+        "prediction_label": "Declined",
+        "approval_probability": 0.012155,
+        "actual_label": 0
+      },
+      "stage_4_shap_values": {
+        "Credit_History": {
+          "shap_value": -4.534117,
+          "abs_shap": 4.534117,
+          "direction": "supports_decline",
+          "rank": 1
+        },
+        "Total_Income": {
+          "shap_value": 0.888695,
+          "abs_shap": 0.888695,
+          "direction": "supports_approval",
+          "rank": 2
+        },
+        "ApplicantIncome": {
+          "shap_value": -0.67363,
+          "abs_shap": 0.67363,
+          "direction": "supports_decline",
+          "rank": 3
+        },
+        "Education_Graduate": {
+          "shap_value": -0.44365,
+          "abs_shap": 0.44365,
+          "direction": "supports_decline",
+          "rank": 4
+        },
+        "Property_Area_Semiurban": {
+          "shap_value": -0.335646,
+          "abs_shap": 0.335646,
+          "direction": "supports_decline",
+          "rank": 5
+        },
+        "DTI": {
+          "shap_value": -0.235318,
+          "abs_shap": 0.235318,
+          "direction": "supports_decline",
+          "rank": 6
+        },
+        "Dependents_2": {
+          "shap_value": 0.209128,
+          "abs_shap": 0.209128,
+          "direction": "supports_approval",
+          "rank": 7
+        },
+        "Property_Area_Rural": {
+          "shap_value": -0.184706,
+          "abs_shap": 0.184706,
+          "direction": "supports_decline",
+          "rank": 8
+        },
+        "Dependents_0": {
+          "shap_value": 0.125861,
+          "abs_shap": 0.125861,
+          "direction": "supports_approval",
+          "rank": 9
+        },
+        "CoapplicantIncome": {
+          "shap_value": 0.108976,
+          "abs_shap": 0.108976,
+          "direction": "supports_approval",
+          "rank": 10
+        },
+        "Dependents_3+": {
+          "shap_value": -0.088197,
+          "abs_shap": 0.088197,
+          "direction": "supports_decline",
+          "rank": 11
+        },
+        "Gender_Female": {
+          "shap_value": -0.048496,
+          "abs_shap": 0.048496,
+          "direction": "supports_decline",
+          "rank": 12
+        },
+        "Self_Employed_No": {
+          "shap_value": 0.040327,
+          "abs_shap": 0.040327,
+          "direction": "supports_approval",
+          "rank": 13
+        },
+        "Loan_Amount_Term": {
+          "shap_value": -0.034016,
+          "abs_shap": 0.034016,
+          "direction": "supports_decline",
+          "rank": 14
+        },
+        "Education_Not Graduate": {
+          "shap_value": -0.025138,
+          "abs_shap": 0.025138,
+          "direction": "supports_decline",
+          "rank": 15
+        },
+        "Dependents_1": {
+          "shap_value": 0.023731,
+          "abs_shap": 0.023731,
+          "direction": "supports_approval",
+          "rank": 16
+        },
+        "LoanAmount": {
+          "shap_value": 0.020603,
+          "abs_shap": 0.020603,
+          "direction": "supports_approval",
+          "rank": 17
+        },
+        "Married_Yes": {
+          "shap_value": 0.015004,
+          "abs_shap": 0.015004,
+          "direction": "supports_approval",
+          "rank": 18
+        },
+        "Gender_Male": {
+          "shap_value": -0.009128,
+          "abs_shap": 0.009128,
+          "direction": "supports_decline",
+          "rank": 19
+        },
+        "Married_No": {
+          "shap_value": 0.006394,
+          "abs_shap": 0.006394,
+          "direction": "supports_approval",
+          "rank": 20
+        },
+        "Property_Area_Urban": {
+          "shap_value": -0.004166,
+          "abs_shap": 0.004166,
+          "direction": "supports_decline",
+          "rank": 21
+        },
+        "Self_Employed_Yes": {
+          "shap_value": 0.001624,
+          "abs_shap": 0.001624,
+          "direction": "supports_approval",
+          "rank": 22
+        }
+      },
+      "stage_5_policy_checks": {
+        "RULE_CREDIT_001": {
+          "description": "Applicant must have clean credit history",
+          "feature_value": 0.0,
+          "threshold": 1,
+          "violated": true
+        },
+        "RULE_DTI_001": {
+          "description": "Applications with DTI > 2.0 are declined",
+          "feature_value": 0.035063,
+          "threshold": 2.0,
+          "violated": false
+        }
+      },
+      "stage_6_kg_status": "retrieved",
+      "stage_7_llm_status": "generated",
+      "stage_7_llm_narrative": "The loan application was declined primarily because the applicant did not meet the requirement for a clean credit history. This is a critical factor, as per the bank's policy, which mandates that applicants must have a clean credit history to be eligible for a loan. \n\nOn the positive side, the application was supported by the relatively high combined income of the applicant and co-applicant, which indicates financial capability to repay the loan. Additionally, the fact that the applicant is not self-employed suggests a stable employment status, which is generally favorable for loan approval.\n\nHowever, several factors contributed negatively to the decision. The applicant's individual income was on the lower side, and the lack of a graduate education also played a role in the decline. Moreover, the applicant's living area and debt-to-income ratio did not significantly support the application.\n\nTo improve the chances of approval in future applications, it is recommended that the applicant focuses on improving their credit history by ensuring timely payments and reducing any outstanding debts.",
+      "stage_7_llm_features_used": [
+        "Credit_History",
+        "Total_Income",
+        "Self_Employed_No",
+        "ApplicantIncome",
+        "Education_Graduate"
+      ],
+      "stage_7_llm_positive_drivers": [
+        "The combined income of the applicant and co-applicant is relatively high.",
+        "The applicant is not self-employed, which is generally seen as a stable employment status."
+      ],
+      "stage_7_llm_negative_drivers": [
+        "The applicant does not have a clean credit history.",
+        "The applicant's individual income is relatively low.",
+        "The applicant does not have a graduate education."
+      ],
+      "stage_7_llm_policy_violations": [
+        "The applicant must have a clean credit history, which was not met."
+      ],
+      "stage_8_crosscheck": {
+        "raw_ApplicantIncome_mentioned": true,
+        "raw_CoapplicantIncome_mentioned": false,
+        "raw_LoanAmount_mentioned": false,
+        "raw_Loan_Amount_Term_mentioned": false,
+        "raw_Credit_History_mentioned": true,
+        "raw_Total_Income_mentioned": true,
+        "raw_Gender_mentioned": false,
+        "raw_Married_mentioned": false,
+        "raw_Dependents_mentioned": false,
+        "raw_Education_mentioned": true,
+        "raw_Self_Employed_mentioned": false,
+        "raw_Property_Area_mentioned": false,
+        "shap_top5_Credit_History_mentioned": true,
+        "shap_top5_Total_Income_mentioned": true,
+        "shap_top5_ApplicantIncome_mentioned": true,
+        "shap_top5_Education_Graduate_mentioned": true,
+        "shap_top5_Property_Area_Semiurban_mentioned": false,
+        "policy_RULE_CREDIT_001_mentioned": false,
+        "shap_top5_coverage": 0.8,
+        "overall_coverage": 0.4444444444444444
+      }
+    }
+  ]
+}
