@@ -21,23 +21,15 @@
 %                                     also used for the TOC unless
 %                                     \toctitle is used
 %
-\author{Ivar Ekeland\inst{1} \and Roger Temam\inst{2}
-Jeffrey Dean \and David Grove \and Craig Chambers \and Kim~B.~Bruce \and
-Elsa Bertino}
+\author{Mostaqim Murshed\inst{1} \and Madhushi Bandara\inst{1}}
 %
-\authorrunning{Ivar Ekeland et al.}   % abbreviated author list (for running head)
+\authorrunning{Murshed and Bandara}   % abbreviated author list (for running head)
 %
 %%%% list of authors for the TOC (use if author list has to be modified)
-\tocauthor{Ivar Ekeland, Roger Temam, Jeffrey Dean, David Grove,
-Craig Chambers, Kim B. Bruce, Elisa Bertino}
+\tocauthor{Mostaqim Murshed, Madhushi Bandara}
 %
-\institute{Princeton University, Princeton NJ 08544, USA,\\
-\email{I.Ekeland@princeton.edu},\\ WWW home page:
-\texttt{http://users/\homedir iekeland/web/welcome.html}
-\and
-Universit\'{e} de Paris-Sud,
-Laboratoire d'Analyse Num\'{e}rique, B\^{a}timent 425,\\
-F-91405 Orsay Cedex, France}
+\institute{University of Technology Sydney, Sydney, Australia\\
+\email{mostaqim.murshed@students.uts.edu.au}}
 
 \maketitle              % typeset the title of the contribution
 
@@ -130,7 +122,7 @@ Based on these gaps, we formulate the following research questions:
 \section{Methodology}
 \subsection{Design Science Research Methodology}
 
-We adopt the Design Science Research Methodology (DSRM) to guide the development of the proposed HOGE framework. DSRM is well suited for this research as we to create and evaluate an artifact designed to solve a practical problem and contribute knowledge to the field~\cite{peffers2007}. In information systems and socio-technical domains, design science emphasizes building artifacts that address the interplay between people, organizations, and technology~\cite{hevner2004}. Because the core motivation of this work is human-centered explainability; an inherently socio-technical goal DSRM provides a methodologically appropriate structure for us.
+We adopt the Design Science Research Methodology (DSRM) to guide the development of the proposed HOGE framework. DSRM is well suited for this research as we aim to create and evaluate an artifact designed to solve a practical problem and contribute knowledge to the field~\cite{peffers2007}. In information systems and socio-technical domains, design science emphasizes building artifacts that address the interplay between people, organizations, and technology~\cite{hevner2004}. Because the core motivation of this work is human-centered explainability; an inherently socio-technical goal, DSRM provides a methodologically appropriate structure for us.
 
 DSRM includes multiple stages- problem identification and motivation, objectives of a solution, design and development, demonstration, evaluation, and communication~\cite{peffers2007}. Hevner et al.~\cite{hevner2004} emphasises that design science should produce innovative artifacts and evaluate them rigorously within a relevant environment. Following sections discuss how each stage is applied to this research.
 
@@ -229,7 +221,7 @@ The HOGE system architecture consists of three major components: predictive mode
 
 \subsection{Component A: Predictive Model and Technical Explainers}
 
-HOGE is designed to integrate into existing predictive models and model explainability methods. For example, explainability methods may include feature attribution (e.g., SHAP~\cite{lundberg2017}), local surrogate models (e.g., LIME~\cite{ribeiro2016}), counterfactual generation, and uncertainty estimation. HOGE does not replace technical XAI, but extend its capability.
+HOGE is designed to integrate into existing predictive models and model explainability methods. For example, explainability methods may include feature attribution (e.g., SHAP~\cite{lundberg2017}), local surrogate models (e.g., LIME~\cite{ribeiro2016}), counterfactual generation, and uncertainty estimation. HOGE does not replace technical XAI, but extends its capability.
 
 \subsection{Component B: Semantic Knowledge Representation}
 This component contains an ontology (schema) and a knowledge graph (KG) and support reasoning and traceability, consistent with the roles of ontologies in XAI described by Confalonieri and Guizzardi~\cite{confalonieri2021}.
@@ -717,7 +709,7 @@ The pipeline provides explanations at different cognitive levels and satisfies d
 \end{table}
 
 \subsubsection{Benefits of a Knowledge Graph.}
-The Knowledge Graph adds three critical advantages beyond traditional ML explainability:
+The Knowledge Graph adds four critical advantages beyond traditional ML explainability:
 \begin{enumerate}
     \item \textbf{Contextualisation}: SHAP alone cannot explain why a feature matters. The KG contextualises SHAP values with domain rules and risk factors.
     \item \textbf{Rule Binding}: Policy violations are discovered automatically and linked back to features.
@@ -776,7 +768,7 @@ Future work should empirically validate HOGE through user studies and applicatio
 
 % ---- Bibliography ----
 %
-\begin{thebibliography}{36}
+\begin{thebibliography}{35}
 
 % === Foundational references ===
 
