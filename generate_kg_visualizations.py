@@ -22,14 +22,15 @@ driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASS))
 
 # ── colour palette per node label ──────────────────────────
 LABEL_COLORS = {
-    "Applicant":           "#4C72B0",
-    "LoanApplication":     "#DD8452",
-    "Feature":             "#55A868",
-    "FeatureValue":        "#C44E52",
-    "ModelExplanation":    "#8172B3",
-    "FeatureContribution": "#937860",
-    "PolicyRule":          "#DA8BC3",
-    "RiskFactor":          "#8C8C8C",
+    "Applicant":              "#4C72B0",
+    "LoanApplication":        "#DD8452",
+    "Feature":                "#55A868",
+    "FeatureValue":           "#C44E52",
+    "ModelExplanation":       "#8172B3",
+    "FeatureContribution":    "#937860",
+    "PolicyRule":             "#DA8BC3",
+    "RiskFactor":             "#8C8C8C",
+    "CounterfactualScenario": "#64B5CD",
 }
 DEFAULT_COLOR = "#CCB974"
 
@@ -176,8 +177,8 @@ def _short(name, label):
     if name is None:
         return "?"
     s = str(name)
-    # Shorten FeatureContribution / FeatureValue ids
-    if label in ("FeatureContribution", "FeatureValue") and "_" in s:
+    # Shorten FeatureContribution / FeatureValue / CounterfactualScenario ids
+    if label in ("FeatureContribution", "FeatureValue", "CounterfactualScenario") and "_" in s:
         parts = s.split("_")
         # e.g. EXP_LP001006_DTI -> DTI
         if len(parts) >= 3:
