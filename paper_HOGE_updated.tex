@@ -170,7 +170,7 @@ We propose a framework termed Human-Centric Ontology-Grounded Explanation (HOGE)
 
 
 \subsection{Stage 4 - Demonstration}
-Its evaluation is operationalized via a use case and a proposed metric suite and an experimental plan aligned with interpretability evaluation guidance~\cite{doshi2017}.
+The HOGE artifact is demonstrated through a loan decisioning case study (Section~5), in which we instantiate the full pipeline---from predictive model training through SHAP attribution, KG construction, and LLM narrative generation---for 500~loan applications. The demonstration is operationalised via three scenarios (prediction retrieval, narrative explanation, and policy validation) and evaluated using a metric suite aligned with interpretability evaluation guidance~\cite{doshi2017}.
 
 \subsection{Stage 5- Evaluation}
 
@@ -210,10 +210,11 @@ This level evaluates whether explanations improve real task performance:
     \item \textbf{Actionability Index (AIx)}: proportion of explanations that lead to correct recommended actions, aligned to domain goals.
 \end{itemize}
 
+The current prototype evaluation fully operationalises Level~1 metrics (SF, EC, HRC) through automated evaluation, and partially addresses Level~2 through automated consistency and traceability checks. Full human-subject evaluation with Comprehension Score and Trust Calibration Error (Level~2) and application-grounded evaluation with Decision Utility Gain and Actionability Index (Level~3) are proposed for future validation studies.
+
 
 \subsection{Stage 6- Communication}
-
-
+This paper constitutes the primary communication artefact for the HOGE framework, presenting the design rationale, architectural specification, prototype implementation, and empirical evaluation. The open-source prototype repository\footnote{\url{https://github.com/staq-6/Phd-Experiment1}} provides all source code, evaluation scripts, output artefacts (JSON explanations, evaluation workbooks), and reproducibility instructions, enabling independent verification and extension of the reported results.
 
 \section{Proposed HOGE Architecture}
 
@@ -232,7 +233,9 @@ HOGE is designed to integrate into existing predictive models and model explaina
 
 \subsection{Component B: Semantic Knowledge Representation}
 This component contains an ontology (schema) and a knowledge graph (KG) and support reasoning and traceability, consistent with the roles of ontologies in XAI described by Confalonieri and Guizzardi~\cite{confalonieri2021}.
-The ontology defines domain concepts, relationships, constraints, and permissible explanation primitives. For example, in the context of cybersecurity, the ontology may define threat categories, behaviors, assets, vulnerabilities, and response actions. In agriculture, the ontology defines irrigation concepts and soil states, enabling explanations aligned to farmer cognition. 
+The ontology defines domain concepts, relationships, constraints, and permissible explanation primitives. For example, in the context of cybersecurity, the ontology may define threat categories, behaviors, assets, vulnerabilities, and response actions. In agriculture, the ontology defines irrigation concepts and soil states, enabling explanations aligned to farmer cognition.
+
+Crucially, HOGE positions the ontology as a \emph{semantic contract} for explanation generation. The contract is operationally defined by three elements: (i)~the closed set of \texttt{Feature} nodes that enumerate every attribute the explanation may reference, (ii)~the \texttt{PolicyRule} and \texttt{RiskFactor} nodes that define permissible domain constraints, and (iii)~the grounding instruction embedded in the LLM prompt that prohibits claims about features or rules not present in the KG. Together, these elements constrain the LLM to produce explanations that are traceable to evidence rather than fabricated from parametric knowledge.
 
 We ground the HOGE ontology on RVO model and extend to capture unified representation necessary to support end-user friendly explanations. The main classes and relationships of HOGE ontology are represented in Figure~\ref{fig:HOGEontology}.
 
@@ -550,7 +553,7 @@ Policy rule retrieval was also validated: applications with \texttt{Credit\_Hist
 
 \subsection{B. Human-Centric Evaluation}
 
-The human-centric evaluation assesses whether the HOGE pipeline produces outputs that are internally consistent, traceable across all pipeline stages, and aligned with the model's actual reasoning. These checks are designed to be repeatable by a domain expert reviewing the generated Excel workbook and JSON artefacts.
+The human-centric evaluation assesses whether the HOGE pipeline produces outputs that are internally consistent, traceable across all pipeline stages, and aligned with the model's actual reasoning. These checks are designed to be repeatable by a domain expert reviewing the generated Excel workbook and JSON artefacts. We note that these automated consistency and traceability checks operationalise a subset of Level~2 evaluation (Section~3.7); full human-subject evaluation with Comprehension Score and Trust Calibration Error, requiring controlled user studies, remains future work (Section~8).
 
 \subsubsection{Prediction vs. SHAP Alignment.}
 
@@ -710,7 +713,7 @@ Table~\ref{tab:comparison} compares HOGE with representative integrated framewor
 HOGE is, to our knowledge, the first framework that (a) explicitly treats the ontology as a semantic contract constraining LLM claims, (b) integrates post-hoc XAI feature attributions into the KG as first-class evidence nodes, (c) evaluates explanation faithfulness through perturbation testing rather than text-similarity proxies, and (d) provides full provenance traceability from narrative claims to KG paths. While systems like AIThreatTrack~\cite{threat2025} achieve lower hallucination rates, they operate in more constrained taxonomic domains without open-ended narrative generation.
 
 \subsection{Study Limitations}
-The proposed approach has several limitations. First, the construction of the knowledge graph relies on manual or semi-automated knowledge engineering processes, which can be time-consuming and may limit scalability across domains---a challenge also noted in broader reviews~\cite{macds2026}. Second, the use of SHAP for feature attribution can be computationally expensive when applied to large-scale datasets or complex models, potentially constraining real-time or resource-limited deployments. Third, the quality and consistency of explanations generated by the large language model are sensitive to prompt design and dependent on the reliability of external APIs, introducing variability that is not fully controllable within the system. Fourth, the LLM-as-judge approach to measuring hallucination and faithfulness, while scalable, may introduce its own biases and should be complemented by human evaluation in future work~\cite{cognet2025}. Fifth, the sample size of 10~applications, while sufficient for demonstrating the pipeline, limits statistical generalisability. Finally, the current prototype evaluation is limited to post-hoc explanations of model behaviour and does not support causal reasoning or counterfactual analysis. These limitations highlight important directions for future work.
+The proposed approach has several limitations. First, the construction of the knowledge graph relies on manual or semi-automated knowledge engineering processes, which can be time-consuming and may limit scalability across domains---a challenge also noted in broader reviews~\cite{macds2026}. Second, the use of SHAP for feature attribution can be computationally expensive when applied to large-scale datasets or complex models, potentially constraining real-time or resource-limited deployments. Third, the quality and consistency of explanations generated by the large language model are sensitive to prompt design and dependent on the reliability of external APIs, introducing variability that is not fully controllable within the system. Fourth, the LLM-as-judge approach to measuring hallucination and faithfulness, while scalable, may introduce its own biases and should be complemented by human evaluation in future work~\cite{cognet2025}. Fifth, the sample size of 10~applications, while sufficient for demonstrating the pipeline, limits statistical generalisability. Sixth, while the HOGE architecture is designed to be domain-agnostic through a generic ontology contract with standardised input/output formats, the current evaluation is limited to a single domain (loan decisioning); validation across additional domains (e.g., healthcare, cybersecurity) is needed to confirm cross-domain reusability. Finally, the current prototype evaluation is limited to post-hoc explanations of model behaviour and does not support causal reasoning or counterfactual analysis. These limitations highlight important directions for future work.
 
 \section{Conclusion}
 
