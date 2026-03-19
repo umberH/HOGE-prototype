@@ -246,7 +246,7 @@ We ground the HOGE ontology on RVO model and extend to capture unified represent
     \label{fig:HOGEontology}
 \end{figure}
 
-Figure~\ref{fig:kg_schema} shows the instantiated ontology schema as realised in the Neo4j knowledge graph, depicting the eight node labels (Applicant, LoanApplication, Feature, FeatureValue, ModelExplanation, FeatureContribution, PolicyRule, RiskFactor) and their directed relationship types.
+Figure~\ref{fig:kg_schema} shows the instantiated ontology schema as realised in the Neo4j knowledge graph, depicting the nine node labels (Applicant, LoanApplication, Feature, FeatureValue, ModelExplanation, FeatureContribution, PolicyRule, RiskFactor, CounterfactualScenario) and their directed relationship types.
 
 \begin{figure}[htp]
     \centering
@@ -257,14 +257,15 @@ Figure~\ref{fig:kg_schema} shows the instantiated ontology schema as realised in
 
 To create an associated knowledge graph from the ontology, we use an ingestion pipeline:
 \begin{enumerate}
-    \item Creates constraints (uniqueness on application IDs, feature names, explanation IDs)
+    \item Creates constraints (uniqueness on application IDs, feature names, explanation IDs, counterfactual IDs)
     \item Loads application-level nodes (Applicant, LoanApplication, demographic attributes)
     \item Loads SHAP explanation nodes + contribution nodes (signed values, absolute importance, rank, direction)
     \item Loads feature values and links them via feature name
     \item Loads policy rules and risk factors, then links violations to applications
+    \item Loads counterfactual scenarios and links them to applications via \texttt{HAS\_COUNTERFACTUAL} and to the perturbed feature via \texttt{PERTURBS\_FEATURE}
 \end{enumerate}
 
-Each evidence item is persisted with an explicit KG path (e.g., \texttt{(LoanApplication:LP001006) -[:HAS\_SHAP\_EXPLANATION]-> (ModelExplanation) -[:HAS\_CONTRIBUTION]-> (FeatureContribution) -[:FOR\_FEATURE]-> (Feature:CoapplicantIncome)}), enabling full provenance traceability from any narrative claim back to its source in the graph.
+Each evidence item is persisted with an explicit KG path (e.g., \texttt{(LoanApplication:LP001006) -[:HAS\_SHAP\_EXPLANATION]-> (ModelExplanation) -[:HAS\_CONTRIBUTION]-> (FeatureContribution) -[:FOR\_FEATURE]-> (Feature:CoapplicantIncome)}), enabling full provenance traceability from any narrative claim back to its source in the graph. Counterfactual scenarios are similarly persisted with the path \texttt{(LoanApplication) -[:HAS\_COUNTERFACTUAL]-> (CounterfactualScenario) -[:PERTURBS\_FEATURE]-> (Feature)}, ensuring that contrastive what-if claims are also KG-grounded.
 
 Figure~\ref{fig:kg_instance} shows the instance-level subgraph for loan application LP001006, illustrating how a single application node connects to its applicant, feature values, SHAP contributions, and feature definitions through the relationships defined in the ontology schema.
 
@@ -363,6 +364,7 @@ The HOGE ontology was extended and a Loan Explainability Knowledge Graph was cre
     \item \textbf{11,000} FeatureContribution nodes recording SHAP values, importance ranks, and directions
     \item \textbf{2}~PolicyRule nodes (DTI~$>$~2.0 hard decline; Credit\_History~=~0 hard decline)
     \item \textbf{2}~RiskFactor nodes (High DTI, Bad Credit History) with IMPACTS and DERIVED\_FROM relationships
+    \item \textbf{51}~CounterfactualScenario nodes (for 10 evaluation applications) linked via \texttt{HAS\_COUNTERFACTUAL} to applications and via \texttt{PERTURBS\_FEATURE} to actionable features
 \end{itemize}
 
 Policy violations were automatically detected and linked: applications with DTI~$>$~2.0 received a \texttt{VIOLATES\_RULE} relationship to \texttt{RULE\_DTI\_001}, and applications with \texttt{Credit\_History}~=~0 were linked to \texttt{RULE\_CREDIT\_001}.
@@ -372,6 +374,7 @@ The KG enables complex multi-hop queries such as:
     \item ``Which features most influenced Application~X?''
     \item ``Which risk factors were triggered for Application~X?''
     \item ``Which policy rules were violated in Application~X and why?''
+    \item ``What minimal change to Application~X would flip the decision?''
 \end{itemize}
 
 \subsection{Narrative Explanation via Large Language Models}
@@ -572,7 +575,7 @@ All 10~applications showed perfect alignment: approved applications had positive
 
 \subsubsection{Intermediate Outcome Traceability.}
 
-A core claim of HOGE is that every stage of the pipeline produces traceable intermediate outcomes. To validate this, for each sampled application we collect and record the outputs of all seven pipeline stages:
+A core claim of HOGE is that every stage of the pipeline produces traceable intermediate outcomes. To validate this, for each sampled application we collect and record the outputs of all eight pipeline stages:
 
 \begin{enumerate}
     \item \textbf{Stage~1 --- Raw Features}: The original input values (e.g., ApplicantIncome, CoapplicantIncome, Credit\_History, LoanAmount).
@@ -580,8 +583,9 @@ A core claim of HOGE is that every stage of the pipeline produces traceable inte
     \item \textbf{Stage~3 --- Model Prediction}: The binary outcome (Approved/Declined) and the associated probability score.
     \item \textbf{Stage~4 --- SHAP Attribution}: The top-K SHAP feature contributions with signed values and direction labels.
     \item \textbf{Stage~5 --- Policy Evaluation}: Rule-by-rule pass/fail status (e.g., RULE\_DTI\_001, RULE\_CREDIT\_001).
-    \item \textbf{Stage~6 --- KG Retrieval}: Confirmation that all features, contributions, and policy links were retrieved from Neo4j.
-    \item \textbf{Stage~7 --- LLM Generation}: The structured JSON explanation with narrative, drivers, violations, and provenance metadata.
+    \item \textbf{Stage~6 --- Counterfactual Analysis}: Minimal actionable feature changes that would flip the prediction, persisted as \texttt{CounterfactualScenario} nodes in the KG.
+    \item \textbf{Stage~7 --- KG Retrieval}: Confirmation that all features, contributions, policy links, and counterfactual scenarios were retrieved from Neo4j.
+    \item \textbf{Stage~8 --- LLM Generation}: The structured JSON explanation with narrative, drivers, violations, counterfactual what-if, and provenance metadata.
 \end{enumerate}
 
 All stages are recorded in both JSON format and a multi-sheet Excel workbook (\texttt{hoge\_evaluation\_workbook.xlsx}), enabling a domain expert or auditor to trace any explanation claim back through every intermediate step.
@@ -613,8 +617,11 @@ Table~\ref{tab:intermediate} illustrates the intermediate outcomes for a represe
         5. Policy & RULE\_CREDIT\_001 & VIOLATED \\
          & RULE\_DTI\_001 & PASSED \\
         \midrule
-        6. KG & Status & Retrieved \\
-        7. LLM & Status & Generated \\
+        6. Counterfactual & Minimal flip & CoapplicantInc. +\$5000 \\
+         & New probability & 0.829 (Approved) \\
+        \midrule
+        7. KG & Status & Retrieved \\
+        8. LLM & Status & Generated \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -641,7 +648,7 @@ This evaluation verifies that the LLM's generated narrative references the actua
 \subsection{Counterfactual Analysis Results}
 \label{sec:counterfactual}
 
-To address the contrastive property of human explanations~\cite{miller2019} (``Why outcome~A instead of~B?''), HOGE includes a counterfactual explanation module that computes the minimal actionable feature changes needed to flip a prediction. For each of the 10~sampled applications, the module systematically perturbs actionable features (CoapplicantIncome, LoanAmount, Loan\_Amount\_Term, Credit\_History) and identifies the single-feature change that would reverse the model's decision.
+To address the contrastive property of human explanations~\cite{miller2019} (``Why outcome~A instead of~B?''), HOGE includes a counterfactual explanation module that computes the minimal actionable feature changes needed to flip a prediction. Counterfactual results are persisted as \texttt{CounterfactualScenario} nodes in the KG, linked to the application via \texttt{HAS\_COUNTERFACTUAL} and to the perturbed feature via \texttt{PERTURBS\_FEATURE}. This ensures that contrastive what-if claims in the LLM narrative are governed by the same semantic contract as all other explanation claims---the LLM retrieves counterfactual evidence from the KG rather than computing it at inference time.
 
 Results are presented in Table~\ref{tab:counterfactual}. A single-feature flip was found for 9 out of 10~applications (90\%). Credit\_History was the most powerful flip lever: flipping it reversed the decision in 7~cases, with probability shifts exceeding 0.75 in most instances. For the two declined applications, the module identified actionable paths to approval: LP001250 could flip by adding a co-applicant income of \$5,000 (probability: 3.6\%~$\to$~82.9\%), and LP002446 could flip by establishing positive credit history (probability: 1.2\%~$\to$~87.0\%).
 
@@ -671,7 +678,7 @@ The single failure case (LP001238, Approved at 95.7\%) could not be flipped by a
     \end{tabular}
 \end{table}
 
-These counterfactual explanations are integrated into the LLM narrative via the structured prompt, enabling the generated explanation to include contrastive what-if statements grounded in actual model behaviour rather than LLM speculation. This directly operationalises Miller's contrastive property~\cite{miller2019} within the HOGE framework.
+These counterfactual explanations are integrated into the LLM narrative via the structured prompt, enabling the generated explanation to include contrastive what-if statements grounded in actual model behaviour rather than LLM speculation. Because counterfactual scenarios are persisted in the KG with explicit provenance paths, the evidence bundle for each explanation includes entries of the form \texttt{(LoanApplication) -[:HAS\_COUNTERFACTUAL]-> (CounterfactualScenario) -[:PERTURBS\_FEATURE]-> (Feature)}, maintaining end-to-end traceability. This directly operationalises Miller's contrastive property~\cite{miller2019} within the HOGE framework.
 
 \subsection{Answering the Research Questions}
 
@@ -682,7 +689,7 @@ The HOGE framework positions the ontology not merely as a data store but as a \e
 Perturbation-based faithfulness testing yielded an average score of 0.760, with 90\% of applications passing. This approach goes beyond the text-similarity metrics (BLEU, ROUGE, BERTScore) used by most integrated systems~\cite{gdm2026,medsum2026,medkgcot2025} and instead directly tests whether explanations reflect the model's actual sensitivity to features. The single failure case (LP002209) revealed an interaction between preprocessing and perturbation that is a methodological contribution: StandardScaler normalisation can mask the effect of feature perturbation, a finding relevant to any perturbation-based evaluation framework.
 
 \subsubsection{RQ3: Provenance and Retrieval Accuracy.}
-The KG achieved Precision@K~=~1.0 at all K values and 100\% prediction match, confirming lossless provenance. This contrasts with systems where retrieval noise propagates into explanations---Xu et al.~\cite{synkg2025} noted that LLM-generated triples can introduce noise despite filtering. HOGE avoids this by treating the KG as a faithful mirror of ground-truth SHAP data rather than an LLM-expanded knowledge store.
+The KG achieved Precision@K~=~1.0 at all K values and 100\% prediction match, confirming lossless provenance. This contrasts with systems where retrieval noise propagates into explanations---Xu et al.~\cite{synkg2025} noted that LLM-generated triples can introduce noise despite filtering. HOGE avoids this by treating the KG as a faithful mirror of ground-truth SHAP data rather than an LLM-expanded knowledge store. Additionally, counterfactual scenarios are persisted as \texttt{CounterfactualScenario} nodes in the same KG, linked via \texttt{HAS\_COUNTERFACTUAL} and \texttt{PERTURBS\_FEATURE} relationships, extending provenance coverage to contrastive claims.
 
 \subsection{Key Takeaways}
 The integrated approach demonstrates several key strengths.
@@ -715,6 +722,7 @@ The Knowledge Graph adds three critical advantages beyond traditional ML explain
     \item \textbf{Contextualisation}: SHAP alone cannot explain why a feature matters. The KG contextualises SHAP values with domain rules and risk factors.
     \item \textbf{Rule Binding}: Policy violations are discovered automatically and linked back to features.
     \item \textbf{Semantic Traceability}: The system can answer multi-hop queries such as ``Which SHAP features triggered a risk factor that violated a policy?''
+    \item \textbf{Counterfactual Provenance}: Counterfactual what-if scenarios are persisted as first-class KG nodes, ensuring that contrastive claims in the LLM narrative are governed by the semantic contract rather than generated ad hoc.
 \end{enumerate}
 
 \subsubsection{Perfect Graph Retrieval.}
@@ -750,7 +758,7 @@ Table~\ref{tab:comparison} compares HOGE with representative integrated framewor
     \end{tabular}
 \end{table}
 
-HOGE is, to our knowledge, the first framework that (a) explicitly treats the ontology as a semantic contract constraining LLM claims, (b) integrates post-hoc XAI feature attributions into the KG as first-class evidence nodes, (c) evaluates explanation faithfulness through perturbation testing rather than text-similarity proxies, (d) provides full provenance traceability from narrative claims to KG paths, and (e) includes counterfactual what-if analysis grounded in actual model perturbations. While systems like AIThreatTrack~\cite{threat2025} achieve lower hallucination rates, they operate in more constrained taxonomic domains without open-ended narrative generation or contrastive explanations.
+HOGE is, to our knowledge, the first framework that (a) explicitly treats the ontology as a semantic contract constraining LLM claims, (b) integrates post-hoc XAI feature attributions into the KG as first-class evidence nodes, (c) evaluates explanation faithfulness through perturbation testing rather than text-similarity proxies, (d) provides full provenance traceability from narrative claims to KG paths, and (e) persists counterfactual what-if scenarios as KG nodes, ensuring contrastive explanations are governed by the same semantic contract as factual claims. While systems like AIThreatTrack~\cite{threat2025} achieve lower hallucination rates, they operate in more constrained taxonomic domains without open-ended narrative generation or contrastive explanations.
 
 \subsection{Study Limitations}
 The proposed approach has several limitations. First, the construction of the knowledge graph relies on manual or semi-automated knowledge engineering processes, which can be time-consuming and may limit scalability across domains---a challenge also noted in broader reviews~\cite{macds2026}. Second, the use of SHAP for feature attribution can be computationally expensive when applied to large-scale datasets or complex models, potentially constraining real-time or resource-limited deployments. Third, the quality and consistency of explanations generated by the large language model are sensitive to prompt design and dependent on the reliability of external APIs, introducing variability that is not fully controllable within the system. Fourth, the LLM-as-judge approach to measuring hallucination and faithfulness, while scalable, may introduce its own biases and should be complemented by human evaluation in future work~\cite{cognet2025}. Fifth, the sample size of 10~applications, while sufficient for demonstrating the pipeline, limits statistical generalisability. Sixth, while the HOGE architecture is designed to be domain-agnostic through a generic ontology contract with standardised input/output formats, the current evaluation is limited to a single domain (loan decisioning); validation across additional domains (e.g., healthcare, cybersecurity) is needed to confirm cross-domain reusability. Finally, while HOGE now supports counterfactual what-if analysis through single-feature perturbation, it does not yet support full causal reasoning or multi-feature optimisation for counterfactual generation. These limitations highlight important directions for future work.

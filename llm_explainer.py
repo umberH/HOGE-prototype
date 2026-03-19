@@ -160,6 +160,48 @@ def get_application_explanation_data(application_id: str):
         """
         all_rules = session.run(all_rules_query).data()
 
+        # ---------- 4) Counterfactual scenarios from KG ----------
+        cf_query = """
+        MATCH (app:LoanApplication {application_id: $application_id})
+              -[:HAS_COUNTERFACTUAL]->(cs:CounterfactualScenario)
+        RETURN cs.feature AS feature,
+               cs.current_value AS current_value,
+               cs.changed_to AS changed_to,
+               cs.change_description AS change_description,
+               cs.original_probability AS original_probability,
+               cs.new_probability AS new_probability,
+               cs.probability_shift AS probability_shift,
+               cs.flipped_prediction AS flipped_prediction,
+               cs.new_prediction AS new_prediction,
+               cs.is_minimal_flip AS is_minimal_flip
+        ORDER BY cs.is_minimal_flip DESC, abs(cs.probability_shift) DESC
+        """
+        cf_rows = session.run(cf_query, {"application_id": application_id}).data()
+
+        counterfactual_scenarios = []
+        for cf in cf_rows:
+            counterfactual_scenarios.append({
+                "feature": cf["feature"],
+                "current_value": cf["current_value"],
+                "changed_to": cf["changed_to"],
+                "change_description": cf["change_description"],
+                "original_probability": cf["original_probability"],
+                "new_probability": cf["new_probability"],
+                "probability_shift": cf["probability_shift"],
+                "flipped_prediction": cf["flipped_prediction"],
+                "new_prediction": cf["new_prediction"],
+                "is_minimal_flip": cf["is_minimal_flip"],
+            })
+            evidence_bundle.append({
+                "claim_type": "counterfactual",
+                "feature": cf["feature"],
+                "kg_path": f"(LoanApplication:{application_id})-[:HAS_COUNTERFACTUAL]->"
+                           f"(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:{cf['feature']})",
+                "change_description": cf["change_description"],
+                "probability_shift": cf["probability_shift"],
+                "flipped": cf["flipped_prediction"],
+            })
+
     return {
         "application_id": application_id,
         "model_prediction": status,
@@ -167,6 +209,7 @@ def get_application_explanation_data(application_id: str):
         "shap_details": shap_details,
         "violated_rules": violated_rules,
         "all_policy_rules": all_rules,
+        "counterfactual_scenarios": counterfactual_scenarios,
         "evidence_bundle": evidence_bundle,
         "provenance": {
             **PROVENANCE,
@@ -392,16 +435,14 @@ if __name__ == "__main__":
         print(f"Error fetching explanation data: {e}")
         sys.exit(1)
 
-    # Optionally enrich with counterfactual analysis
-    try:
-        from counterfactual_explainer import load_resources, generate_counterfactual
-        pipeline, df, shap_long = load_resources()
-        cf_result = generate_counterfactual(pipeline, df, shap_long, application_id)
-        context["counterfactual_scenarios"] = cf_result.get("counterfactual_scenarios", [])
-        print(f"Counterfactual analysis: {cf_result['flipping_scenarios_found']} flip(s) found")
-    except Exception as e:
-        print(f"Counterfactual analysis skipped: {e}")
-        context["counterfactual_scenarios"] = []
+    # Counterfactual scenarios are now retrieved from the KG
+    # (loaded by neo_loader.py from eval_counterfactual.json)
+    cf_count = len(context.get("counterfactual_scenarios", []))
+    if cf_count > 0:
+        flips = sum(1 for c in context["counterfactual_scenarios"] if c["flipped_prediction"])
+        print(f"Counterfactual scenarios from KG: {cf_count} scenarios, {flips} flip(s)")
+    else:
+        print("No counterfactual scenarios found in KG for this application")
 
     print("\n=== RAW CONTEXT (for debugging) ===")
     print(json.dumps(context, indent=2, default=str))

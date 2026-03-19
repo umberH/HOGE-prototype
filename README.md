@@ -61,17 +61,18 @@ python extract_shap_values.py
 python neo_loader.py
 ```
 **Requires**: Running Neo4j instance
-- Creates 23,000+ nodes: Applicant, LoanApplication, Feature, FeatureValue, ModelExplanation, FeatureContribution, PolicyRule, RiskFactor
+- Creates 23,000+ nodes: Applicant, LoanApplication, Feature, FeatureValue, ModelExplanation, FeatureContribution, PolicyRule, RiskFactor, CounterfactualScenario
 - Automatically detects and links policy violations
+- Loads counterfactual scenarios (from `eval_counterfactual.json`) as KG nodes linked via `HAS_COUNTERFACTUAL` and `PERTURBS_FEATURE`
 
 ### Step 4: Generate LLM Explanations
 ```bash
 python llm_explainer.py LP001006
 ```
 **Output**: `explanation_LP001006.json`
-- Queries KG for complete evidence bundle
+- Queries KG for complete evidence bundle (SHAP, policy rules, counterfactual scenarios)
 - Sends constraint-aware prompt to GPT-4o
-- Returns structured JSON with summary, drivers, violations, narrative, provenance
+- Returns structured JSON with summary, drivers, violations, counterfactual what-if, narrative, provenance
 
 ### Step 5: Run System Evaluation
 ```bash
@@ -95,6 +96,7 @@ python counterfactual_explainer.py --all
 - Computes minimal single-feature changes to flip each prediction
 - 9/10 applications have a single-feature flip
 - Credit_History is the most powerful flip lever
+- Re-run `python neo_loader.py` after this step to persist counterfactuals into the KG as `CounterfactualScenario` nodes
 
 ### Step 6: Run Human-Centric Evaluation
 ```bash

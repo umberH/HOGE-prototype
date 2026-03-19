@@ -41,7 +41,8 @@ constraints = [
     "CREATE CONSTRAINT IF NOT EXISTS FOR (f:Feature) REQUIRE f.name IS UNIQUE",
     "CREATE CONSTRAINT IF NOT EXISTS FOR (e:ModelExplanation) REQUIRE e.explanation_id IS UNIQUE",
     "CREATE CONSTRAINT IF NOT EXISTS FOR (fc:FeatureContribution) REQUIRE fc.id IS UNIQUE",
-    "CREATE CONSTRAINT IF NOT EXISTS FOR (fv:FeatureValue) REQUIRE fv.id IS UNIQUE"
+    "CREATE CONSTRAINT IF NOT EXISTS FOR (fv:FeatureValue) REQUIRE fv.id IS UNIQUE",
+    "CREATE CONSTRAINT IF NOT EXISTS FOR (cs:CounterfactualScenario) REQUIRE cs.id IS UNIQUE"
 ]
 
 for c in constraints:
@@ -274,6 +275,73 @@ print("✔ Policy violations linked")
 # ============================================================
 # DONE
 # ============================================================
+
+# ============================================================
+# 6. LOAD COUNTERFACTUAL SCENARIOS (if available)
+# ============================================================
+
+import json, os
+
+COUNTERFACTUAL_FILE = "eval_counterfactual.json"
+
+if os.path.exists(COUNTERFACTUAL_FILE):
+    print("Loading counterfactual scenarios...")
+    with open(COUNTERFACTUAL_FILE) as f:
+        cf_results = json.load(f)
+
+    cf_query = """
+    MATCH (l:LoanApplication {application_id: $application_id})
+    MERGE (cs:CounterfactualScenario {id: $cf_id})
+    SET cs.feature = $feature,
+        cs.current_value = $current_value,
+        cs.changed_to = $changed_to,
+        cs.change_description = $change_description,
+        cs.original_probability = $original_probability,
+        cs.new_probability = $new_probability,
+        cs.probability_shift = $probability_shift,
+        cs.flipped_prediction = $flipped_prediction,
+        cs.new_prediction = $new_prediction,
+        cs.is_minimal_flip = $is_minimal_flip
+    MERGE (l)-[:HAS_COUNTERFACTUAL]->(cs)
+    MERGE (f:Feature {name: $feature})
+    MERGE (cs)-[:PERTURBS_FEATURE]->(f)
+    """
+
+    count = 0
+    for app_result in cf_results:
+        app_id = app_result["application_id"]
+        minimal_flip = app_result.get("minimal_flip")
+        minimal_flip_feature = minimal_flip["feature"] if minimal_flip else None
+        minimal_flip_change = minimal_flip["change_description"] if minimal_flip else None
+
+        for i, scenario in enumerate(app_result.get("counterfactual_scenarios", [])):
+            is_minimal = (
+                scenario["feature"] == minimal_flip_feature
+                and scenario["change_description"] == minimal_flip_change
+            ) if minimal_flip else False
+
+            params = {
+                "application_id": app_id,
+                "cf_id": f"CF_{app_id}_{i}",
+                "feature": scenario["feature"],
+                "current_value": float(scenario["current_value"]) if scenario["current_value"] is not None else 0.0,
+                "changed_to": float(scenario["changed_to"]),
+                "change_description": scenario["change_description"],
+                "original_probability": scenario["original_probability"],
+                "new_probability": scenario["new_probability"],
+                "probability_shift": scenario["probability_shift"],
+                "flipped_prediction": scenario["flipped_prediction"],
+                "new_prediction": scenario["new_prediction"],
+                "is_minimal_flip": is_minimal,
+            }
+            run_query(cf_query, params)
+            count += 1
+
+    print(f"✔ {count} counterfactual scenarios loaded for {len(cf_results)} applications")
+else:
+    print(f"⚠ {COUNTERFACTUAL_FILE} not found — skipping counterfactual ingestion")
+    print("  Run: python counterfactual_explainer.py --all  to generate it first")
+
 
 print("\n🚀 Neo4j KG successfully built!")
 driver.close()

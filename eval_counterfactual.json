@@ -81,9 +81,9 @@
     },
     "actionable_features_tested": [
       "Loan_Amount_Term",
+      "Credit_History",
       "LoanAmount",
-      "CoapplicantIncome",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 4
@@ -169,9 +169,9 @@
       "shap_importance": 1.071923017501831
     },
     "actionable_features_tested": [
+      "Credit_History",
       "LoanAmount",
-      "CoapplicantIncome",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 3
@@ -257,10 +257,10 @@
       "shap_importance": 0.6373788714408875
     },
     "actionable_features_tested": [
-      "CoapplicantIncome",
       "Loan_Amount_Term",
+      "Credit_History",
       "LoanAmount",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 3
@@ -346,10 +346,10 @@
       "shap_importance": 1.1015043258666992
     },
     "actionable_features_tested": [
-      "Credit_History",
       "Loan_Amount_Term",
-      "CoapplicantIncome",
-      "LoanAmount"
+      "Credit_History",
+      "LoanAmount",
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 3
@@ -435,10 +435,10 @@
       "shap_importance": 0.6369773745536804
     },
     "actionable_features_tested": [
-      "CoapplicantIncome",
       "Loan_Amount_Term",
+      "Credit_History",
       "LoanAmount",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 4
@@ -524,10 +524,10 @@
       "shap_importance": 0.6686159372329712
     },
     "actionable_features_tested": [
-      "CoapplicantIncome",
       "Loan_Amount_Term",
+      "Credit_History",
       "LoanAmount",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 3
@@ -613,10 +613,10 @@
       "shap_importance": 0.6253591775894165
     },
     "actionable_features_tested": [
-      "CoapplicantIncome",
       "Loan_Amount_Term",
+      "Credit_History",
       "LoanAmount",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 3
@@ -703,9 +703,9 @@
     },
     "actionable_features_tested": [
       "Loan_Amount_Term",
+      "Credit_History",
       "LoanAmount",
-      "CoapplicantIncome",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 4
@@ -780,10 +780,10 @@
     ],
     "minimal_flip": null,
     "actionable_features_tested": [
-      "CoapplicantIncome",
       "Loan_Amount_Term",
+      "Credit_History",
       "LoanAmount",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 5,
     "flipping_scenarios_found": 0
@@ -882,9 +882,9 @@
     },
     "actionable_features_tested": [
       "Loan_Amount_Term",
+      "Credit_History",
       "LoanAmount",
-      "CoapplicantIncome",
-      "Credit_History"
+      "CoapplicantIncome"
     ],
     "total_scenarios_tested": 6,
     "flipping_scenarios_found": 1
