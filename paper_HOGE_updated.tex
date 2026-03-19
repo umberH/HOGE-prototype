@@ -10,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{url}
 \begin{document}
 %
 \mainmatter              % start of the contribution
@@ -304,7 +305,7 @@ API endpoint accepts the case details (e.g.id) form the user, invoke ML model an
 \section{Prototype Implementation}
 
 \subsection{Case Study Overview}
-For demonstration of the utility of HOGE, we prototype an end-to-end Explainable AI (XAI) pipeline for loan decisioning, integrating monotonic gradient boosting as ML models, local feature attribution with SHAP, and a finance domain aware Knowledge Graph (KG) to generate context-rich, human-centric explanations.
+For demonstration of the utility of HOGE, we prototype an end-to-end Explainable AI (XAI) pipeline for loan decisioning, integrating monotonic gradient boosting as ML models, local feature attribution with SHAP, and a finance domain aware Knowledge Graph (KG) to generate context-rich, human-centric explanations. The prototype uses the publicly available Loan Eligible Dataset from Kaggle~\cite{kaggle_loan}, which contains 614~loan application records with demographic, financial, and credit attributes.
 
 We demonstrate how HOGE performs over three scenarios:
 \begin{itemize}
@@ -315,7 +316,7 @@ We demonstrate how HOGE performs over three scenarios:
 
 
 \subsection{Predictive Model}
-A gradient boosting model (XGBoost) with domain constraints was trained on structured financial data containing 500 loan applications to predict loan approval outcome. The pre-processed features used for model training include:
+A gradient boosting model (XGBoost) with domain constraints was trained on the Loan Eligible Dataset~\cite{kaggle_loan}, a publicly available structured financial dataset containing 614~loan application records. After pre-processing (removing incomplete records and engineering derived features such as TotalIncome and Debt-to-Income ratio), 500~applications were retained for model training and evaluation. The pre-processed features used for model training include:
 \begin{itemize}
     \item Income features (ApplicantIncome, CoapplicantIncome, TotalIncome)
     \item Credit history
@@ -387,7 +388,14 @@ Each explanation is persisted with full provenance metadata (model version: \tex
 
 \section{Evaluation Results}
 
-We evaluate the HOGE prototype across two complementary axes: (A)~system and technical evaluation (quantitative), measuring explanation faithfulness, grounding precision, and graph retrieval accuracy; and (B)~human-centric evaluation (qualitative), assessing prediction--SHAP alignment, intermediate outcome traceability, and LLM grounding coverage. All evaluations were conducted on a random sample of 10~applications drawn from the 500-application dataset. Results for both evaluation axes are summarized in Table~\ref{tab:evalSummary}.
+We evaluate the HOGE prototype across two complementary axes, following the three-level evaluation framework defined in Section~3.5:
+
+\begin{itemize}
+    \item \textbf{Axis~A --- System and Technical Evaluation (Functionally Grounded, Level~1):} Three automated, quantitative evaluations measuring (A1)~explanation faithfulness via perturbation tests, (A2)~grounding precision and hallucination rate via claim-level verification, and (A3)~graph retrieval accuracy via Precision@K.
+    \item \textbf{Axis~B --- Human-Centric Evaluation (Human-Grounded, Level~2):} Three qualitative checks assessing prediction--SHAP alignment, intermediate outcome traceability across all pipeline stages, and LLM grounding coverage against the KG evidence.
+\end{itemize}
+
+All evaluations were conducted on a stratified random sample of 10~applications (6~approved, 4~declined) drawn from the 500-application dataset. Each evaluation step is fully automated and reproducible via the scripts \texttt{evaluation\_system.py} and \texttt{evaluation\_human.py}. Results for both evaluation axes are summarized in Table~\ref{tab:evalSummary}.
 
 
 % Requires: \usepackage{booktabs}
@@ -429,9 +437,15 @@ We evaluate the HOGE prototype across two complementary axes: (A)~system and tec
 
 \subsection{A1. Explanation Faithfulness (Perturbation Tests)}
 
-To measure whether HOGE explanations faithfully reflect the model's actual reasoning, we employed perturbation tests. For each sampled application, we identified the top SHAP feature, artificially perturbed it (e.g., flipping \texttt{Credit\_History} from 1 to 0, or reducing \texttt{CoapplicantIncome} to 20\% of its original value), re-computed SHAP values on the perturbed input, and evaluated whether the model's probability shift and new top driver were consistent with the perturbation.
+To measure whether HOGE explanations faithfully reflect the model's actual reasoning, we employed perturbation-based faithfulness testing. The procedure for each sampled application is as follows:
 
-An LLM-as-judge (GPT-4o) scored each perturbation test on a 0--1 scale across three criteria: whether the perturbation was reflected in the probability shift, whether the shift direction was correct, and whether the top driver changed appropriately.
+\begin{enumerate}
+    \item \textbf{Identify the top driver}: Retrieve the feature with the highest absolute SHAP value for the application from the KG.
+    \item \textbf{Apply a domain-appropriate perturbation}: For binary features (e.g., \texttt{Credit\_History}), flip the value (1$\to$0 or 0$\to$1). For continuous features (e.g., \texttt{CoapplicantIncome}, \texttt{Total\_Income}), reduce to 20\% of the original value. If the feature value is zero and cannot be meaningfully perturbed, record it as ``unchanged.''
+    \item \textbf{Re-score the perturbed application}: Feed the modified feature vector to the trained XGBoost model, obtain the new approval probability and re-compute SHAP values using TreeExplainer.
+    \item \textbf{Compare original vs.\ perturbed}: Record the probability shift ($\Delta$ Prob), the new top SHAP feature, and the new SHAP direction.
+    \item \textbf{Judge faithfulness}: An LLM-as-judge (GPT-4o, temperature~=~0) scores the perturbation on a 0--1 scale across three criteria: (i)~whether the probability shifted in the expected direction, (ii)~whether the magnitude of the shift is plausible given the perturbation, and (iii)~whether the top driver changed appropriately (e.g., the perturbed feature becomes the new top driver).
+\end{enumerate}
 
 Results are presented in Table~\ref{tab:faithfulness}. The average faithfulness score was \textbf{0.760}, with 9 out of 10 applications passing (score $\geq$ 0.5) and 6 achieving perfect faithfulness (score = 1.0). Credit\_History perturbations were particularly decisive: flipping credit history from good to bad consistently caused probability drops exceeding 0.80, and the top driver correctly shifted to \texttt{Credit\_History (supports\_decline)}.
 
@@ -464,7 +478,17 @@ The single failure (LP002209, score = 0.0) occurred when reducing \texttt{Total\
 
 \subsection{A2. Hallucination Rate and Grounding Precision}
 
-For each sampled application, we generated a full LLM explanation via HOGE, then employed an LLM-as-judge to score every factual claim in the narrative against the ground-truth KG evidence. The judge evaluated three HOGE Level~1 metrics:
+This evaluation measures whether the LLM's generated narrative remains grounded in the KG evidence and does not fabricate unsupported claims. The evaluation procedure is:
+
+\begin{enumerate}
+    \item \textbf{Generate explanation}: For each sampled application, invoke the full HOGE pipeline to produce a structured JSON explanation containing a narrative, driver lists, and a self-reported feature list.
+    \item \textbf{Extract claims}: Parse the narrative into individual factual claims (e.g., ``the applicant's income is high'', ``Credit\_History violation was detected'').
+    \item \textbf{Ground-truth assembly}: Collect the complete KG evidence bundle for the application: all 22~SHAP feature contributions, policy rule evaluations, raw feature values, and the model prediction.
+    \item \textbf{Claim-level verification}: An LLM-as-judge (GPT-4o, temperature~=~0) classifies each claim as \emph{grounded} (directly supported by KG evidence), \emph{partially grounded} (loosely consistent), or \emph{hallucinated} (no supporting evidence in the KG).
+    \item \textbf{Compute metrics}: Aggregate the classifications into three scores per application.
+\end{enumerate}
+
+The judge evaluated three HOGE Level~1 metrics:
 
 \begin{itemize}
     \item \textbf{Semantic Fidelity (SF)}: proportion of claims mapped to ontology concepts (avg = \textbf{0.793})
@@ -501,7 +525,17 @@ Table~\ref{tab:hallucination} presents per-application results. The highest grou
 
 \subsection{A3. Graph Retrieval Accuracy (Precision@K)}
 
-To validate that the KG correctly stores and retrieves the right SHAP contributions and policy rules for each application, we compared KG query results against the ground-truth SHAP CSV files. For each application, we measured:
+This evaluation validates that the KG ingestion pipeline faithfully transfers SHAP data into Neo4j and that Cypher queries return the correct features in the correct rank order. The procedure is:
+
+\begin{enumerate}
+    \item \textbf{Ground-truth extraction}: For each sampled application, load the top-K features (by absolute SHAP value) directly from the SHAP CSV file.
+    \item \textbf{KG query}: Execute a Cypher query against Neo4j to retrieve the top-K \texttt{FeatureContribution} nodes linked to the application, ordered by \texttt{importance\_rank}.
+    \item \textbf{Set comparison}: Compare the KG result set against the CSV ground truth at K~=~3, 5, and 10, computing Precision@K as the proportion of KG-returned features that match the ground truth.
+    \item \textbf{Prediction match}: Verify that the \texttt{ModelExplanation} node's stored prediction and probability match the model's actual output.
+    \item \textbf{Policy rule check}: Confirm that applications violating DTI or Credit\_History thresholds have the correct \texttt{VIOLATES\_RULE} relationships in the KG.
+\end{enumerate}
+
+For each application, we measured:
 
 \begin{itemize}
     \item \textbf{Prediction Match}: whether the KG-stored prediction matches the model's actual prediction
@@ -516,13 +550,33 @@ Policy rule retrieval was also validated: applications with \texttt{Credit\_Hist
 
 \subsection{B. Human-Centric Evaluation}
 
+The human-centric evaluation assesses whether the HOGE pipeline produces outputs that are internally consistent, traceable across all pipeline stages, and aligned with the model's actual reasoning. These checks are designed to be repeatable by a domain expert reviewing the generated Excel workbook and JSON artefacts.
+
 \subsubsection{Prediction vs. SHAP Alignment.}
 
-For each sampled application, we verified that the model's prediction direction (approved = positive, declined = negative) was consistent with the net sum of SHAP values. All 10~applications showed perfect alignment: approved applications had positive net SHAP sums (range: 0.003 to 2.327), and declined applications had negative sums ($-$4.065 and $-$5.176). All 10~predictions were also correct against the ground-truth labels, achieving 100\% accuracy on the sample.
+For each sampled application, we verified two consistency properties:
+\begin{enumerate}
+    \item \textbf{Direction consistency}: The model's binary prediction (approved/declined) must be consistent with the sign of the net SHAP sum. Approved applications should have a positive aggregate SHAP value; declined applications should have a negative one.
+    \item \textbf{Label accuracy}: The model's prediction must match the ground-truth label from the original dataset.
+\end{enumerate}
+
+All 10~applications showed perfect alignment: approved applications had positive net SHAP sums (range: 0.003 to 2.327), and declined applications had negative sums ($-$4.065 and $-$5.176). All 10~predictions were also correct against the ground-truth labels, achieving 100\% accuracy on the sample.
 
 \subsubsection{Intermediate Outcome Traceability.}
 
-A core claim of HOGE is that every stage of the pipeline---from raw input features through engineered features, model prediction, SHAP attribution, policy evaluation, KG retrieval, and LLM generation---produces traceable intermediate outcomes. We validated this by collecting all eight stages for each application and recording them both in JSON and a multi-sheet Excel workbook.
+A core claim of HOGE is that every stage of the pipeline produces traceable intermediate outcomes. To validate this, for each sampled application we collect and record the outputs of all seven pipeline stages:
+
+\begin{enumerate}
+    \item \textbf{Stage~1 --- Raw Features}: The original input values (e.g., ApplicantIncome, CoapplicantIncome, Credit\_History, LoanAmount).
+    \item \textbf{Stage~2 --- Engineered Features}: Derived values such as TotalIncome and Debt-to-Income ratio (DTI).
+    \item \textbf{Stage~3 --- Model Prediction}: The binary outcome (Approved/Declined) and the associated probability score.
+    \item \textbf{Stage~4 --- SHAP Attribution}: The top-K SHAP feature contributions with signed values and direction labels.
+    \item \textbf{Stage~5 --- Policy Evaluation}: Rule-by-rule pass/fail status (e.g., RULE\_DTI\_001, RULE\_CREDIT\_001).
+    \item \textbf{Stage~6 --- KG Retrieval}: Confirmation that all features, contributions, and policy links were retrieved from Neo4j.
+    \item \textbf{Stage~7 --- LLM Generation}: The structured JSON explanation with narrative, drivers, violations, and provenance metadata.
+\end{enumerate}
+
+All stages are recorded in both JSON format and a multi-sheet Excel workbook (\texttt{hoge\_evaluation\_workbook.xlsx}), enabling a domain expert or auditor to trace any explanation claim back through every intermediate step.
 
 Table~\ref{tab:intermediate} illustrates the intermediate outcomes for a representative application (LP001250, Declined).
 
@@ -560,7 +614,13 @@ Table~\ref{tab:intermediate} illustrates the intermediate outcomes for a represe
 
 \subsubsection{LLM Grounding Cross-Check.}
 
-To verify that the LLM uses the intermediate outcomes in its explanations, we performed an automated cross-check. For each application, we checked whether each raw feature name, each top-5 SHAP feature, and each violated policy rule appeared in the LLM narrative or the LLM's self-reported feature list.
+This evaluation verifies that the LLM's generated narrative references the actual intermediate outcomes rather than fabricating its own reasoning. The cross-check procedure is:
+
+\begin{enumerate}
+    \item \textbf{Collect ground-truth items}: Assemble three reference sets for each application: (a)~all raw feature names from the input, (b)~the top-5 SHAP features by absolute contribution, and (c)~all violated policy rules.
+    \item \textbf{Extract LLM references}: Parse the LLM's narrative text and its self-reported \texttt{features\_used} list from the structured JSON output.
+    \item \textbf{Compute coverage}: For each reference set, calculate the proportion of ground-truth items that appear (by exact or semantic match) in the LLM output.
+\end{enumerate}
 
 \textbf{SHAP Top-5 Coverage}: 8 out of 10 applications achieved 100\% coverage (all top-5 SHAP features appeared in the narrative); the remaining 2 achieved 80\%. The average SHAP Top-5 coverage was \textbf{96\%}, confirming that the LLM consistently references the most important model drivers.
 
@@ -665,7 +725,7 @@ Future work should empirically validate HOGE through user studies and applicatio
 
 % ---- Bibliography ----
 %
-\begin{thebibliography}{35}
+\begin{thebibliography}{36}
 
 % === Foundational references ===
 
@@ -738,6 +798,8 @@ Future work should empirically validate HOGE through user studies and applicatio
 \bibitem{learn2024} Sch\"{o}n, E.M., et al.: Knowledge graphs as context sources for LLM-based explanations of learning recommendations. IEEE Transactions on Learning Technologies 17, 2256--2270 (2024)
 
 \bibitem{pipe2024} De La Cruz Mart\'{i}nez, L., et al.: Are large language models the new interface for data pipelines? In: Proceedings of the International Conference on Computing and Communication Networks (2024)
+
+\bibitem{kaggle_loan} Ukani, V.: Loan Eligible Dataset. Kaggle (2020). \url{https://www.kaggle.com/datasets/vikasukani/loan-eligible-dataset}
 
 \end{thebibliography}
 %
