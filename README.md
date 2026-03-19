@@ -87,6 +87,15 @@ python evaluation_system.py --all --n-samples 10
 | Hallucination Rate (HRC) | 0.207 |
 | Precision@3/5/10 | 1.000 |
 
+### Step 5b: Run Counterfactual Analysis
+```bash
+python counterfactual_explainer.py --all
+```
+**Output**: `eval_counterfactual.json`
+- Computes minimal single-feature changes to flip each prediction
+- 9/10 applications have a single-feature flip
+- Credit_History is the most powerful flip lever
+
 ### Step 6: Run Human-Centric Evaluation
 ```bash
 python evaluation_human.py --n-samples 10
@@ -120,6 +129,7 @@ python generate_kg_visualizations.py
 | `predict_new.py` | Score new applications with trained model |
 | `evaluation_system.py` | System evaluation: faithfulness, hallucination, retrieval |
 | `evaluation_human.py` | Human-centric evaluation: alignment, traceability, Excel workbook |
+| `counterfactual_explainer.py` | Counterfactual what-if analysis: minimal feature changes to flip predictions |
 | `generate_kg_visualizations.py` | Generate KG schema and instance PNG visualizations |
 
 ### Data Files
@@ -141,6 +151,7 @@ python generate_kg_visualizations.py
 | `eval_retrieval.json` | Per-application Precision@K scores |
 | `eval_system_all.json` | Combined system evaluation summary |
 | `eval_human_results.json` | Human-centric evaluation data (alignment, intermediate outcomes) |
+| `eval_counterfactual.json` | Counterfactual analysis: minimal flip scenarios per application |
 | `hoge_evaluation_workbook.xlsx` | 4-sheet Excel workbook for supervisor review |
 | `explanation_LP001006.json` | Example structured LLM explanation |
 
@@ -175,6 +186,8 @@ The evaluation workbook contains four sheets for supervisor review:
 | Human-Centric | Prediction Accuracy | 100% |
 | Human-Centric | SHAP-Prediction Alignment | 100% |
 | Human-Centric | SHAP Top-5 LLM Coverage | 96% |
+| Counterfactual | Single-Feature Flip Rate | 9/10 (90%) |
+| Counterfactual | Most Common Flip Lever | Credit_History (7/9) |
 
 ## Technology Stack
 

@@ -42,7 +42,7 @@ F-91405 Orsay Cedex, France}
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-This paper proposes the Human-Centric Ontology-Grounded Explanation (HOGE) framework, which integrates large language models (LLMs) with domain ontologies and knowledge graphs (KGs) to produce semantically grounded, audience-adaptive explanations for machine learning decisions. While Explainable AI (XAI) methods such as SHAP provide valuable technical transparency, their outputs remain difficult for non-technical stakeholders to interpret. LLMs can translate these outputs into natural language but risk hallucination and unfaithful reasoning. HOGE addresses this gap by positioning the ontology as a semantic contract that constrains what explanations can claim, and the LLM as a mediator that translates ontology-grounded evidence into human-consumable narratives. We prototype HOGE in a loan decisioning domain using XGBoost with monotonic constraints, SHAP feature attribution, a Neo4j knowledge graph, and GPT-4o as the narrative explainer. Empirical evaluation across 10~sampled applications demonstrates: average explanation faithfulness of 0.76, semantic fidelity of 0.793, evidence coverage of 0.907, hallucination rate of 20.7\%, perfect graph retrieval accuracy (Precision@K~=~1.0), and 100\% SHAP--prediction alignment. These results demonstrate HOGE's ability to deliver grounded, traceable, and human-readable explanations for high-stakes decisions.
+This paper proposes the Human-Centric Ontology-Grounded Explanation (HOGE) framework, which integrates large language models (LLMs) with domain ontologies and knowledge graphs (KGs) to produce semantically grounded, audience-adaptive explanations for machine learning decisions. While Explainable AI (XAI) methods such as SHAP provide valuable technical transparency, their outputs remain difficult for non-technical stakeholders to interpret. LLMs can translate these outputs into natural language but risk hallucination and unfaithful reasoning. HOGE addresses this gap by positioning the ontology as a semantic contract that constrains what explanations can claim, and the LLM as a mediator that translates ontology-grounded evidence into human-consumable narratives. We prototype HOGE in a loan decisioning domain using XGBoost with monotonic constraints, SHAP feature attribution, a Neo4j knowledge graph, and GPT-4o as the narrative explainer. Empirical evaluation across 10~sampled applications demonstrates: average explanation faithfulness of 0.76, semantic fidelity of 0.793, evidence coverage of 0.907, hallucination rate of 20.7\%, perfect graph retrieval accuracy (Precision@K~=~1.0), and 100\% SHAP--prediction alignment. These results demonstrate HOGE's ability to deliver grounded, traceable, and human-readable explanations for high-stakes decisions. Counterfactual what-if analysis further enables contrastive explanations, with single-feature flips found for 90\% of tested applications.
 \keywords{Explainable AI, Large Language Models, Ontology, Knowledge Graph, SHAP, Human-Centric AI, Semantic Grounding}
 \end{abstract}
 %
@@ -285,7 +285,7 @@ The Narrative Explainer operates under strict grounding constraints. The LLM pro
     \item ALL feature contributions ranked by importance (the complete evidence set)
     \item ALL known policy rules from the domain ontology (the semantic contract)
     \item Explicit instructions that the LLM must ONLY reference features and rules present in the evidence
-    \item A structured JSON output format requiring: summary, positive drivers, negative drivers, policy violations, recommendation, full narrative, and a list of features used
+    \item A structured JSON output format requiring: summary, positive drivers, negative drivers, policy violations, recommendation, counterfactual what-if scenario, full narrative, and a list of features used
 \end{itemize}
 
 This structured output enables automated evaluation. The final working query produces a structured response that contains:
@@ -294,6 +294,7 @@ This structured output enables automated evaluation. The final working query pro
     \item Model explanation details (feature, value, importance, rank, direction)
     \item violated rules list (rule\_id, description, severity)
     \item evidence bundle: KG paths backing each claim
+    \item counterfactual what-if: the minimal actionable change that would flip the decision
     \item provenance metadata (model version, XAI method, KG loader version, timestamp)
 \end{itemize}
 
@@ -433,6 +434,10 @@ All evaluations were conducted on a stratified random sample of 10~applications 
             & SHAP--Prediction Alignment & 10/10 (100\%) \\
             & Avg SHAP Top-5 Coverage & 96\% \\
             & Avg Overall Coverage & 61.1\% \\
+        \midrule
+        \multirow{2}{*}{C. Counterfactual}
+            & Single-Feature Flip Rate & 9/10 (90\%) \\
+            & Most Common Flip Feature & Credit\_History \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -633,6 +638,41 @@ This evaluation verifies that the LLM's generated narrative references the actua
 \section{Discussion}
 \label{sec:discussion}
 
+\subsection{Counterfactual Analysis Results}
+\label{sec:counterfactual}
+
+To address the contrastive property of human explanations~\cite{miller2019} (``Why outcome~A instead of~B?''), HOGE includes a counterfactual explanation module that computes the minimal actionable feature changes needed to flip a prediction. For each of the 10~sampled applications, the module systematically perturbs actionable features (CoapplicantIncome, LoanAmount, Loan\_Amount\_Term, Credit\_History) and identifies the single-feature change that would reverse the model's decision.
+
+Results are presented in Table~\ref{tab:counterfactual}. A single-feature flip was found for 9 out of 10~applications (90\%). Credit\_History was the most powerful flip lever: flipping it reversed the decision in 7~cases, with probability shifts exceeding 0.75 in most instances. For the two declined applications, the module identified actionable paths to approval: LP001250 could flip by adding a co-applicant income of \$5,000 (probability: 3.6\%~$\to$~82.9\%), and LP002446 could flip by establishing positive credit history (probability: 1.2\%~$\to$~87.0\%).
+
+The single failure case (LP001238, Approved at 95.7\%) could not be flipped by any single actionable feature change, indicating a robust approval that is resilient across the actionable feature space---a useful signal for a loan officer confirming the strength of the decision.
+
+\begin{table}[htp]
+    \centering
+    \caption{Counterfactual analysis: minimal single-feature changes to flip predictions}
+    \label{tab:counterfactual}
+    \begin{tabular}{l l r l l r}
+        \toprule
+        \textbf{App ID} & \textbf{Current} & \textbf{Prob} & \textbf{Feature} & \textbf{Change} & \textbf{New Prob} \\
+        \midrule
+        LP002170 & Approved & 0.944 & Credit\_History & Flip 1$\to$0 & 0.176 \\
+        LP001250 & Declined & 0.036 & CoapplicantInc. & Add \$5000 & 0.829 \\
+        LP002209 & Approved & 0.940 & Credit\_History & Flip 1$\to$0 & 0.054 \\
+        LP001536 & Approved & 0.781 & Loan\_Amt\_Term & Extend to 360 & 0.343 \\
+        LP001357 & Approved & 0.817 & Credit\_History & Flip 1$\to$0 & 0.017 \\
+        LP002266 & Approved & 0.905 & Credit\_History & Flip 1$\to$0 & 0.024 \\
+        LP002223 & Approved & 0.881 & Credit\_History & Flip 1$\to$0 & 0.036 \\
+        LP001439 & Approved & 0.686 & Credit\_History & Flip 1$\to$0 & 0.015 \\
+        LP001238 & Approved & 0.957 & --- & No single flip & --- \\
+        LP002446 & Declined & 0.012 & Credit\_History & Flip 0$\to$1 & 0.870 \\
+        \midrule
+        \multicolumn{5}{l}{\textbf{Flip success rate}} & \textbf{9/10} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+These counterfactual explanations are integrated into the LLM narrative via the structured prompt, enabling the generated explanation to include contrastive what-if statements grounded in actual model behaviour rather than LLM speculation. This directly operationalises Miller's contrastive property~\cite{miller2019} within the HOGE framework.
+
 \subsection{Answering the Research Questions}
 
 \subsubsection{RQ1: Ontology as Semantic Contract and Hallucination Impact.}
@@ -696,24 +736,24 @@ Table~\ref{tab:comparison} compares HOGE with representative integrated framewor
     \label{tab:comparison}
     \begin{tabular}{l c c c c c}
         \toprule
-        \textbf{System} & \textbf{XAI} & \textbf{KG} & \textbf{Ontology} & \textbf{Faithful.} & \textbf{Halluc.} \\
-        & \textbf{Method} & \textbf{Grounding} & \textbf{Contract} & \textbf{Test} & \textbf{Rate} \\
+        \textbf{System} & \textbf{XAI} & \textbf{KG} & \textbf{Ontology} & \textbf{Faithful.} & \textbf{Counter-} \\
+        & \textbf{Method} & \textbf{Grounding} & \textbf{Contract} & \textbf{Test} & \textbf{factual} \\
         \midrule
-        GraphRAG-GDM~\cite{gdm2026} & --- & Neo4j & No & No & N/R \\
-        AIThreatTrack~\cite{threat2025} & --- & ATT\&CK & Partial & No & 1.5\% \\
-        KLAGE~\cite{klage2026} & LIME & Graph-BERT & No & No & N/R \\
-        Med-KGCoT~\cite{medkgcot2025} & --- & Dynamic & No & No & N/R \\
-        EGDR~\cite{depress2025} & --- & DSM-5 KG & Partial & No & N/R \\
-        AgriMod~\cite{soil2025} & --- & Ontology & Partial & No & N/R \\
-        \textbf{HOGE (ours)} & \textbf{SHAP} & \textbf{Neo4j} & \textbf{Yes} & \textbf{Yes} & \textbf{20.7\%} \\
+        GraphRAG-GDM~\cite{gdm2026} & --- & Neo4j & No & No & No \\
+        AIThreatTrack~\cite{threat2025} & --- & ATT\&CK & Partial & No & No \\
+        KLAGE~\cite{klage2026} & LIME & Graph-BERT & No & No & No \\
+        Med-KGCoT~\cite{medkgcot2025} & --- & Dynamic & No & No & No \\
+        EGDR~\cite{depress2025} & --- & DSM-5 KG & Partial & No & No \\
+        AgriMod~\cite{soil2025} & --- & Ontology & Partial & No & No \\
+        \textbf{HOGE (ours)} & \textbf{SHAP} & \textbf{Neo4j} & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-HOGE is, to our knowledge, the first framework that (a) explicitly treats the ontology as a semantic contract constraining LLM claims, (b) integrates post-hoc XAI feature attributions into the KG as first-class evidence nodes, (c) evaluates explanation faithfulness through perturbation testing rather than text-similarity proxies, and (d) provides full provenance traceability from narrative claims to KG paths. While systems like AIThreatTrack~\cite{threat2025} achieve lower hallucination rates, they operate in more constrained taxonomic domains without open-ended narrative generation.
+HOGE is, to our knowledge, the first framework that (a) explicitly treats the ontology as a semantic contract constraining LLM claims, (b) integrates post-hoc XAI feature attributions into the KG as first-class evidence nodes, (c) evaluates explanation faithfulness through perturbation testing rather than text-similarity proxies, (d) provides full provenance traceability from narrative claims to KG paths, and (e) includes counterfactual what-if analysis grounded in actual model perturbations. While systems like AIThreatTrack~\cite{threat2025} achieve lower hallucination rates, they operate in more constrained taxonomic domains without open-ended narrative generation or contrastive explanations.
 
 \subsection{Study Limitations}
-The proposed approach has several limitations. First, the construction of the knowledge graph relies on manual or semi-automated knowledge engineering processes, which can be time-consuming and may limit scalability across domains---a challenge also noted in broader reviews~\cite{macds2026}. Second, the use of SHAP for feature attribution can be computationally expensive when applied to large-scale datasets or complex models, potentially constraining real-time or resource-limited deployments. Third, the quality and consistency of explanations generated by the large language model are sensitive to prompt design and dependent on the reliability of external APIs, introducing variability that is not fully controllable within the system. Fourth, the LLM-as-judge approach to measuring hallucination and faithfulness, while scalable, may introduce its own biases and should be complemented by human evaluation in future work~\cite{cognet2025}. Fifth, the sample size of 10~applications, while sufficient for demonstrating the pipeline, limits statistical generalisability. Sixth, while the HOGE architecture is designed to be domain-agnostic through a generic ontology contract with standardised input/output formats, the current evaluation is limited to a single domain (loan decisioning); validation across additional domains (e.g., healthcare, cybersecurity) is needed to confirm cross-domain reusability. Finally, the current prototype evaluation is limited to post-hoc explanations of model behaviour and does not support causal reasoning or counterfactual analysis. These limitations highlight important directions for future work.
+The proposed approach has several limitations. First, the construction of the knowledge graph relies on manual or semi-automated knowledge engineering processes, which can be time-consuming and may limit scalability across domains---a challenge also noted in broader reviews~\cite{macds2026}. Second, the use of SHAP for feature attribution can be computationally expensive when applied to large-scale datasets or complex models, potentially constraining real-time or resource-limited deployments. Third, the quality and consistency of explanations generated by the large language model are sensitive to prompt design and dependent on the reliability of external APIs, introducing variability that is not fully controllable within the system. Fourth, the LLM-as-judge approach to measuring hallucination and faithfulness, while scalable, may introduce its own biases and should be complemented by human evaluation in future work~\cite{cognet2025}. Fifth, the sample size of 10~applications, while sufficient for demonstrating the pipeline, limits statistical generalisability. Sixth, while the HOGE architecture is designed to be domain-agnostic through a generic ontology contract with standardised input/output formats, the current evaluation is limited to a single domain (loan decisioning); validation across additional domains (e.g., healthcare, cybersecurity) is needed to confirm cross-domain reusability. Finally, while HOGE now supports counterfactual what-if analysis through single-feature perturbation, it does not yet support full causal reasoning or multi-feature optimisation for counterfactual generation. These limitations highlight important directions for future work.
 
 \section{Conclusion}
 
@@ -721,7 +761,7 @@ This paper advances a human-centric perspective on explainability at the interse
 
 To address these challenges, we proposed the Human-Centric Ontology-Grounded Explanation (HOGE) framework. HOGE positions the ontology as a semantic contract, transforms technical model signals into concept-level statements, grounds each statement in explicit evidence bundles via graph-based retrieval, and uses a constraint-aware LLM mediator to generate audience-adaptive explanations.
 
-Empirical evaluation of the HOGE prototype in a loan decisioning domain produced encouraging results. Explanation faithfulness averaged 0.76 across perturbation tests, with 90\% of applications passing. The KG retrieval pipeline achieved perfect Precision@K (1.0) at all levels, confirming zero information loss. Semantic fidelity averaged 0.793, evidence coverage reached 0.907, and the hallucination rate was 20.7\%---consisting entirely of benign embellishments rather than factual fabrications. SHAP--prediction alignment was 100\%, and the LLM referenced 96\% of top-5 SHAP features in its narratives.
+Empirical evaluation of the HOGE prototype in a loan decisioning domain produced encouraging results. Explanation faithfulness averaged 0.76 across perturbation tests, with 90\% of applications passing. The KG retrieval pipeline achieved perfect Precision@K (1.0) at all levels, confirming zero information loss. Semantic fidelity averaged 0.793, evidence coverage reached 0.907, and the hallucination rate was 20.7\%---consisting entirely of benign embellishments rather than factual fabrications. SHAP--prediction alignment was 100\%, and the LLM referenced 96\% of top-5 SHAP features in its narratives. Counterfactual analysis identified single-feature decision flips for 9 out of 10~applications, operationalising Miller's contrastive explanation property.
 
 Future work should empirically validate HOGE through user studies and application-grounded evaluations in at least one target domain (Level~2 and Level~3 of the evaluation framework). Such evaluations should compare: (i)~baseline XAI outputs (e.g., raw SHAP/LIME), (ii)~LLM-only narrative explanations, (iii)~ontology-only symbolic explanations, and (iv)~HOGE explanations. The strongest evidence for the framework's impact would be improvements in comprehension, appropriate trust calibration, and decision outcomes---demonstrating not only that the explanation is technically ``correct,'' but that it is meaningfully usable. Additionally, techniques such as constrained decoding, chain-of-verification prompting, or retrieval-augmented generation with citation requirements may further reduce the hallucination rate below the current 20.7\%.
 

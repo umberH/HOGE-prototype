@@ -249,6 +249,23 @@ def build_llm_prompt(context: dict) -> str:
 
     prob_pct = f"{prob*100:.1f}%" if prob is not None else "N/A"
 
+    # Counterfactual what-if scenarios (if provided)
+    counterfactuals = context.get("counterfactual_scenarios", [])
+    if counterfactuals:
+        cf_lines = []
+        for cf in counterfactuals:
+            direction = "increased" if cf["probability_shift"] > 0 else "decreased"
+            cf_lines.append(
+                f"- If {cf['feature']} changed from {cf['current_value']} to "
+                f"{cf['changed_to']} ({cf['change_description']}): "
+                f"approval probability would {direction} from "
+                f"{cf['original_probability']*100:.1f}% to {cf['new_probability']*100:.1f}%"
+                f"{' (FLIPS decision)' if cf['flipped_prediction'] else ''}"
+            )
+        cf_str = "\n".join(cf_lines)
+    else:
+        cf_str = "No counterfactual scenarios available."
+
     prompt = f"""You are an explainable-AI assistant operating under the HOGE framework.
 You explain loan decisions using ONLY the evidence provided below.
 
@@ -273,6 +290,9 @@ Policy rules violated for this application:
 ALL known policy rules in the domain ontology:
 {all_rules_str}
 
+Counterfactual what-if scenarios (what could change the decision):
+{cf_str}
+
 === STRICT GROUNDING RULES ===
 1. You must ONLY reference features and rules listed above. Do NOT invent or assume any fact not provided.
 2. Every claim must be traceable to the evidence above.
@@ -289,7 +309,8 @@ You must respond with a valid JSON object with EXACTLY these keys:
   "negative_drivers": ["List of plain-language sentences about features supporting decline"],
   "policy_violations": ["List of plain-language sentences about violated rules, or empty list"],
   "recommendation": "One actionable suggestion for future applications",
-  "narrative": "Full 2-4 paragraph plain-language explanation combining all of the above",
+  "counterfactual_what_if": "One sentence describing the most impactful change that could flip the decision, based ONLY on the counterfactual scenarios above. If none available, say so.",
+  "narrative": "Full 2-4 paragraph plain-language explanation combining all of the above, including a what-if paragraph",
   "features_used": ["List of feature names referenced in the narrative"]
 }}
 
@@ -371,6 +392,17 @@ if __name__ == "__main__":
         print(f"Error fetching explanation data: {e}")
         sys.exit(1)
 
+    # Optionally enrich with counterfactual analysis
+    try:
+        from counterfactual_explainer import load_resources, generate_counterfactual
+        pipeline, df, shap_long = load_resources()
+        cf_result = generate_counterfactual(pipeline, df, shap_long, application_id)
+        context["counterfactual_scenarios"] = cf_result.get("counterfactual_scenarios", [])
+        print(f"Counterfactual analysis: {cf_result['flipping_scenarios_found']} flip(s) found")
+    except Exception as e:
+        print(f"Counterfactual analysis skipped: {e}")
+        context["counterfactual_scenarios"] = []
+
     print("\n=== RAW CONTEXT (for debugging) ===")
     print(json.dumps(context, indent=2, default=str))
 
@@ -396,6 +428,9 @@ if __name__ == "__main__":
 
         print("\n--- Recommendation ---")
         print(result.get("recommendation", ""))
+
+        print("\n--- Counterfactual What-If ---")
+        print(result.get("counterfactual_what_if", "N/A"))
 
         print("\n--- Full Narrative ---")
         print(result.get("narrative", ""))

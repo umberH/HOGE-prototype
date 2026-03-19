@@ -1,0 +1,892 @@
+[
+  {
+    "application_id": "LP002170",
+    "current_prediction": "Approved",
+    "current_probability": 0.9438,
+    "target_prediction": "Declined",
+    "probability_gap_to_flip": 0.4438,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "original_probability": 0.9438,
+        "new_probability": 0.1758,
+        "probability_shift": -0.768,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.5826866626739502
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 3667.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "original_probability": 0.9438,
+        "new_probability": 0.2374,
+        "probability_shift": -0.7064,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 1.3439910411834717
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 236.0,
+        "changed_to": 354.0,
+        "change_description": "increase by 50%",
+        "original_probability": 0.9438,
+        "new_probability": 0.2913,
+        "probability_shift": -0.6525,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.9770431518554688
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 236.0,
+        "changed_to": 472.0,
+        "change_description": "increase by 100%",
+        "original_probability": 0.9438,
+        "new_probability": 0.2913,
+        "probability_shift": -0.6525,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.9770431518554688
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "original_probability": 0.9438,
+        "new_probability": 0.953,
+        "probability_shift": 0.0092,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.0134883727878332
+      }
+    ],
+    "minimal_flip": {
+      "feature": "Credit_History",
+      "current_value": 1.0,
+      "changed_to": 0.0,
+      "change_description": "flip",
+      "original_probability": 0.9438,
+      "new_probability": 0.1758,
+      "probability_shift": -0.768,
+      "flipped_prediction": true,
+      "new_prediction": "Declined",
+      "shap_importance": 0.5826866626739502
+    },
+    "actionable_features_tested": [
+      "Loan_Amount_Term",
+      "LoanAmount",
+      "CoapplicantIncome",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 4
+  },
+  {
+    "application_id": "LP001250",
+    "current_prediction": "Declined",
+    "current_probability": 0.036,
+    "target_prediction": "Approved",
+    "probability_gap_to_flip": 0.464,
+    "counterfactual_scenarios": [
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 5000.0,
+        "change_description": "add co-applicant income of 5000",
+        "original_probability": 0.036,
+        "new_probability": 0.8294,
+        "probability_shift": 0.7934,
+        "flipped_prediction": true,
+        "new_prediction": "Approved",
+        "shap_importance": 1.071923017501831
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 3000.0,
+        "change_description": "add co-applicant income of 3000",
+        "original_probability": 0.036,
+        "new_probability": 0.6128,
+        "probability_shift": 0.5768,
+        "flipped_prediction": true,
+        "new_prediction": "Approved",
+        "shap_importance": 1.071923017501831
+      },
+      {
+        "feature": "Credit_History",
+        "current_value": 0.0,
+        "changed_to": 1.0,
+        "change_description": "flip",
+        "original_probability": 0.036,
+        "new_probability": 0.5542,
+        "probability_shift": 0.5182,
+        "flipped_prediction": true,
+        "new_prediction": "Approved",
+        "shap_importance": 3.3207714557647705
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 95.0,
+        "changed_to": 47.5,
+        "change_description": "reduce by 50%",
+        "original_probability": 0.036,
+        "new_probability": 0.0755,
+        "probability_shift": 0.0394,
+        "flipped_prediction": false,
+        "new_prediction": "Declined",
+        "shap_importance": 0.2871661186218261
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 95.0,
+        "changed_to": 71.25,
+        "change_description": "reduce by 25%",
+        "original_probability": 0.036,
+        "new_probability": 0.0637,
+        "probability_shift": 0.0277,
+        "flipped_prediction": false,
+        "new_prediction": "Declined",
+        "shap_importance": 0.2871661186218261
+      }
+    ],
+    "minimal_flip": {
+      "feature": "CoapplicantIncome",
+      "current_value": 0.0,
+      "changed_to": 5000.0,
+      "change_description": "add co-applicant income of 5000",
+      "original_probability": 0.036,
+      "new_probability": 0.8294,
+      "probability_shift": 0.7934,
+      "flipped_prediction": true,
+      "new_prediction": "Approved",
+      "shap_importance": 1.071923017501831
+    },
+    "actionable_features_tested": [
+      "LoanAmount",
+      "CoapplicantIncome",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 3
+  },
+  {
+    "application_id": "LP002209",
+    "current_prediction": "Approved",
+    "current_probability": 0.9402,
+    "target_prediction": "Declined",
+    "probability_gap_to_flip": 0.4402,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "original_probability": 0.9402,
+        "new_probability": 0.0541,
+        "probability_shift": -0.8861,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.6373788714408875
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 110.0,
+        "changed_to": 220.0,
+        "change_description": "increase by 100%",
+        "original_probability": 0.9402,
+        "new_probability": 0.1808,
+        "probability_shift": -0.7593,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.2834069430828094
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 110.0,
+        "changed_to": 165.0,
+        "change_description": "increase by 50%",
+        "original_probability": 0.9402,
+        "new_probability": 0.3218,
+        "probability_shift": -0.6184,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.2834069430828094
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 1459.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "original_probability": 0.9402,
+        "new_probability": 0.5624,
+        "probability_shift": -0.3778,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.5006864666938782
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "original_probability": 0.9402,
+        "new_probability": 0.9448,
+        "probability_shift": 0.0046,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.0108897984027862
+      }
+    ],
+    "minimal_flip": {
+      "feature": "Credit_History",
+      "current_value": 1.0,
+      "changed_to": 0.0,
+      "change_description": "flip",
+      "original_probability": 0.9402,
+      "new_probability": 0.0541,
+      "probability_shift": -0.8861,
+      "flipped_prediction": true,
+      "new_prediction": "Declined",
+      "shap_importance": 0.6373788714408875
+    },
+    "actionable_features_tested": [
+      "CoapplicantIncome",
+      "Loan_Amount_Term",
+      "LoanAmount",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 3
+  },
+  {
+    "application_id": "LP001536",
+    "current_prediction": "Approved",
+    "current_probability": 0.7809,
+    "target_prediction": "Declined",
+    "probability_gap_to_flip": 0.2809,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 180.0,
+        "changed_to": 360.0,
+        "change_description": "extend to 360 months",
+        "original_probability": 0.7809,
+        "new_probability": 0.3425,
+        "probability_shift": -0.4385,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 1.1015043258666992
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 600.0,
+        "changed_to": 1200.0,
+        "change_description": "increase by 100%",
+        "original_probability": 0.7809,
+        "new_probability": 0.4515,
+        "probability_shift": -0.3294,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.8232735991477966
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 600.0,
+        "changed_to": 900.0,
+        "change_description": "increase by 50%",
+        "original_probability": 0.7809,
+        "new_probability": 0.4672,
+        "probability_shift": -0.3138,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.8232735991477966
+      },
+      {
+        "feature": "Credit_History",
+        "current_value": 0.0,
+        "changed_to": 1.0,
+        "change_description": "flip",
+        "original_probability": 0.7809,
+        "new_probability": 0.9106,
+        "probability_shift": 0.1296,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 2.293311595916748
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "original_probability": 0.7809,
+        "new_probability": 0.7809,
+        "probability_shift": 0.0,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.5567353367805481
+      }
+    ],
+    "minimal_flip": {
+      "feature": "Loan_Amount_Term",
+      "current_value": 180.0,
+      "changed_to": 360.0,
+      "change_description": "extend to 360 months",
+      "original_probability": 0.7809,
+      "new_probability": 0.3425,
+      "probability_shift": -0.4385,
+      "flipped_prediction": true,
+      "new_prediction": "Declined",
+      "shap_importance": 1.1015043258666992
+    },
+    "actionable_features_tested": [
+      "Credit_History",
+      "Loan_Amount_Term",
+      "CoapplicantIncome",
+      "LoanAmount"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 3
+  },
+  {
+    "application_id": "LP001357",
+    "current_prediction": "Approved",
+    "current_probability": 0.8168,
+    "target_prediction": "Declined",
+    "probability_gap_to_flip": 0.3168,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "original_probability": 0.8168,
+        "new_probability": 0.0166,
+        "probability_shift": -0.8002,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.6369773745536804
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 160.0,
+        "changed_to": 320.0,
+        "change_description": "increase by 100%",
+        "original_probability": 0.8168,
+        "new_probability": 0.0914,
+        "probability_shift": -0.7255,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.0547235831618309
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 160.0,
+        "changed_to": 240.0,
+        "change_description": "increase by 50%",
+        "original_probability": 0.8168,
+        "new_probability": 0.0933,
+        "probability_shift": -0.7235,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.0547235831618309
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 754.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "original_probability": 0.8168,
+        "new_probability": 0.1256,
+        "probability_shift": -0.6913,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.5697048902511597
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "original_probability": 0.8168,
+        "new_probability": 0.7921,
+        "probability_shift": -0.0248,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.0135972527787089
+      }
+    ],
+    "minimal_flip": {
+      "feature": "Credit_History",
+      "current_value": 1.0,
+      "changed_to": 0.0,
+      "change_description": "flip",
+      "original_probability": 0.8168,
+      "new_probability": 0.0166,
+      "probability_shift": -0.8002,
+      "flipped_prediction": true,
+      "new_prediction": "Declined",
+      "shap_importance": 0.6369773745536804
+    },
+    "actionable_features_tested": [
+      "CoapplicantIncome",
+      "Loan_Amount_Term",
+      "LoanAmount",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 4
+  },
+  {
+    "application_id": "LP002266",
+    "current_prediction": "Approved",
+    "current_probability": 0.9046,
+    "target_prediction": "Declined",
+    "probability_gap_to_flip": 0.4046,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "original_probability": 0.9046,
+        "new_probability": 0.0235,
+        "probability_shift": -0.8811,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.6686159372329712
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 113.0,
+        "changed_to": 226.0,
+        "change_description": "increase by 100%",
+        "original_probability": 0.9046,
+        "new_probability": 0.0979,
+        "probability_shift": -0.8067,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.2851311862468719
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 113.0,
+        "changed_to": 169.5,
+        "change_description": "increase by 50%",
+        "original_probability": 0.9046,
+        "new_probability": 0.162,
+        "probability_shift": -0.7426,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.2851311862468719
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "original_probability": 0.9046,
+        "new_probability": 0.8979,
+        "probability_shift": -0.0068,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.0170469991862773
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 1400.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "original_probability": 0.9046,
+        "new_probability": 0.9084,
+        "probability_shift": 0.0038,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.6207318902015686
+      }
+    ],
+    "minimal_flip": {
+      "feature": "Credit_History",
+      "current_value": 1.0,
+      "changed_to": 0.0,
+      "change_description": "flip",
+      "original_probability": 0.9046,
+      "new_probability": 0.0235,
+      "probability_shift": -0.8811,
+      "flipped_prediction": true,
+      "new_prediction": "Declined",
+      "shap_importance": 0.6686159372329712
+    },
+    "actionable_features_tested": [
+      "CoapplicantIncome",
+      "Loan_Amount_Term",
+      "LoanAmount",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 3
+  },
+  {
+    "application_id": "LP002223",
+    "current_prediction": "Approved",
+    "current_probability": 0.8814,
+    "target_prediction": "Declined",
+    "probability_gap_to_flip": 0.3814,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": NaN,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "original_probability": 0.8814,
+        "new_probability": 0.0365,
+        "probability_shift": -0.8449,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.6253591775894165
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 130.0,
+        "changed_to": 260.0,
+        "change_description": "increase by 100%",
+        "original_probability": 0.8814,
+        "new_probability": 0.0747,
+        "probability_shift": -0.8067,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.214019313454628
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 130.0,
+        "changed_to": 195.0,
+        "change_description": "increase by 50%",
+        "original_probability": 0.8814,
+        "new_probability": 0.1384,
+        "probability_shift": -0.7429,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.214019313454628
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "original_probability": 0.8814,
+        "new_probability": 0.8945,
+        "probability_shift": 0.0131,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.0012941032182425
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "original_probability": 0.8814,
+        "new_probability": 0.8814,
+        "probability_shift": 0.0,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 1.0222865343093872
+      }
+    ],
+    "minimal_flip": {
+      "feature": "Credit_History",
+      "current_value": NaN,
+      "changed_to": 0.0,
+      "change_description": "flip",
+      "original_probability": 0.8814,
+      "new_probability": 0.0365,
+      "probability_shift": -0.8449,
+      "flipped_prediction": true,
+      "new_prediction": "Declined",
+      "shap_importance": 0.6253591775894165
+    },
+    "actionable_features_tested": [
+      "CoapplicantIncome",
+      "Loan_Amount_Term",
+      "LoanAmount",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 3
+  },
+  {
+    "application_id": "LP001439",
+    "current_prediction": "Approved",
+    "current_probability": 0.686,
+    "target_prediction": "Declined",
+    "probability_gap_to_flip": 0.186,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "original_probability": 0.686,
+        "new_probability": 0.0147,
+        "probability_shift": -0.6713,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.6045941114425659
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 2014.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "original_probability": 0.686,
+        "new_probability": 0.0167,
+        "probability_shift": -0.6692,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 1.0840634107589722
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 194.0,
+        "changed_to": 291.0,
+        "change_description": "increase by 50%",
+        "original_probability": 0.686,
+        "new_probability": 0.0916,
+        "probability_shift": -0.5944,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.646010160446167
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 194.0,
+        "changed_to": 388.0,
+        "change_description": "increase by 100%",
+        "original_probability": 0.686,
+        "new_probability": 0.0916,
+        "probability_shift": -0.5944,
+        "flipped_prediction": true,
+        "new_prediction": "Declined",
+        "shap_importance": 0.646010160446167
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "original_probability": 0.686,
+        "new_probability": 0.6922,
+        "probability_shift": 0.0062,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.0040030619129538
+      }
+    ],
+    "minimal_flip": {
+      "feature": "Credit_History",
+      "current_value": 1.0,
+      "changed_to": 0.0,
+      "change_description": "flip",
+      "original_probability": 0.686,
+      "new_probability": 0.0147,
+      "probability_shift": -0.6713,
+      "flipped_prediction": true,
+      "new_prediction": "Declined",
+      "shap_importance": 0.6045941114425659
+    },
+    "actionable_features_tested": [
+      "Loan_Amount_Term",
+      "LoanAmount",
+      "CoapplicantIncome",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 4
+  },
+  {
+    "application_id": "LP001238",
+    "current_prediction": "Approved",
+    "current_probability": 0.9571,
+    "target_prediction": "Declined",
+    "probability_gap_to_flip": 0.4571,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "original_probability": 0.9571,
+        "new_probability": 0.577,
+        "probability_shift": -0.3801,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.4354737401008606
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 125.0,
+        "changed_to": 250.0,
+        "change_description": "increase by 100%",
+        "original_probability": 0.9571,
+        "new_probability": 0.8705,
+        "probability_shift": -0.0866,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.1010792404413223
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 125.0,
+        "changed_to": 187.5,
+        "change_description": "increase by 50%",
+        "original_probability": 0.9571,
+        "new_probability": 0.9112,
+        "probability_shift": -0.0459,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.1010792404413223
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 60.0,
+        "changed_to": 360.0,
+        "change_description": "extend to 360 months",
+        "original_probability": 0.9571,
+        "new_probability": 0.9235,
+        "probability_shift": -0.0336,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.5559729933738708
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "original_probability": 0.9571,
+        "new_probability": 0.9571,
+        "probability_shift": 0.0,
+        "flipped_prediction": false,
+        "new_prediction": "Approved",
+        "shap_importance": 0.8317260146141052
+      }
+    ],
+    "minimal_flip": null,
+    "actionable_features_tested": [
+      "CoapplicantIncome",
+      "Loan_Amount_Term",
+      "LoanAmount",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 5,
+    "flipping_scenarios_found": 0
+  },
+  {
+    "application_id": "LP002446",
+    "current_prediction": "Declined",
+    "current_probability": 0.0122,
+    "target_prediction": "Approved",
+    "probability_gap_to_flip": 0.4878,
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 0.0,
+        "changed_to": 1.0,
+        "change_description": "flip",
+        "original_probability": 0.0122,
+        "new_probability": 0.8699,
+        "probability_shift": 0.8578,
+        "flipped_prediction": true,
+        "new_prediction": "Approved",
+        "shap_importance": 4.534116744995117
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 1255.0,
+        "changed_to": 2510.0,
+        "change_description": "double",
+        "original_probability": 0.0122,
+        "new_probability": 0.0571,
+        "probability_shift": 0.0449,
+        "flipped_prediction": false,
+        "new_prediction": "Declined",
+        "shap_importance": 0.1089761555194854
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 125.0,
+        "changed_to": 62.5,
+        "change_description": "reduce by 50%",
+        "original_probability": 0.0122,
+        "new_probability": 0.0381,
+        "probability_shift": 0.026,
+        "flipped_prediction": false,
+        "new_prediction": "Declined",
+        "shap_importance": 0.0206026341766119
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 1255.0,
+        "changed_to": 1882.5,
+        "change_description": "increase by 50%",
+        "original_probability": 0.0122,
+        "new_probability": 0.0366,
+        "probability_shift": 0.0244,
+        "flipped_prediction": false,
+        "new_prediction": "Declined",
+        "shap_importance": 0.1089761555194854
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": 125.0,
+        "changed_to": 93.75,
+        "change_description": "reduce by 25%",
+        "original_probability": 0.0122,
+        "new_probability": 0.0264,
+        "probability_shift": 0.0143,
+        "flipped_prediction": false,
+        "new_prediction": "Declined",
+        "shap_importance": 0.0206026341766119
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "original_probability": 0.0122,
+        "new_probability": 0.0167,
+        "probability_shift": 0.0046,
+        "flipped_prediction": false,
+        "new_prediction": "Declined",
+        "shap_importance": 0.0340158902108669
+      }
+    ],
+    "minimal_flip": {
+      "feature": "Credit_History",
+      "current_value": 0.0,
+      "changed_to": 1.0,
+      "change_description": "flip",
+      "original_probability": 0.0122,
+      "new_probability": 0.8699,
+      "probability_shift": 0.8578,
+      "flipped_prediction": true,
+      "new_prediction": "Approved",
+      "shap_importance": 4.534116744995117
+    },
+    "actionable_features_tested": [
+      "Loan_Amount_Term",
+      "LoanAmount",
+      "CoapplicantIncome",
+      "Credit_History"
+    ],
+    "total_scenarios_tested": 6,
+    "flipping_scenarios_found": 1
+  }
+]
