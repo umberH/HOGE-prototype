@@ -1,22 +1,23 @@
 {
-  "summary": "The loan application was approved with a high probability due to strong financial indicators and a clean credit history.",
+  "summary": "The loan application was approved with a high probability of 91.1%.",
   "positive_drivers": [
-    "The coapplicant's income significantly supports the approval of the loan.",
-    "The applicant has a clean credit history, which is a strong positive factor.",
-    "The requested loan amount is considered reasonable and supports approval.",
-    "Having no dependents also contributes positively to the approval decision.",
-    "The property being in a rural area is a positive factor for approval."
+    "The coapplicant's income significantly supports the approval.",
+    "A clean credit history is a strong positive factor.",
+    "The requested loan amount is favorable for approval.",
+    "Having no dependents supports the approval.",
+    "The property being in a rural area is seen positively."
   ],
   "negative_drivers": [
-    "The applicant's income alone is relatively low, which could have led to a decline.",
-    "The property is not located in a semiurban area, which slightly affects the decision negatively.",
-    "The applicant's education level is not graduate, which slightly impacts the decision negatively.",
-    "Having two dependents could have negatively influenced the decision.",
-    "Being male slightly affects the decision negatively."
+    "The applicant's income is relatively low, which is a negative factor.",
+    "The property is not located in a semiurban area, which is less favorable.",
+    "Not having a graduate education is a negative factor.",
+    "Having two dependents is seen as a negative factor.",
+    "The applicant is not female, which slightly decreases the approval score."
   ],
   "policy_violations": [],
-  "recommendation": "Consider increasing the primary applicant's income or improving educational qualifications for even stronger applications in the future.",
-  "narrative": "The loan application was approved with a high probability due to several positive factors. The coapplicant's income plays a significant role in supporting the approval, providing a strong financial backing. Additionally, the applicant's clean credit history is a critical factor that aligns with the bank's policy requirements, further supporting the decision. The requested loan amount is reasonable, which also contributes positively to the approval.\n\nOn the other hand, there are some factors that could have negatively influenced the decision. The primary applicant's income is relatively low, which could have been a concern. Furthermore, the property is not located in a semiurban area, and the applicant's education level is not graduate, both of which slightly impact the decision negatively. Despite these, the overall financial profile and adherence to policy rules ensured the application's approval.\n\nNo policy rules were violated in this application, indicating a strong alignment with the bank's requirements. For future applications, it might be beneficial to consider increasing the primary applicant's income or improving educational qualifications to further strengthen the application.",
+  "recommendation": "Consider increasing the applicant's income or reducing the loan amount to improve future applications.",
+  "counterfactual_what_if": "No counterfactual scenarios are available.",
+  "narrative": "The loan application was approved with a high probability of 91.1%. Several factors contributed positively to this decision. The coapplicant's income was a significant positive factor, providing strong support for the approval. Additionally, the applicant's clean credit history was a crucial element in favor of the application. The requested loan amount was considered reasonable, further supporting the approval. Moreover, having no dependents and the property being located in a rural area were also seen as positive factors.\n\nOn the other hand, there were some factors that negatively impacted the decision. The applicant's income was relatively low, which is a negative factor in the assessment. The property not being located in a semiurban area was less favorable, and not having a graduate education also contributed negatively. Additionally, having two dependents and the applicant not being female slightly decreased the approval score.\n\nImportantly, no policy rules were violated in this application, which means that all the criteria were met satisfactorily. For future applications, it might be beneficial to consider increasing the applicant's income or reducing the loan amount to further strengthen the application.\n\nCurrently, there are no counterfactual scenarios available that could suggest changes to flip the decision, indicating that the application was strong in its current form.",
   "features_used": [
     "CoapplicantIncome",
     "Credit_History",
@@ -27,14 +28,14 @@
     "Property_Area_Semiurban",
     "Education_Graduate",
     "Dependents_2",
-    "Gender_Male"
+    "Gender_Female"
   ],
   "provenance": {
     "model_name": "xgb_monotonic_v1",
     "xai_method": "TreeSHAP",
     "kg_loader_version": "neo_loader_v1",
     "hoge_version": "1.0.0",
-    "retrieval_timestamp": "2026-03-19T09:19:28.018610+00:00"
+    "retrieval_timestamp": "2026-03-19T17:17:24.690090+00:00"
   },
   "evidence_bundle": [
     {

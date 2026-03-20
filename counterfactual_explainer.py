@@ -250,17 +250,20 @@ def generate_counterfactual(pipeline, df, shap_long_df, application_id):
 # RUN FOR EVALUATION SAMPLE
 # ============================================================
 
-EVAL_SAMPLE = [
+EVAL_SAMPLE_DEFAULT = [
     "LP002170", "LP001250", "LP002209", "LP001536", "LP001357",
     "LP002266", "LP002223", "LP001439", "LP001238", "LP002446",
 ]
 
 
-def run_all():
+def run_all(sample_ids=None):
     pipeline, df, shap_long = load_resources()
     all_results = []
 
-    for app_id in EVAL_SAMPLE:
+    if sample_ids is None:
+        sample_ids = EVAL_SAMPLE_DEFAULT
+
+    for app_id in sample_ids:
         try:
             result = generate_counterfactual(pipeline, df, shap_long, app_id)
             all_results.append(result)
@@ -282,7 +285,7 @@ def run_all():
     # Save results
     with open("eval_counterfactual.json", "w") as f:
         json.dump(all_results, f, indent=2, default=str)
-    print(f"\nResults saved to eval_counterfactual.json")
+    print(f"\nResults saved to eval_counterfactual.json ({len(all_results)} applications)")
 
     return all_results
 
@@ -299,10 +302,28 @@ def run_single(application_id):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "--all":
-            run_all()
-        else:
-            run_single(sys.argv[1])
+    import argparse
+
+    parser = argparse.ArgumentParser(description="HOGE Counterfactual Explainer")
+    parser.add_argument("app_id", nargs="?", default=None,
+                        help="Single application ID to analyze")
+    parser.add_argument("--all", action="store_true",
+                        help="Run for default 10 evaluation samples")
+    parser.add_argument("--n-samples", type=int, default=None,
+                        help="Number of applications to sample (uses seed 42)")
+    args = parser.parse_args()
+
+    if args.n_samples is not None:
+        # Dynamic sampling: same seed as evaluation scripts for consistency
+        shap_long = pd.read_csv(SHAP_LONG_FILE)
+        unique_ids = shap_long["application_id"].unique()
+        rng = np.random.RandomState(42)
+        sample_ids = list(rng.choice(unique_ids,
+                                     size=min(args.n_samples, len(unique_ids)),
+                                     replace=False))
+        print(f"Sampling {len(sample_ids)} applications (seed=42)")
+        run_all(sample_ids=sample_ids)
+    elif args.app_id and args.app_id != "--all":
+        run_single(args.app_id)
     else:
         run_all()
