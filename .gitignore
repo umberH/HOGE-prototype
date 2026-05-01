@@ -1,5 +1,13 @@
 __pycache__/
 .env
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Legacy files
 paper_HOGE_updated.tex
 paper_HOGE_condensed.tex
 hoge_evaluation_workbook.xlsx

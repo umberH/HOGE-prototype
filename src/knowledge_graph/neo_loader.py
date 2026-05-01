@@ -1,13 +1,20 @@
 from neo4j import GraphDatabase
 import pandas as pd
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ============================================================
 # CONFIG
 # ============================================================
 
-NEO4J_URI = "neo4j://127.0.0.1:7687"
-NEO4J_USER = "neo4j"
-NEO4J_PASSWORD = "test1234"
+NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
+NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
+
+if not NEO4J_PASSWORD:
+    raise ValueError("NEO4J_PASSWORD must be set in .env file")
 
 APPLICATION_DATA_FILE = "data/raw/df1_loan.csv"
 SHAP_LONG_FILE = "data/processed/shap_long.csv"
