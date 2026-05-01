@@ -15,6 +15,7 @@ load_dotenv()
 NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
+NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
@@ -49,7 +50,7 @@ def get_application_explanation_data(application_id: str):
     Returns a dict ready to feed into the LLM (Component C).
     """
 
-    with driver.session(database="neo4j") as session:
+    with driver.session(database=NEO4J_DATABASE) as session:
         # ---------- 1) Prediction + SHAP rows ----------
         shap_query = """
         MATCH (app:LoanApplication {application_id: $application_id})
