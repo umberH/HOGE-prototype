@@ -17,6 +17,7 @@ load_dotenv()
 NEO4J_URI  = os.getenv("NEO4J_URI",  "neo4j://127.0.0.1:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASS = os.getenv("NEO4J_PASSWORD", "test1234")
+NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 
 driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASS))
 
@@ -42,7 +43,7 @@ def generate_schema_view():
     """Query db.schema.visualization() or fall back to manual meta-query."""
     G = nx.DiGraph()
 
-    with driver.session() as session:
+    with driver.session(database=NEO4J_DATABASE) as session:
         # Get all relationship types connecting label pairs
         result = session.run("""
             MATCH (a)-[r]->(b)
@@ -97,7 +98,7 @@ def generate_instance_view(app_id="LP001006"):
     """Visualise the full subgraph around a single loan application."""
     G = nx.DiGraph()
 
-    with driver.session() as session:
+    with driver.session(database=NEO4J_DATABASE) as session:
         # Fetch all nodes and relationships within 2 hops of the application
         result = session.run("""
             MATCH path = (la:LoanApplication {application_id: $aid})-[*1..2]-(n)

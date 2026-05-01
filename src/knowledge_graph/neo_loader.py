@@ -12,6 +12,7 @@ load_dotenv()
 NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
+NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 
 if not NEO4J_PASSWORD:
     raise ValueError("NEO4J_PASSWORD must be set in .env file")
@@ -32,7 +33,7 @@ driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 # ============================================================
 
 def run_query(q, params=None):
-    with driver.session() as session:
+    with driver.session(database=NEO4J_DATABASE) as session:
         session.run(q, params or {})
 
 

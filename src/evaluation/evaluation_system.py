@@ -42,6 +42,7 @@ load_dotenv()
 NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
+NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 
@@ -486,7 +487,7 @@ def run_graph_retrieval_evaluation(sample_ids=None, n_samples=10):
         gt_prob = gt.iloc[0]["approval_probability"]
 
         # KG retrieval
-        with driver.session() as session:
+        with driver.session(database=NEO4J_DATABASE) as session:
             kg_query = """
             MATCH (app:LoanApplication {application_id: $app_id})
                   -[:HAS_SHAP_EXPLANATION]->(exp:ModelExplanation)
@@ -533,7 +534,7 @@ def run_graph_retrieval_evaluation(sample_ids=None, n_samples=10):
         feature_recall = len(set(gt_features) & set(kg_features)) / len(set(gt_features))
 
         # Policy retrieval check
-        with driver.session() as session:
+        with driver.session(database=NEO4J_DATABASE) as session:
             rule_query = """
             MATCH (app:LoanApplication {application_id: $app_id})
                   -[:VIOLATES_RULE]->(r:PolicyRule)
