@@ -245,17 +245,136 @@ elif page == "🔍 Explain Application":
                 st.success(explanation['recommendation'])
 
                 # Technical details (expandable)
-                with st.expander("🔬 Technical Details"):
-                    st.markdown("#### SHAP Feature Contributions (Top 10)")
+                with st.expander("🔬 Technical Details & Visualizations"):
+
+                    # SHAP Waterfall Chart
+                    st.markdown("#### 📊 SHAP Feature Contributions")
 
                     shap_df = pd.DataFrame(context['shap_details'][:10])
-                    st.dataframe(shap_df, use_container_width=True)
 
-                    st.markdown("#### Features Used in Explanation")
-                    st.write(explanation['features_used'])
+                    # Create interactive bar chart
+                    import plotly.graph_objects as go
 
-                    st.markdown("#### Provenance")
-                    st.json(explanation.get('provenance', {}))
+                    fig = go.Figure()
+
+                    # Separate positive and negative contributions
+                    colors = ['#2ca02c' if x > 0 else '#d62728' for x in shap_df['shap']]
+
+                    fig.add_trace(go.Bar(
+                        x=shap_df['shap'],
+                        y=shap_df['feature'],
+                        orientation='h',
+                        marker=dict(color=colors),
+                        text=[f"{x:.4f}" for x in shap_df['shap']],
+                        textposition='auto',
+                        hovertemplate='<b>%{y}</b><br>SHAP: %{x:.4f}<br>Value: %{customdata[0]}<extra></extra>',
+                        customdata=shap_df[['value']].values
+                    ))
+
+                    fig.update_layout(
+                        title="Top 10 Feature Contributions (SHAP Values)",
+                        xaxis_title="SHAP Value (Impact on Prediction)",
+                        yaxis_title="Feature",
+                        height=500,
+                        showlegend=False,
+                        yaxis={'categoryorder': 'total ascending'}
+                    )
+
+                    st.plotly_chart(fig, use_container_width=True)
+
+                    # Feature importance table
+                    st.markdown("#### 📋 Detailed Feature Analysis")
+                    st.dataframe(
+                        shap_df[['feature', 'value', 'shap', 'direction', 'rank']].style.background_gradient(
+                            subset=['shap'], cmap='RdYlGn', vmin=-1, vmax=1
+                        ),
+                        use_container_width=True
+                    )
+
+                    # Feature importance pie chart
+                    col1, col2 = st.columns(2)
+
+                    with col1:
+                        st.markdown("#### 🥧 Contribution Distribution")
+
+                        # Pie chart for positive vs negative
+                        pos_sum = sum(shap_df[shap_df['shap'] > 0]['shap'])
+                        neg_sum = abs(sum(shap_df[shap_df['shap'] < 0]['shap']))
+
+                        fig_pie = go.Figure(data=[go.Pie(
+                            labels=['Positive Impact', 'Negative Impact'],
+                            values=[pos_sum, neg_sum],
+                            marker=dict(colors=['#2ca02c', '#d62728']),
+                            hole=0.3
+                        )])
+
+                        fig_pie.update_layout(
+                            title="Net SHAP Contribution",
+                            height=300
+                        )
+
+                        st.plotly_chart(fig_pie, use_container_width=True)
+
+                    with col2:
+                        st.markdown("#### 🎯 Top Drivers")
+
+                        # Top 5 by absolute value
+                        top_5 = shap_df.nlargest(5, 'importance')
+
+                        fig_top = go.Figure(data=[go.Bar(
+                            x=top_5['importance'],
+                            y=top_5['feature'],
+                            orientation='h',
+                            marker=dict(color='#1f77b4'),
+                            text=[f"{x:.4f}" for x in top_5['importance']],
+                            textposition='auto'
+                        )])
+
+                        fig_top.update_layout(
+                            title="Top 5 by Importance",
+                            xaxis_title="Absolute SHAP Value",
+                            height=300,
+                            showlegend=False
+                        )
+
+                        st.plotly_chart(fig_top, use_container_width=True)
+
+                    # Features used in LLM explanation
+                    st.markdown("#### 🤖 Features Referenced by LLM")
+
+                    llm_features = explanation['features_used']
+                    shap_features = shap_df['feature'].tolist()
+
+                    # Show which features were used vs available
+                    coverage_data = []
+                    for feat in shap_features[:10]:
+                        coverage_data.append({
+                            'Feature': feat,
+                            'In SHAP Top 10': '✓',
+                            'Used by LLM': '✓' if feat in llm_features else '✗'
+                        })
+
+                    st.dataframe(coverage_data, use_container_width=True)
+
+                    # Coverage metrics
+                    coverage_rate = len(set(llm_features) & set(shap_features)) / len(shap_features) * 100
+                    st.metric("LLM Coverage of Top 10 SHAP Features", f"{coverage_rate:.0f}%")
+
+                    # Provenance
+                    st.markdown("#### 🔍 Provenance & Metadata")
+
+                    prov_col1, prov_col2 = st.columns(2)
+
+                    with prov_col1:
+                        st.json(explanation.get('provenance', {}))
+
+                    with prov_col2:
+                        st.markdown("**System Information:**")
+                        st.write(f"- Model: {explanation.get('provenance', {}).get('model_name', 'N/A')}")
+                        st.write(f"- XAI Method: {explanation.get('provenance', {}).get('xai_method', 'N/A')}")
+                        st.write(f"- HOGE Version: {explanation.get('provenance', {}).get('hoge_version', 'N/A')}")
+                        st.write(f"- Retrieved: {explanation.get('provenance', {}).get('retrieval_timestamp', 'N/A')}")
+                        st.write(f"- Evidence Items: {len(explanation.get('evidence_bundle', []))}")
 
                 # Download options
                 st.markdown("---")
