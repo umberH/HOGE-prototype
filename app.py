@@ -16,7 +16,7 @@ from pathlib import Path
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from llm_explainer import get_application_explanation_data, call_llm_for_explanation
+from src.explainability.llm_explainer import get_application_explanation_data, call_llm_for_explanation
 from neo4j import GraphDatabase
 import os
 from dotenv import load_dotenv
