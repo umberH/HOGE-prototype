@@ -9,8 +9,8 @@ NEO4J_URI = "neo4j://127.0.0.1:7687"
 NEO4J_USER = "neo4j"
 NEO4J_PASSWORD = "test1234"
 
-APPLICATION_DATA_FILE = "df1_loan.csv"
-SHAP_LONG_FILE = "shap_long.csv"
+APPLICATION_DATA_FILE = "data/raw/df1_loan.csv"
+SHAP_LONG_FILE = "data/processed/shap_long.csv"
 
 
 # ============================================================
@@ -282,7 +282,7 @@ print("✔ Policy violations linked")
 
 import json, os
 
-COUNTERFACTUAL_FILE = "eval_counterfactual.json"
+COUNTERFACTUAL_FILE = "data/evaluation/eval_counterfactual.json"
 
 if os.path.exists(COUNTERFACTUAL_FILE):
     print("Loading counterfactual scenarios...")

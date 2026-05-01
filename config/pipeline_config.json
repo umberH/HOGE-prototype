@@ -1,0 +1,76 @@
+{
+  "data": {
+    "raw_data_path": "data/raw/df1_loan.csv",
+    "processed_data_path": "data/processed/",
+    "test_size": 0.2,
+    "random_state": 42,
+    "stratify": true
+  },
+  "preprocessing": {
+    "numeric_imputation_strategy": "median",
+    "categorical_imputation_strategy": "most_frequent",
+    "scaling": true,
+    "feature_engineering": {
+      "create_dti": true,
+      "dti_formula": "LoanAmount / (ApplicantIncome + CoapplicantIncome + 1)"
+    }
+  },
+  "features": {
+    "numeric": [
+      "ApplicantIncome",
+      "CoapplicantIncome",
+      "LoanAmount",
+      "Loan_Amount_Term",
+      "Credit_History",
+      "Total_Income",
+      "DTI"
+    ],
+    "categorical": [
+      "Gender",
+      "Married",
+      "Dependents",
+      "Education",
+      "Self_Employed",
+      "Property_Area"
+    ],
+    "target": "Loan_Status",
+    "id_column": "Loan_ID"
+  },
+  "model_selection": {
+    "default_model": "xgboost_monotonic",
+    "available_models": [
+      "xgboost_monotonic",
+      "xgboost_baseline",
+      "random_forest",
+      "logistic_regression"
+    ]
+  },
+  "hyperparameter_tuning": {
+    "enabled": true,
+    "method": "optuna",
+    "n_trials": 100,
+    "timeout_seconds": 3600,
+    "optimization_direction": "maximize",
+    "pruning": true,
+    "parallel_jobs": 4
+  },
+  "evaluation": {
+    "metrics": [
+      "accuracy",
+      "precision",
+      "recall",
+      "f1",
+      "roc_auc"
+    ],
+    "cross_validation": {
+      "enabled": true,
+      "folds": 5,
+      "stratified": true
+    }
+  },
+  "output": {
+    "model_save_path": "models/",
+    "predictions_save_path": "data/processed/",
+    "log_level": "INFO"
+  }
+}

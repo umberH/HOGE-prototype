@@ -8,8 +8,8 @@ from sklearn.compose import ColumnTransformer
 # 1. Load model & raw dataset
 # ============================================================
 
-MODEL_FILE = "loan_xgb_monotonic.joblib"
-DATA_FILE = "df1_loan.csv"
+MODEL_FILE = "models/loan_xgb_monotonic.joblib"
+DATA_FILE = "data/raw/df1_loan.csv"
 
 print("Loading model...")
 pipeline = joblib.load(MODEL_FILE)
@@ -131,7 +131,7 @@ shap_wide.insert(0, "application_id", app_ids.values)
 shap_wide.insert(1, "prediction", preds)
 shap_wide.insert(2, "approval_probability", probs)
 
-shap_wide.to_csv("shap_wide.csv", index=False)
+shap_wide.to_csv("data/processed/shap_wide.csv", index=False)
 print("Saved shap_wide.csv ✔")
 
 
@@ -171,7 +171,7 @@ for i in range(shap_values.shape[0]):
         )
 
 shap_long = pd.DataFrame(records)
-shap_long.to_csv("shap_long.csv", index=False)
+shap_long.to_csv("data/processed/shap_long.csv", index=False)
 print("Saved shap_long.csv ✔")
 
 print("\nDone. You now have:")

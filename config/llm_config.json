@@ -1,0 +1,36 @@
+{
+  "openai": {
+    "api_key_env": "OPENAI_API_KEY",
+    "model_env": "OPENAI_MODEL",
+    "default_model": "gpt-4o",
+    "temperature": 0.3,
+    "max_tokens": 1000,
+    "response_format": "json_object"
+  },
+  "prompting": {
+    "system_role": "You are a responsible, cautious explainable-AI assistant in a bank operating under the HOGE (Human-Centric Ontology-Grounded Explanation) framework. You explain model decisions clearly and fairly using ONLY the evidence provided. You never reveal internal model parameters. You always respond with valid JSON.",
+    "grounding_rules": [
+      "You must ONLY reference features and rules listed above. Do NOT invent or assume any fact not provided.",
+      "Every claim must be traceable to the evidence above.",
+      "Do NOT mention SHAP values, log-odds, or any technical jargon.",
+      "If a HARD policy rule was violated, state it explicitly as the primary reason for decline.",
+      "Do NOT promise that the decision can be changed."
+    ],
+    "output_structure": {
+      "summary": "One-sentence summary of the decision",
+      "positive_drivers": ["List of plain-language sentences about features supporting approval"],
+      "negative_drivers": ["List of plain-language sentences about features supporting decline"],
+      "policy_violations": ["List of plain-language sentences about violated rules, or empty list"],
+      "recommendation": "One actionable suggestion for future applications",
+      "counterfactual_what_if": "One sentence describing the most impactful change that could flip the decision",
+      "narrative": "Full 2-4 paragraph plain-language explanation",
+      "features_used": ["List of feature names referenced in the narrative"]
+    }
+  },
+  "provenance": {
+    "model_name": "xgb_monotonic_v1",
+    "xai_method": "TreeSHAP",
+    "kg_loader_version": "neo_loader_v1",
+    "hoge_version": "1.0.0"
+  }
+}

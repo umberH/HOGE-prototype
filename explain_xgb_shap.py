@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 # 1. Load model & dataset
 # ============================================================
 
-MODEL_FILE = "loan_xgb_monotonic.joblib"
-DATA_FILE = "df1_loan.csv"
+MODEL_FILE = "models/loan_xgb_monotonic.joblib"
+DATA_FILE = "data/raw/df1_loan.csv"
 
 print("Loading model...")
 pipeline = joblib.load(MODEL_FILE)

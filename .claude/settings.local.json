@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p config data/raw data/processed data/evaluation models src/models src/explainability src/knowledge_graph src/evaluation src/utils notebooks tests scripts figures paper)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

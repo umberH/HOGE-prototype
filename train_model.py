@@ -13,7 +13,7 @@ import joblib
 # 1. LOAD RAW DATA
 # ============================================================
 
-df = pd.read_csv("df1_loan.csv")
+df = pd.read_csv("data/raw/df1_loan.csv")
 
 # Drop generated index column
 df = df.drop(columns=["Unnamed: 0"], errors="ignore")
@@ -177,5 +177,5 @@ print("ROC-AUC Score:", roc_auc_score(y_test, y_proba))
 # 12. SAVE MODEL
 # ============================================================
 
-joblib.dump(pipeline, "loan_xgb_monotonic.joblib")
+joblib.dump(pipeline, "models/loan_xgb_monotonic.joblib")
 print("\nModel saved as loan_xgb_monotonic.joblib ✔")

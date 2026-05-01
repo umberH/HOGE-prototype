@@ -59,10 +59,10 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 
-MODEL_FILE = "loan_xgb_monotonic.joblib"
-DATA_FILE = "df1_loan.csv"
-SHAP_LONG_FILE = "shap_long.csv"
-SHAP_WIDE_FILE = "shap_wide.csv"
+MODEL_FILE = "models/loan_xgb_monotonic.joblib"
+DATA_FILE = "data/raw/df1_loan.csv"
+SHAP_LONG_FILE = "data/processed/shap_long.csv"
+SHAP_WIDE_FILE = "data/processed/shap_wide.csv"
 
 driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 
@@ -516,7 +516,7 @@ def print_intermediate_crosscheck(outcomes):
 # EXCEL WORKBOOK GENERATOR
 # ============================================================
 
-def generate_excel_workbook(alignment_results, outcomes, output_file="hoge_evaluation_workbook.xlsx"):
+def generate_excel_workbook(alignment_results, outcomes, output_file="data/evaluation/hoge_evaluation_workbook.xlsx"):
     """
     Create a multi-sheet Excel workbook with:
     - Sheet 1: Prediction vs SHAP Alignment
@@ -706,7 +706,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="HOGE Human-Centric Evaluation")
     parser.add_argument("--n-samples", type=int, default=10, help="Number of applications to sample")
     parser.add_argument("--app-ids", nargs="+", default=None, help="Specific application IDs")
-    parser.add_argument("--output", default="hoge_evaluation_workbook.xlsx", help="Output Excel file")
+    parser.add_argument("--output", default="data/evaluation/hoge_evaluation_workbook.xlsx", help="Output Excel file")
     args = parser.parse_args()
 
     print("="*60)
@@ -749,7 +749,7 @@ if __name__ == "__main__":
         "alignment_results": alignment_results,
         "intermediate_outcomes": outcomes,
     }
-    with open("eval_human_results.json", "w") as f:
+    with open("data/evaluation/eval_human_results.json", "w") as f:
         json.dump(json_output, f, indent=2, default=str)
     print("JSON results saved to: eval_human_results.json")
 

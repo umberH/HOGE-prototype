@@ -1,0 +1,73 @@
+{
+  "connection": {
+    "uri_env": "NEO4J_URI",
+    "user_env": "NEO4J_USER",
+    "password_env": "NEO4J_PASSWORD",
+    "default_uri": "neo4j://127.0.0.1:7687",
+    "default_user": "neo4j",
+    "default_password": "test1234"
+  },
+  "data_sources": {
+    "applications": "data/raw/df1_loan.csv",
+    "shap_values": "data/processed/shap_long.csv",
+    "counterfactuals": "data/evaluation/eval_counterfactual.json"
+  },
+  "schema": {
+    "constraints": [
+      "Applicant.applicant_id",
+      "LoanApplication.application_id",
+      "Feature.name",
+      "ModelExplanation.explanation_id",
+      "FeatureContribution.id",
+      "FeatureValue.id",
+      "CounterfactualScenario.id",
+      "PolicyRule.rule_id",
+      "RiskFactor.risk_id"
+    ],
+    "node_types": [
+      "Applicant",
+      "LoanApplication",
+      "Feature",
+      "ModelExplanation",
+      "FeatureContribution",
+      "FeatureValue",
+      "CounterfactualScenario",
+      "PolicyRule",
+      "RiskFactor"
+    ]
+  },
+  "policy_rules": [
+    {
+      "rule_id": "RULE_DTI_001",
+      "name": "DTI Hard Cutoff",
+      "feature_name": "DTI",
+      "operator": ">",
+      "threshold_value": 2.0,
+      "severity": "HARD",
+      "description": "Applications with DTI > 2.0 are declined.",
+      "risk_factor_id": "RF_HIGH_DTI"
+    },
+    {
+      "rule_id": "RULE_CREDIT_001",
+      "name": "Credit History Required",
+      "feature_name": "Credit_History",
+      "operator": "=",
+      "threshold_value": 1,
+      "severity": "HARD",
+      "description": "Applicant must have clean credit history.",
+      "risk_factor_id": "RF_BAD_CREDIT"
+    }
+  ],
+  "risk_factors": [
+    {
+      "risk_id": "RF_HIGH_DTI",
+      "name": "High DTI",
+      "risk_type": "income"
+    },
+    {
+      "risk_id": "RF_BAD_CREDIT",
+      "name": "Bad Credit History",
+      "risk_type": "credit"
+    }
+  ]
+}

@@ -45,10 +45,10 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 
-MODEL_FILE = "loan_xgb_monotonic.joblib"
-DATA_FILE = "df1_loan.csv"
-SHAP_LONG_FILE = "shap_long.csv"
-SHAP_WIDE_FILE = "shap_wide.csv"
+MODEL_FILE = "models/loan_xgb_monotonic.joblib"
+DATA_FILE = "data/raw/df1_loan.csv"
+SHAP_LONG_FILE = "data/processed/shap_long.csv"
+SHAP_WIDE_FILE = "data/processed/shap_wide.csv"
 
 driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 
@@ -620,20 +620,20 @@ if __name__ == "__main__":
     if run_all or args.faithfulness:
         r = run_faithfulness_perturbation(n_samples=args.n_samples)
         all_results["faithfulness"] = r
-        save_results(r, "eval_faithfulness.json")
+        save_results(r, "data/evaluation/eval_faithfulness.json")
 
     if run_all or args.hallucination:
         r = run_hallucination_evaluation(n_samples=args.n_samples)
         all_results["hallucination"] = r
-        save_results(r, "eval_hallucination.json")
+        save_results(r, "data/evaluation/eval_hallucination.json")
 
     if run_all or args.retrieval:
         r = run_graph_retrieval_evaluation(n_samples=args.n_samples)
         all_results["retrieval"] = r
-        save_results(r, "eval_retrieval.json")
+        save_results(r, "data/evaluation/eval_retrieval.json")
 
     if all_results:
-        save_results(all_results, "eval_system_all.json")
+        save_results(all_results, "data/evaluation/eval_system_all.json")
         print("\n" + "="*60)
         print("ALL SYSTEM EVALUATIONS COMPLETE")
         print("="*60)

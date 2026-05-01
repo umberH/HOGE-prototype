@@ -483,7 +483,7 @@ if __name__ == "__main__":
         print(json.dumps(result.get("provenance", {}), indent=2, default=str))
 
         # Save full result for evaluation
-        output_file = f"explanation_{application_id}.json"
+        output_file = f"data/evaluation/explanation_{application_id}.json"
         with open(output_file, "w") as f:
             json.dump(result, f, indent=2, default=str)
         print(f"\nFull explanation saved to: {output_file}")

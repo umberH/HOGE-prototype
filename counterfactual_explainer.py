@@ -23,9 +23,9 @@ load_dotenv()
 # CONFIG
 # ============================================================
 
-MODEL_FILE = "loan_xgb_monotonic.joblib"
-RAW_DATA_FILE = "df1_loan.csv"
-SHAP_LONG_FILE = "shap_long.csv"
+MODEL_FILE = "models/loan_xgb_monotonic.joblib"
+RAW_DATA_FILE = "data/raw/df1_loan.csv"
+SHAP_LONG_FILE = "data/processed/shap_long.csv"
 
 # Features that an applicant can realistically change
 ACTIONABLE_FEATURES = [
@@ -283,7 +283,7 @@ def run_all(sample_ids=None):
             print(f"{app_id}: ERROR - {e}")
 
     # Save results
-    with open("eval_counterfactual.json", "w") as f:
+    with open("data/evaluation/eval_counterfactual.json", "w") as f:
         json.dump(all_results, f, indent=2, default=str)
     print(f"\nResults saved to eval_counterfactual.json ({len(all_results)} applications)")
 

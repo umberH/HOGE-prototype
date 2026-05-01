@@ -7,7 +7,7 @@ import os
 # 1. LOAD TRAINED MODEL SAFELY
 # ============================================================
 
-MODEL_FILE = "loan_xgb_monotonic.joblib"
+MODEL_FILE = "models/loan_xgb_monotonic.joblib"
 
 if not os.path.exists(MODEL_FILE):
     raise FileNotFoundError(
@@ -25,7 +25,7 @@ print("Model loaded ✔")
 
 # Change filename here:
 
-DATA_FILE = "new_applications.csv"
+DATA_FILE = "data/raw/new_applications.csv"
 # DATA_FILE = "extreme_applications.csv"
 
 if not os.path.exists(DATA_FILE):
@@ -82,7 +82,7 @@ new["Approval_Probability"] = probs
 # 6. SAVE SCORING OUTPUT
 # ============================================================
 
-output_file = "scored_applications_xgb.csv"
+output_file = "data/processed/scored_applications_xgb.csv"
 new.to_csv(output_file, index=False)
 
 print("\nScoring complete ✔")
