@@ -1,3 +1,6 @@
+# Streamlit Cloud Production Requirements
+# Minimal dependencies needed to run the app
+
 # Core ML & Data Science
 numpy>=1.24.0,<2.0.0
 pandas>=2.0.0
@@ -13,39 +16,17 @@ neo4j>=5.14.0
 # OpenAI for LLM explanations
 openai>=1.6.0
 
-# Hyperparameter tuning
-optuna>=3.5.0
-
 # Environment management
 python-dotenv>=1.0.0
-
-# Excel output
-openpyxl>=3.1.0
 
 # Visualization
 matplotlib>=3.7.0
 seaborn>=0.12.0
 networkx>=3.1
-graphviz>=0.20.0
+plotly>=5.18.0
 
 # Web frontend
 streamlit>=1.29.0
-plotly>=5.18.0
 
-# API development (optional)
-fastapi>=0.109.0
-uvicorn>=0.27.0
+# Pydantic for data models
 pydantic>=2.5.0
-
-# Testing
-pytest>=7.4.0
-pytest-cov>=4.1.0
-
-# Code quality
-black>=23.12.0
-flake8>=7.0.0
-mypy>=1.8.0
-
-# Documentation
-sphinx>=7.2.0
-sphinx-rtd-theme>=2.0.0
