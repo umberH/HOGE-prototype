@@ -41,6 +41,24 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Helper function to get Neo4j config from Streamlit secrets or environment
+def get_neo4j_config():
+    """Get Neo4j configuration from Streamlit secrets (production) or environment (local)"""
+    if hasattr(st, 'secrets') and 'neo4j' in st.secrets:
+        return {
+            'uri': st.secrets["neo4j"]["uri"],
+            'user': st.secrets["neo4j"]["user"],
+            'password': st.secrets["neo4j"]["password"],
+            'database': st.secrets["neo4j"].get("database", "neo4j")
+        }
+    else:
+        return {
+            'uri': os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687"),
+            'user': os.getenv("NEO4J_USER", "neo4j"),
+            'password': os.getenv("NEO4J_PASSWORD", "test1234"),
+            'database': os.getenv("NEO4J_DATABASE", "neo4j")
+        }
+
 # Custom CSS
 st.markdown("""
 <style>
@@ -109,16 +127,13 @@ with st.sidebar:
 
     # Check Neo4j connection
     try:
-        NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
-        NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-        NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
-
-        driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+        config = get_neo4j_config()
+        driver = GraphDatabase.driver(config['uri'], auth=(config['user'], config['password']))
         driver.verify_connectivity()
         st.success("Neo4j Connected")
         driver.close()
-    except:
-        st.error("Neo4j Disconnected")
+    except Exception as e:
+        st.error(f"Neo4j Disconnected: {str(e)}")
 
     # Check OpenAI key (from user input in sidebar)
     if st.session_state.get('user_openai_key'):
@@ -266,10 +281,11 @@ elif page == "Explain Application":
     def get_available_application_ids():
         """Fetch all available application IDs from Neo4j"""
         try:
-            NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
-            NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-            NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
-            NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
+            config = get_neo4j_config()
+            NEO4J_URI = config['uri']
+            NEO4J_USER = config['user']
+            NEO4J_PASSWORD = config['password']
+            NEO4J_DATABASE = config['database']
 
             driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 
