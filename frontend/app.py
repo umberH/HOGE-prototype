@@ -17,13 +17,21 @@ from pathlib import Path
 # Add backend to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from backend.src.explainability.llm_explainer import get_application_explanation_data, call_llm_for_explanation
+# Import services (abstraction layer)
+from backend.src.api.services import ExplanationService, ApplicationService
+from backend.src.api.models import ExplanationRequest
+
+# Import backend modules for features not yet in services
 from backend.src.explainability.concept_mapper import ConceptMapper
 from neo4j import GraphDatabase
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Initialize services
+explanation_service = ExplanationService()
+application_service = ApplicationService()
 
 # Page config
 st.set_page_config(
@@ -485,11 +493,22 @@ elif page == "Explain Application":
         else:
             with st.spinner(f"Generating fresh explanation for {loan_id} (calling LLM)..."):
                 try:
-                    # Get context from KG
-                    context = get_application_explanation_data(loan_id)
+                    # Use ExplanationService (abstraction layer)
+                    request = ExplanationRequest(
+                        application_id=loan_id,
+                        audience=audience,
+                        use_concepts=use_concepts
+                    )
 
-                    # Generate LLM explanation with selected audience and concept toggle
-                    explanation = call_llm_for_explanation(context, audience=audience, use_concepts=use_concepts)
+                    # Generate explanation via service
+                    response = explanation_service.generate_explanation(request)
+
+                    # Convert response DTO back to dict format for compatibility with existing UI code
+                    explanation = response.to_dict()
+
+                    # For now, also get raw context for visualizations (TODO: refactor visualizations)
+                    from backend.src.explainability.llm_explainer import get_application_explanation_data
+                    context = get_application_explanation_data(loan_id)
 
                     # Store in session state
                     st.session_state.current_explanation = explanation
@@ -1371,8 +1390,18 @@ elif page == "Batch Analysis":
 
                 for i, app_id in enumerate(selected_apps):
                     try:
+                        # Use ExplanationService for batch processing
+                        request = ExplanationRequest(
+                            application_id=app_id,
+                            audience=batch_audience_key,
+                            use_concepts=False
+                        )
+                        response = explanation_service.generate_explanation(request)
+                        explanation = response.to_dict()
+
+                        # Get context for compatibility
+                        from backend.src.explainability.llm_explainer import get_application_explanation_data
                         context = get_application_explanation_data(app_id)
-                        explanation = call_llm_for_explanation(context, audience=batch_audience_key)
 
                         results.append({
                             'Application ID': app_id,
