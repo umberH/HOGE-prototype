@@ -1,0 +1,163 @@
+{
+  "evaluation_timestamp": "2026-05-01T04:52:33.095297+00:00",
+  "results": [
+    {
+      "application_id": "LP002170",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.9583821892738342,
+      "kg_prob": 0.9583821892738342,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": []
+    },
+    {
+      "application_id": "LP001250",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.0283859744668006,
+      "kg_prob": 0.0283859744668006,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": [
+        "RULE_CREDIT_001"
+      ]
+    },
+    {
+      "application_id": "LP002209",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.9518746733665466,
+      "kg_prob": 0.9518746733665466,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": []
+    },
+    {
+      "application_id": "LP001536",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.7662873268127441,
+      "kg_prob": 0.7662873268127441,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": [
+        "RULE_CREDIT_001"
+      ]
+    },
+    {
+      "application_id": "LP001357",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.7748395800590515,
+      "kg_prob": 0.7748395800590515,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": []
+    },
+    {
+      "application_id": "LP002266",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.905302882194519,
+      "kg_prob": 0.905302882194519,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": []
+    },
+    {
+      "application_id": "LP002223",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.8810344934463501,
+      "kg_prob": 0.8810344934463501,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": [
+        "RULE_CREDIT_001"
+      ]
+    },
+    {
+      "application_id": "LP001439",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.6689938306808472,
+      "kg_prob": 0.6689938306808472,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": []
+    },
+    {
+      "application_id": "LP001238",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.9670880436897278,
+      "kg_prob": 0.9670880436897278,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": []
+    },
+    {
+      "application_id": "LP002446",
+      "kg_found": true,
+      "prediction_match": true,
+      "probability_match": true,
+      "gt_prob": 0.0145004047080874,
+      "kg_prob": 0.0145004047080874,
+      "precision_at_3": 1.0,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "feature_recall": 1.0,
+      "total_gt_features": 22,
+      "total_kg_features": 22,
+      "kg_rules_found": [
+        "RULE_CREDIT_001"
+      ]
+    }
+  ]
+}

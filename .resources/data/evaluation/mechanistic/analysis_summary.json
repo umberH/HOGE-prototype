@@ -1,0 +1,21 @@
+{
+  "analysis_type": "comprehensive_mechanistic_interpretability",
+  "model": "models/loan_xgb_monotonic.joblib",
+  "data_samples": 5,
+  "num_features": 13,
+  "shapley_interactions": {
+    "total_interactions": 3,
+    "synergistic": 2,
+    "redundant": 1
+  },
+  "circuits": {
+    "total_discovered": 0,
+    "coverage": 0.0,
+    "avg_complexity": NaN
+  },
+  "fidelity": {
+    "overall_quality": 0.5741780470449096,
+    "faithfulness": 1.0,
+    "coverage": 0.0
+  }
+}

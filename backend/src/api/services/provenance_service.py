@@ -30,7 +30,7 @@ class ProvenanceService:
         Returns:
             Model provenance dict
         """
-        return self._load_provenance_file("models/model_provenance.json").get("model_provenance", {})
+        return self._load_provenance_file(".resources/models/model_provenance.json").get("model_provenance", {})
 
     def load_kg_provenance(self) -> Dict[str, Any]:
         """
@@ -39,7 +39,7 @@ class ProvenanceService:
         Returns:
             KG provenance dict
         """
-        return self._load_provenance_file("data/provenance/kg_provenance.json").get("kg_provenance", {})
+        return self._load_provenance_file(".resources/data/provenance/kg_provenance.json").get("kg_provenance", {})
 
     def load_evaluation_provenance(self) -> Dict[str, Any]:
         """
@@ -48,7 +48,7 @@ class ProvenanceService:
         Returns:
             Evaluation provenance dict
         """
-        return self._load_provenance_file("data/provenance/eval_provenance.json").get("evaluation_provenance", {})
+        return self._load_provenance_file(".resources/data/provenance/eval_provenance.json").get("evaluation_provenance", {})
 
     def load_all_system_provenance(self) -> Dict[str, Any]:
         """

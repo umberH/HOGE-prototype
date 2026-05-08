@@ -1,0 +1,164 @@
+% Component D: Mechanistic Interpretability
+% Add this section after Component C (Narrative Explainer) in your paper
+
+\subsection{Component D: Mechanistic Interpretability Layer}
+
+While Components A--C of HOGE provide feature attributions (SHAP), semantic grounding (KG), and natural language narratives (LLM), they primarily address \emph{what} the model decided and \emph{why individual features contributed}. A critical gap remains: understanding \emph{how} the model internally organizes its decision-making mechanisms across the ensemble. We introduce Component~D---Mechanistic Interpretability---to reveal the internal structure, feature interactions, and tree-level specialization patterns that govern model behaviour.
+
+\subsubsection{Motivation: Beyond Feature Importance}
+
+Standard XAI methods like SHAP answer ``Which features mattered for this decision?'' but cannot explain:
+\begin{itemize}
+    \item \textbf{Feature dependencies}: Do \texttt{ApplicantIncome} and \texttt{Total\_Income} interact, and if so, how?
+    \item \textbf{Tree specialization}: Do different trees in the ensemble focus on different aspects of risk assessment?
+    \item \textbf{Decision mechanisms}: What is the internal hierarchy of checks the model performs?
+    \item \textbf{Systematic patterns}: Are certain feature combinations consistently evaluated together?
+\end{itemize}
+
+These questions are critical for model debugging, fairness analysis, and regulatory compliance. For instance, discovering that \texttt{Credit\_History} is underutilized (3.7\% tree specialization vs. expected 20--30\%) reveals a systematic model limitation invisible to SHAP analysis.
+
+\subsubsection{Design Principles}
+
+Mechanistic interpretability for tree ensembles is inspired by recent work on neural network interpretability~\cite{olah2020, anthropic2023}, which seeks to understand individual neurons and circuits. We adapt this paradigm to XGBoost by treating:
+\begin{itemize}
+    \item \textbf{Trees as ``neurons''}: Each tree specializes in particular decision patterns
+    \item \textbf{Feature interactions as ``circuits''}: Co-occurring features form decision pathways
+    \item \textbf{Ensemble structure as ``network architecture''}: Hierarchical organization emerges from tree specializations
+\end{itemize}
+
+Component~D operates post-training and requires no model modification, making it compatible with existing HOGE pipelines.
+
+\subsubsection{Mechanistic Analysis Methods}
+
+We implement four complementary analysis methods:
+
+\paragraph{1. Tree Specialization Analysis}
+For each tree $t \in T$ in the ensemble, we identify its \emph{dominant feature} $f^*_t$ as the feature with the highest within-tree importance:
+\begin{equation}
+f^*_t = \arg\max_{f \in F} \frac{\text{count}(f \text{ splits in } t)}{\text{total splits in } t}
+\end{equation}
+Aggregating across the ensemble reveals the \emph{specialization distribution}:
+\begin{equation}
+\text{Spec}(f) = \frac{|\{t \in T : f^*_t = f\}|}{|T|}
+\end{equation}
+This metric shows what proportion of trees primarily focus on each feature, revealing the model's internal decision hierarchy.
+
+\paragraph{2. Feature Interaction Detection}
+Two features $f_a$ and $f_b$ are said to \emph{interact} in tree $t$ if both appear as split nodes. We quantify interaction strength as:
+\begin{equation}
+\text{Strength}(f_a, f_b) = \frac{|\{t \in T : f_a \in t \land f_b \in t\}|}{|T|}
+\end{equation}
+Interactions are classified by average depth difference $\Delta d$:
+\begin{itemize}
+    \item \textbf{Parallel} ($\Delta d < 0.5$): Features checked independently at similar depths
+    \item \textbf{Sequential} ($0.5 \leq \Delta d < 2$): One feature conditions on another
+    \item \textbf{Nested} ($\Delta d \geq 2$): Deep conditional dependencies
+\end{itemize}
+
+\paragraph{3. Decision Path Tracing}
+For application $x$, we extract the decision path through each tree $t$:
+\begin{equation}
+\text{Path}_t(x) = \langle f_1, \theta_1, d_1 \rangle, \ldots, \langle f_k, \theta_k, d_k \rangle, v_{\text{leaf}}
+\end{equation}
+where $f_i$ is the split feature, $\theta_i$ the threshold, $d_i$ the direction (left/right), and $v_{\text{leaf}}$ the terminal leaf value. Aggregating paths reveals which trees contribute most to the final prediction.
+
+\paragraph{4. Activation Pattern Analysis}
+For feature $f$, we compute its \emph{activation pattern}:
+\begin{align}
+\text{Usage}(f) &= \frac{|\{t \in T : f \text{ appears in } t\}|}{|T|} \\
+\text{Thresholds}(f) &= \{\theta : \exists t, \text{split on } f \text{ at } \theta\}
+\end{align}
+This reveals how broadly a feature is used and how many distinct decision boundaries the model has learned for it.
+
+\subsubsection{Integration with HOGE Knowledge Graph}
+
+Mechanistic insights are persisted as first-class entities in the Neo4j KG:
+\begin{itemize}
+    \item \texttt{DecisionPath} nodes: Individual tree paths for each application
+    \item \texttt{FeatureInteraction} nodes: Detected interactions with strength and type
+    \item \texttt{TreeSpecialization} nodes: Per-tree dominant features and statistics
+    \item \texttt{INTERACTS\_WITH} relationships: Link features to their interactions
+    \item \texttt{SPECIALIZES\_IN} relationships: Link trees to their focus features
+\end{itemize}
+
+This enables Cypher queries such as:
+\begin{verbatim}
+MATCH (f1:Feature)-[:INTERACTS_WITH]->(fi:FeatureInteraction)
+      <-[:INTERACTS_WITH]-(f2:Feature)
+WHERE fi.interaction_strength > 0.4
+RETURN f1.name, f2.name, fi.interaction_type, fi.interaction_strength
+ORDER BY fi.interaction_strength DESC
+\end{verbatim}
+
+\subsubsection{Empirical Findings: Loan Approval Model}
+
+Applying mechanistic analysis to our XGBoost loan approval model (350 trees, 22 features) revealed:
+
+\paragraph{Over-specialization on Total\_Income}
+$\text{Spec}(\texttt{Total\_Income}) = 0.677$ (237/350 trees), indicating nearly 7 out of 10 trees primarily split on this single feature. While income is rationally predictive, such concentration reduces ensemble diversity and suggests potential for model simplification (fewer trees, higher learning rate).
+
+\paragraph{Strong Income Feature Interactions}
+Top interactions (all parallel type):
+\begin{itemize}
+    \item \texttt{ApplicantIncome} $\times$ \texttt{Total\_Income}: Strength 0.509 (178 trees)
+    \item \texttt{CoapplicantIncome} $\times$ \texttt{Total\_Income}: Strength 0.423 (148 trees)
+    \item \texttt{ApplicantIncome} $\times$ \texttt{CoapplicantIncome}: Strength 0.411 (144 trees)
+\end{itemize}
+This reveals a robust cross-validation strategy: the model independently verifies income from multiple sources rather than relying on a single measure.
+
+\paragraph{Underutilization of Credit\_History}
+$\text{Spec}(\texttt{Credit\_History}) = 0.037$ (13/350 trees), far below the 20--30\% expected for credit-based lending. Cross-referencing with SHAP analysis confirmed low marginal contribution, suggesting either (i)~low variance in training data (most applicants have good credit) or (ii)~income features dominate the signal. This finding prompted data re-examination and consideration of \texttt{Credit\_History} $\times$ \texttt{Total\_Income} interaction features.
+
+\paragraph{Low Demographic Bias}
+Demographic features (\texttt{Property\_Area}, \texttt{Dependents}, \texttt{Marital\_Status}) combined for <5\% specialization, indicating decisions are primarily financial rather than demographic---a positive finding for fair lending compliance.
+
+\paragraph{Hierarchical Decision Strategy (Inferred)}
+Mechanistic analysis reveals a three-tier strategy:
+\begin{enumerate}
+    \item \textbf{Tier 1 (68\%)}: Primary filter via \texttt{Total\_Income} (278 unique thresholds, fine-grained)
+    \item \textbf{Tier 2 (30\%)}: Income validation via \texttt{ApplicantIncome}, \texttt{CoapplicantIncome}, \texttt{LoanAmount}
+    \item \textbf{Tier 3 (2\%)}: Risk checks via \texttt{DTI}, \texttt{Credit\_History}
+\end{enumerate}
+
+\subsubsection{Complementarity with SHAP}
+
+Mechanistic interpretability and SHAP provide orthogonal insights:
+\begin{itemize}
+    \item \textbf{SHAP}: ``\texttt{Total\_Income} contributed +0.45 to this prediction''
+    \item \textbf{Mechanistic}: ``\texttt{Total\_Income} is the primary mechanism in 237/350 trees, cross-validated with \texttt{ApplicantIncome} in 178 trees via 278 distinct thresholds''
+\end{itemize}
+SHAP answers ``How much?'' while mechanistic answers ``How?''---both are necessary for complete model understanding.
+
+\subsubsection{Applications and Research Contributions}
+
+\paragraph{Model Debugging}
+Systematic issues like \texttt{Credit\_History} underutilization or over-specialization are invisible to SHAP but critical for model improvement. Mechanistic analysis provides actionable diagnostics.
+
+\paragraph{Fairness Analysis}
+Comparing mechanistic patterns across demographic groups can reveal disparate decision mechanisms (e.g., ``Does the model use different feature interactions for Group~A vs.\ Group~B?'').
+
+\paragraph{Enhanced LLM Explanations}
+Component~C narratives can be enriched with mechanistic insights:
+\begin{quote}
+\emph{``This decision was primarily driven by trees specializing in Total\_Income evaluation. The model cross-validated your income from multiple sources (applicant: \$5,000, co-applicant: \$3,000) across 178 trees to ensure robustness.''}
+\end{quote}
+
+\paragraph{Causal Discovery}
+Interaction patterns (parallel, sequential, nested) can inform causal graph construction, distinguishing independent causes from mediating relationships.
+
+\paragraph{Regulatory Compliance}
+Mechanistic transparency supports model documentation requirements (e.g., EU AI Act, GDPR Article~22), demonstrating how decisions are actually made internally, not just post-hoc rationalizations.
+
+\subsubsection{Novelty and Limitations}
+
+To our knowledge, this is the first application of mechanistic interpretability principles to tree ensemble models in a high-stakes decision domain. While neural network mechanistic interpretability focuses on activation patterns and circuits~\cite{olah2020,anthropic2023}, we adapt these concepts to discrete tree structures, revealing ensemble organization patterns.
+
+\textbf{Limitations}:
+\begin{itemize}
+    \item Decision path extraction is sensitive to XGBoost version compatibility (observed in implementation)
+    \item Analysis complexity scales with ensemble size ($O(|T| \times |F|^2)$ for interactions)
+    \item Interaction classification (parallel/sequential/nested) is heuristic-based; formal causal inference methods could strengthen this
+    \item Feature names are post-preprocessing (e.g., \texttt{f5}); mapping to original names improves interpretability
+\end{itemize}
+
+Despite these limitations, Component~D extends HOGE's explanation capabilities from \emph{what features contributed} to \emph{how the model internally organizes}, enabling deeper model understanding and more trustworthy deployment in regulated domains.

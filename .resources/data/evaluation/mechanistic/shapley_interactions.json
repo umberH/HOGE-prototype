@@ -1,0 +1,45 @@
+{
+  "interactions": [
+    {
+      "feature_a": "Dependents",
+      "feature_b": "CoapplicantIncome",
+      "interaction_strength": 0.022422034778931975,
+      "synergy_score": 0.022422034778931975,
+      "redundancy_score": 0.0,
+      "interaction_type": "synergistic",
+      "statistical_significance": 0.0,
+      "confidence_interval": [
+        NaN,
+        NaN
+      ],
+      "sample_size": 5
+    },
+    {
+      "feature_a": "Married",
+      "feature_b": "CoapplicantIncome",
+      "interaction_strength": -0.019555348030560034,
+      "synergy_score": 0.0,
+      "redundancy_score": -0.019555348030560034,
+      "interaction_type": "redundant",
+      "statistical_significance": 0.0,
+      "confidence_interval": [
+        NaN,
+        NaN
+      ],
+      "sample_size": 5
+    }
+  ],
+  "summary": {
+    "total_interactions": 2,
+    "synergistic": 1,
+    "redundant": 1,
+    "independent": 0,
+    "mean_strength": 0.020988691404746004,
+    "max_strength": 0.022422034778931975
+  },
+  "provenance": {
+    "method": "ShapleyInteractionIndex",
+    "statistical_test": "one-sample t-test",
+    "significance_level": 0.05
+  }
+}

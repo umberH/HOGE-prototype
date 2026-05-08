@@ -1,0 +1,22 @@
+{
+  "fidelity_metrics": {
+    "circuit_coverage": 0.0,
+    "mechanistic_faithfulness": 1.0,
+    "mean_absolute_error": 0.1106124609708786,
+    "r_squared": 0.8708902352245478,
+    "complexity_score": 0.0,
+    "intervention_consistency": 0.0,
+    "overall_quality_score": 0.5741780470449096
+  },
+  "pareto_frontier": [],
+  "interpretation": {
+    "coverage": "Poor - circuits explain <50% of predictions",
+    "faithfulness": "Excellent - mechanistic model very accurate",
+    "overall": "Low Quality Explanation",
+    "recommendation": "Mechanistic explanation needs improvement"
+  },
+  "provenance": {
+    "method": "MechanisticFidelityEvaluation",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "circuits": [],
+  "summary": {
+    "total_circuits": 0,
+    "avg_frequency": NaN,
+    "avg_importance": NaN,
+    "avg_complexity": NaN,
+    "top_features": {}
+  },
+  "provenance": {
+    "method": "CircuitDiscovery",
+    "model_type": "XGBoost",
+    "version": "1.0.0"
+  }
+}

@@ -63,7 +63,7 @@ class EvaluationResult:
         human_details = []
 
         # Load faithfulness
-        faith_path = "data/evaluation/eval_faithfulness.json"
+        faith_path = ".resources/data/evaluation/eval_faithfulness.json"
         if os.path.exists(faith_path):
             with open(faith_path, 'r') as f:
                 faith_data = json.load(f)
@@ -76,7 +76,7 @@ class EvaluationResult:
                     metrics.faithfulness_samples = len(scores)
 
         # Load hallucination
-        hall_path = "data/evaluation/eval_hallucination.json"
+        hall_path = ".resources/data/evaluation/eval_hallucination.json"
         if os.path.exists(hall_path):
             with open(hall_path, 'r') as f:
                 hall_data = json.load(f)
@@ -99,7 +99,7 @@ class EvaluationResult:
                 metrics.hallucination_samples = len(results)
 
         # Load retrieval
-        retr_path = "data/evaluation/eval_retrieval.json"
+        retr_path = ".resources/data/evaluation/eval_retrieval.json"
         if os.path.exists(retr_path):
             with open(retr_path, 'r') as f:
                 retr_data = json.load(f)
@@ -113,7 +113,7 @@ class EvaluationResult:
                     metrics.retrieval_samples = len(results)
 
         # Load human evaluation
-        human_path = "data/evaluation/eval_human_results.json"
+        human_path = ".resources/data/evaluation/eval_human_results.json"
         if os.path.exists(human_path):
             with open(human_path, 'r') as f:
                 human_data = json.load(f)
@@ -125,7 +125,7 @@ class EvaluationResult:
                 metrics.human_samples = summary.get("total_samples", 0)
 
         # Try to get timestamp from combined file
-        combined_path = "data/evaluation/eval_system_all.json"
+        combined_path = ".resources/data/evaluation/eval_system_all.json"
         if os.path.exists(combined_path):
             with open(combined_path, 'r') as f:
                 combined_data = json.load(f)

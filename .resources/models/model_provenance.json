@@ -1,0 +1,63 @@
+{
+  "provenance_id": "prov_20260508_141536",
+  "export_timestamp": "2026-05-08T04:15:36.155804+00:00",
+  "hoge_version": "1.0.0",
+  "provenance_schema_version": "2.0",
+  "framework_name": "HOGE",
+  "framework_description": "Human-Centric Ontology-Grounded Explanation Framework",
+  "model_provenance": {
+    "model_id": "xgb_monotonic_20260508_141536",
+    "created_at": "2026-05-08T04:15:36.155760+00:00",
+    "model_path": "models/loan_xgb_monotonic.joblib",
+    "model_type": "XGBoost",
+    "model_class": "XGBClassifier",
+    "training_samples": 400,
+    "test_samples": 100,
+    "total_samples": 500,
+    "feature_count": 13,
+    "features": [
+      "Gender",
+      "Married",
+      "Dependents",
+      "Education",
+      "Self_Employed",
+      "ApplicantIncome",
+      "CoapplicantIncome",
+      "LoanAmount",
+      "Loan_Amount_Term",
+      "Credit_History",
+      "Property_Area",
+      "Total_Income",
+      "DTI"
+    ],
+    "target": "Loan_Status",
+    "hyperparameters": {
+      "n_estimators": 350,
+      "learning_rate": 0.05,
+      "max_depth": 4,
+      "subsample": 0.9,
+      "colsample_bytree": 0.9,
+      "eval_metric": "logloss",
+      "n_jobs": -1
+    },
+    "monotonic_constraints": {
+      "ApplicantIncome": 1,
+      "CoapplicantIncome": 1,
+      "LoanAmount": -1,
+      "DTI": -1,
+      "other": 0
+    },
+    "monotonic_constraints_string": "(1,1,-1,0,0,0,-1)",
+    "performance_metrics": {
+      "accuracy": 0.8,
+      "precision": 0.8769230769230769,
+      "recall": 0.8260869565217391,
+      "f1_score": 0.8507462686567164,
+      "roc_auc": 0.852267414679757
+    },
+    "training_date": "2026-05-08T04:15:36.155260+00:00",
+    "random_seed": 42,
+    "test_split_ratio": 0.2,
+    "stratified": true
+  }
+}

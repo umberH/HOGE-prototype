@@ -1,0 +1,38 @@
+{
+  "provenance_id": "prov_20260508_143910",
+  "export_timestamp": "2026-05-08T04:39:10.077925+00:00",
+  "hoge_version": "1.0.0",
+  "provenance_schema_version": "2.0",
+  "framework_name": "HOGE",
+  "framework_description": "Human-Centric Ontology-Grounded Explanation Framework",
+  "kg_provenance": {
+    "loaded_at": "2026-05-08T04:39:10.077925+00:00",
+    "kg_loader_version": "1.0.0",
+    "neo4j_uri": "neo4j://127.0.0.1:7687",
+    "neo4j_version": "2026.04.0",
+    "database_name": "neo4j",
+    "total_nodes": 24054,
+    "total_relationships": 46286,
+    "node_counts": {
+      "LoanApplication": 500,
+      "Applicant": 500,
+      "Feature": "multiple",
+      "FeatureValue": "multiple",
+      "FeatureContribution": 11000,
+      "PolicyRule": 4
+    },
+    "relationship_counts": {
+      "HAS_APPLICATION": 500,
+      "HAS_FEATURE_VALUE": "multiple",
+      "HAS_SHAP_CONTRIBUTION": 11000,
+      "VIOLATES_RULE": "conditional",
+      "HAS_COUNTERFACTUAL": 528
+    },
+    "data_sources": {
+      "applications": "data/raw/df1_loan.csv",
+      "shap_values": "data/processed/shap_long.csv",
+      "counterfactuals": null
+    },
+    "loading_date": "2026-05-08T04:39:10.077925+00:00"
+  }
+}
