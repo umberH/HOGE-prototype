@@ -1,0 +1,49 @@
+# Requirements for Multimodal HOGE (Minimal Implementation)
+# Install with: pip install -r requirements_multimodal.txt
+
+# Core dependencies (from base HOGE)
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+streamlit>=1.28.0
+python-dotenv>=1.0.0
+
+# Deep Learning
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Transformers & NLP
+transformers>=4.30.0
+tokenizers>=0.13.0
+sentencepiece>=0.1.99
+
+# Multimodal Dataset
+CMU-MultimodalSDK>=1.2.12
+h5py>=3.8.0
+
+# Audio Processing
+librosa>=0.10.0
+soundfile>=0.12.0
+
+# Video Processing (optional - for full implementation)
+# opencv-python>=4.8.0
+# moviepy>=1.0.3
+
+# XAI for Deep Learning
+# captum>=0.6.0  # For GradCAM (optional)
+
+# Knowledge Graph
+neo4j>=5.12.0
+
+# LLM
+openai>=1.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+
+# Utilities
+tqdm>=4.65.0
+pyyaml>=6.0
