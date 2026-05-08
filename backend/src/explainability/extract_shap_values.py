@@ -3,13 +3,24 @@ import numpy as np
 import joblib
 import shap
 from sklearn.compose import ColumnTransformer
+import sys
+from pathlib import Path
+
+# Add project root to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
+# Import centralized path configuration
+from backend.src.config import get_paths
+
+# Get centralized paths
+paths = get_paths()
 
 # ============================================================
 # 1. Load model & raw dataset
 # ============================================================
 
-MODEL_FILE = "models/loan_xgb_monotonic.joblib"
-DATA_FILE = "data/raw/df1_loan.csv"
+MODEL_FILE = paths.MODEL_XGB_MONOTONIC
+DATA_FILE = paths.RAW_DATA_LOAN
 
 print("Loading model...")
 pipeline = joblib.load(MODEL_FILE)
@@ -131,8 +142,8 @@ shap_wide.insert(0, "application_id", app_ids.values)
 shap_wide.insert(1, "prediction", preds)
 shap_wide.insert(2, "approval_probability", probs)
 
-shap_wide.to_csv("data/processed/shap_wide.csv", index=False)
-print("Saved shap_wide.csv ✔")
+shap_wide.to_csv(paths.SHAP_WIDE, index=False)
+print(f"Saved {paths.SHAP_WIDE} [OK]")
 
 
 # ============================================================
@@ -171,8 +182,8 @@ for i in range(shap_values.shape[0]):
         )
 
 shap_long = pd.DataFrame(records)
-shap_long.to_csv("data/processed/shap_long.csv", index=False)
-print("Saved shap_long.csv ✔")
+shap_long.to_csv(paths.SHAP_LONG, index=False)
+print(f"Saved {paths.SHAP_LONG} [OK]")
 
 print("\nDone. You now have:")
 print("  - shap_wide.csv  (per-application feature attributions)")

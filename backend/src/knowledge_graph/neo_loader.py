@@ -21,6 +21,7 @@ except ImportError:
 
 # Import config adapter for local/remote Neo4j switching
 from backend.src.api.adapters.config import get_neo4j_config
+from backend.src.config import get_paths
 
 # ============================================================
 # CONFIG
@@ -35,10 +36,10 @@ NEO4J_DATABASE = neo4j_config["database"]
 
 print(f"[CONFIG] Using {neo4j_config['environment']} Neo4j: {NEO4J_URI}")
 
-# Updated paths for new project structure
-PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
-APPLICATION_DATA_FILE = str(PROJECT_ROOT / ".resources" / "data" / "raw" / "df1_loan.csv")
-SHAP_LONG_FILE = str(PROJECT_ROOT / ".resources" / "data" / "processed" / "shap_long.csv")
+# Get centralized paths
+paths = get_paths()
+APPLICATION_DATA_FILE = str(paths.RAW_DATA_LOAN)
+SHAP_LONG_FILE = str(paths.SHAP_LONG)
 
 
 # ============================================================
@@ -310,7 +311,7 @@ print("[OK] Policy violations linked")
 
 import json, os
 
-COUNTERFACTUAL_FILE = str(PROJECT_ROOT / ".resources" / "data" / "evaluation" / "eval_counterfactual.json")
+COUNTERFACTUAL_FILE = str(paths.EVAL_COUNTERFACTUAL)
 
 if os.path.exists(COUNTERFACTUAL_FILE):
     print("Loading counterfactual scenarios...")
@@ -447,9 +448,8 @@ if PROVENANCE_AVAILABLE:
 
     # Save provenance to JSON
     provenance_output = tracker.export_provenance()
-    provenance_dir = PROJECT_ROOT / ".resources" / "data" / "provenance"
-    os.makedirs(provenance_dir, exist_ok=True)
-    provenance_file = provenance_dir / "kg_provenance.json"
+    provenance_file = paths.KG_PROVENANCE
+    os.makedirs(provenance_file.parent, exist_ok=True)
     with open(provenance_file, "w") as f:
         json.dump(provenance_output, f, indent=2, default=str)
 

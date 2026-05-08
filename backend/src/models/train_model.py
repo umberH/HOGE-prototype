@@ -13,21 +13,39 @@ import sys
 from pathlib import Path
 
 # Add project root to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
 
 try:
-    from src.provenance.enhanced_provenance import ProvenanceTracker
+    from backend.src.provenance.enhanced_provenance import ProvenanceTracker
     PROVENANCE_AVAILABLE = True
 except ImportError:
     PROVENANCE_AVAILABLE = False
     print("Warning: Provenance tracking not available")
+
+# Import centralized path configuration
+from backend.src.config import get_paths
+
+# ============================================================
+# 0. PATH CONFIGURATION
+# ============================================================
+
+# Get centralized paths
+paths = get_paths()
+
+# Input paths
+RAW_DATA_FILE = paths.RAW_DATA_LOAN
+
+# Output paths
+MODEL_OUTPUT_PATH = paths.MODEL_XGB_MONOTONIC
+PROVENANCE_OUTPUT_PATH = paths.MODEL_PROVENANCE
 
 
 # ============================================================
 # 1. LOAD RAW DATA
 # ============================================================
 
-df = pd.read_csv("data/raw/df1_loan.csv")
+df = pd.read_csv(RAW_DATA_FILE)
 
 # Drop generated index column
 df = df.drop(columns=["Unnamed: 0"], errors="ignore")
@@ -171,7 +189,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print("Training XGBoost model...")
 pipeline.fit(X_train, y_train)
-print("Training complete ✔")
+print("Training complete [OK]")
 
 
 # ============================================================
@@ -191,8 +209,8 @@ print("ROC-AUC Score:", roc_auc_score(y_test, y_proba))
 # 12. SAVE MODEL
 # ============================================================
 
-joblib.dump(pipeline, "models/loan_xgb_monotonic.joblib")
-print("\nModel saved as loan_xgb_monotonic.joblib ✔")
+joblib.dump(pipeline, MODEL_OUTPUT_PATH)
+print(f"\nModel saved to {MODEL_OUTPUT_PATH} [OK]")
 
 
 # ============================================================
@@ -214,7 +232,7 @@ if PROVENANCE_AVAILABLE:
 
     # Add model metadata
     model_metadata = {
-        "model_path": "models/loan_xgb_monotonic.joblib",
+        "model_path": str(paths.get_relative_path(MODEL_OUTPUT_PATH)),
         "model_type": "XGBoost",
         "model_class": "XGBClassifier",
         "training_samples": len(X_train),
@@ -257,9 +275,9 @@ if PROVENANCE_AVAILABLE:
 
     # Save provenance to JSON
     provenance_output = tracker.export_provenance()
-    with open("models/model_provenance.json", "w") as f:
+    with open(PROVENANCE_OUTPUT_PATH, "w") as f:
         json.dump(provenance_output, f, indent=2, default=str)
 
-    print("Model provenance saved to models/model_provenance.json ✔")
+    print(f"Model provenance saved to {PROVENANCE_OUTPUT_PATH} [OK]")
 else:
     print("\nSkipping provenance capture (module not available)")
