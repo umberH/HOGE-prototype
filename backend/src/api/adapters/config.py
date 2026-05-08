@@ -62,21 +62,51 @@ def get_config(key: str, default: Any = None) -> Any:
 
 def get_neo4j_config() -> Dict[str, str]:
     """
-    Get Neo4j configuration.
+    Get Neo4j configuration with local/remote switching.
+
+    Uses USE_REMOTE_NEO4J flag to switch between local and Aura credentials.
+    Set USE_REMOTE_NEO4J=remote to use Neo4j Aura (production).
+    Set USE_REMOTE_NEO4J=local to use local Neo4j (development).
 
     Returns:
-        Dict with uri, user, password, database
+        Dict with uri, user, password, database, environment
 
     Examples:
         >>> config = get_neo4j_config()
         >>> config['uri']
         'neo4j://localhost:7687'
+        >>> config['environment']
+        'LOCAL'
     """
+    use_remote = get_config("USE_REMOTE_NEO4J", "local").lower() == "remote"
+
+    if use_remote:
+        # Remote Neo4j Aura (production)
+        uri = get_config("NEO4J_REMOTE_URI") or get_config("neo4j.uri")
+        user = get_config("NEO4J_REMOTE_USER") or get_config("neo4j.user", "neo4j")
+        password = get_config("NEO4J_REMOTE_PASSWORD") or get_config("neo4j.password")
+        database = get_config("NEO4J_REMOTE_DATABASE") or get_config("neo4j.database", "neo4j")
+        environment = "REMOTE"
+    else:
+        # Local Neo4j (development)
+        uri = get_config("NEO4J_LOCAL_URI") or get_config("NEO4J_URI", "neo4j://localhost:7687")
+        user = get_config("NEO4J_LOCAL_USER") or get_config("NEO4J_USER", "neo4j")
+        password = get_config("NEO4J_LOCAL_PASSWORD") or get_config("NEO4J_PASSWORD")
+        database = get_config("NEO4J_LOCAL_DATABASE") or get_config("NEO4J_DATABASE", "neo4j")
+        environment = "LOCAL"
+
+    if not password:
+        raise ValueError(
+            f"NEO4J_{environment}_PASSWORD must be set in .env file. "
+            f"Currently using {environment} Neo4j (USE_REMOTE_NEO4J={'remote' if use_remote else 'local'})"
+        )
+
     return {
-        "uri": get_config("NEO4J_URI") or get_config("neo4j.uri", "neo4j://127.0.0.1:7687"),
-        "user": get_config("NEO4J_USER") or get_config("neo4j.user", "neo4j"),
-        "password": get_config("NEO4J_PASSWORD") or get_config("neo4j.password", "test1234"),
-        "database": get_config("NEO4J_DATABASE") or get_config("neo4j.database", "neo4j"),
+        "uri": uri,
+        "user": user,
+        "password": password,
+        "database": database,
+        "environment": environment,
     }
 
 

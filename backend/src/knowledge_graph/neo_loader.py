@@ -10,29 +10,35 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Add project root to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 try:
-    from src.provenance.enhanced_provenance import ProvenanceTracker
+    from backend.src.provenance.enhanced_provenance import ProvenanceTracker
     PROVENANCE_AVAILABLE = True
 except ImportError:
     PROVENANCE_AVAILABLE = False
     print("Warning: Provenance tracking not available")
 
+# Import config adapter for local/remote Neo4j switching
+from backend.src.api.adapters.config import get_neo4j_config
+
 # ============================================================
 # CONFIG
 # ============================================================
 
-NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
-NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
-NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
+# Get Neo4j config (supports local/remote switching via USE_REMOTE_NEO4J flag)
+neo4j_config = get_neo4j_config()
+NEO4J_URI = neo4j_config["uri"]
+NEO4J_USER = neo4j_config["user"]
+NEO4J_PASSWORD = neo4j_config["password"]
+NEO4J_DATABASE = neo4j_config["database"]
 
-if not NEO4J_PASSWORD:
-    raise ValueError("NEO4J_PASSWORD must be set in .env file")
+print(f"🔧 Using {neo4j_config['environment']} Neo4j: {NEO4J_URI}")
 
-APPLICATION_DATA_FILE = "data/raw/df1_loan.csv"
-SHAP_LONG_FILE = "data/processed/shap_long.csv"
+# Updated paths for new project structure
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
+APPLICATION_DATA_FILE = str(PROJECT_ROOT / ".resources" / "data" / "raw" / "df1_loan.csv")
+SHAP_LONG_FILE = str(PROJECT_ROOT / ".resources" / "data" / "processed" / "shap_long.csv")
 
 
 # ============================================================
@@ -304,7 +310,7 @@ print("✔ Policy violations linked")
 
 import json, os
 
-COUNTERFACTUAL_FILE = "data/evaluation/eval_counterfactual.json"
+COUNTERFACTUAL_FILE = str(PROJECT_ROOT / ".resources" / "data" / "evaluation" / "eval_counterfactual.json")
 
 if os.path.exists(COUNTERFACTUAL_FILE):
     print("Loading counterfactual scenarios...")
@@ -441,11 +447,13 @@ if PROVENANCE_AVAILABLE:
 
     # Save provenance to JSON
     provenance_output = tracker.export_provenance()
-    os.makedirs("data/provenance", exist_ok=True)
-    with open("data/provenance/kg_provenance.json", "w") as f:
+    provenance_dir = PROJECT_ROOT / ".resources" / "data" / "provenance"
+    os.makedirs(provenance_dir, exist_ok=True)
+    provenance_file = provenance_dir / "kg_provenance.json"
+    with open(provenance_file, "w") as f:
         json.dump(provenance_output, f, indent=2, default=str)
 
-    print("KG provenance saved to data/provenance/kg_provenance.json ✔")
+    print(f"KG provenance saved to {provenance_file} ✔")
 else:
     print("\nSkipping KG provenance capture (module not available)")
 
