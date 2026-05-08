@@ -1,0 +1,50 @@
+# Streamlit Configuration
+# This file customizes the appearance and behavior of the Streamlit app
+
+[theme]
+# Primary color for interactive elements
+primaryColor = "#FF4B4B"
+
+# Background color for the main content area
+backgroundColor = "#FFFFFF"
+
+# Background color for sidebar and other secondary elements
+secondaryBackgroundColor = "#F0F2F6"
+
+# Text color
+textColor = "#262730"
+
+# Font family (options: "sans serif", "serif", "monospace")
+font = "sans serif"
+
+[server]
+# Maximum file upload size in MB
+maxUploadSize = 200
+
+# Enable XSRF protection
+enableXsrfProtection = true
+
+# Enable CORS (set to false in production)
+enableCORS = false
+
+# Port (only applies to local development)
+port = 8501
+
+[browser]
+# Gather usage stats
+gatherUsageStats = false
+
+# Server address (only for local development)
+serverAddress = "localhost"
+
+[logger]
+# Log level (options: "error", "warning", "info", "debug")
+level = "info"
+
+[runner]
+# Allow users to re-run the app when file changes are detected
+# (only useful in development, disabled on Streamlit Cloud)
+fastReruns = true
+
+# Automatically rerun script when files change (dev only)
+magicEnabled = true
