@@ -67,3 +67,8 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# Documentation (keep on local machine only)
+.documentation/
+*.md
+!README.md
