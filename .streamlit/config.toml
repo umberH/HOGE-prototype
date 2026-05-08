@@ -21,11 +21,11 @@ font = "sans serif"
 # Maximum file upload size in MB
 maxUploadSize = 200
 
-# Enable XSRF protection
+# Enable XSRF protection (if enabled, CORS must also be enabled)
 enableXsrfProtection = true
 
-# Enable CORS (set to false in production)
-enableCORS = false
+# Enable CORS (must be true when XSRF protection is enabled)
+enableCORS = true
 
 # Port (only applies to local development)
 port = 8501

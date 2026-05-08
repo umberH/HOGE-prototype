@@ -33,7 +33,7 @@ NEO4J_USER = neo4j_config["user"]
 NEO4J_PASSWORD = neo4j_config["password"]
 NEO4J_DATABASE = neo4j_config["database"]
 
-print(f"🔧 Using {neo4j_config['environment']} Neo4j: {NEO4J_URI}")
+print(f"[CONFIG] Using {neo4j_config['environment']} Neo4j: {NEO4J_URI}")
 
 # Updated paths for new project structure
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
@@ -76,7 +76,7 @@ constraints = [
 for c in constraints:
     run_query(c)
 
-print("✔ Constraints created")
+print("[OK] Constraints created")
 
 
 # ============================================================
@@ -161,7 +161,7 @@ MERGE (l)-[:HAS_FEATURE_VALUE]->(val2)
 for _, row in apps.iterrows():
     run_query(application_query, row.to_dict())
 
-print("✔ Application + Applicant + FeatureValues loaded")
+print("[OK] Application + Applicant + FeatureValues loaded")
 
 
 # ============================================================
@@ -198,7 +198,7 @@ MERGE (fc)-[:FOR_FEATURE]->(f)
 for _, row in shap_long.iterrows():
     run_query(shap_query, row.to_dict())
 
-print("✔ SHAP explanations loaded")
+print("[OK] SHAP explanations loaded")
 
 
 # ============================================================
@@ -263,7 +263,7 @@ MERGE (rf)-[:DERIVED_FROM]->(f)
 for stmt in static_statements:
     run_query(stmt)
 
-print("✔ Policies + Risk Factors loaded")
+print("[OK] Policies + Risk Factors loaded")
 
 
 # ============================================================
@@ -298,7 +298,7 @@ MERGE (l)-[:VIOLATES_RULE]->(rule);
 
 """)
 
-print("✔ Policy violations linked")
+print("[OK] Policy violations linked")
 
 # ============================================================
 # DONE
@@ -365,9 +365,9 @@ if os.path.exists(COUNTERFACTUAL_FILE):
             run_query(cf_query, params)
             count += 1
 
-    print(f"✔ {count} counterfactual scenarios loaded for {len(cf_results)} applications")
+    print(f"[OK] {count} counterfactual scenarios loaded for {len(cf_results)} applications")
 else:
-    print(f"⚠ {COUNTERFACTUAL_FILE} not found — skipping counterfactual ingestion")
+    print(f"[WARN] {COUNTERFACTUAL_FILE} not found — skipping counterfactual ingestion")
     print("  Run: python counterfactual_explainer.py --all  to generate it first")
 
 
@@ -453,7 +453,7 @@ if PROVENANCE_AVAILABLE:
     with open(provenance_file, "w") as f:
         json.dump(provenance_output, f, indent=2, default=str)
 
-    print(f"KG provenance saved to {provenance_file} ✔")
+    print(f"KG provenance saved to {provenance_file} [OK]")
 else:
     print("\nSkipping KG provenance capture (module not available)")
 
