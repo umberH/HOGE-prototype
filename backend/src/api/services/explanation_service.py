@@ -39,29 +39,34 @@ class ExplanationService:
         pass
 
     def generate_explanation(
-        self, request: ExplanationRequest
+        self, request: ExplanationRequest, api_key: str = None, model: str = None
     ) -> ExplanationResponse:
         """
         Generate explanation for a loan application.
 
         Args:
             request: ExplanationRequest with application_id, audience, use_concepts
+            api_key: Optional OpenAI API key (for user-provided keys)
+            model: Optional OpenAI model name
 
         Returns:
             ExplanationResponse DTO with complete explanation
 
         Raises:
             ValueError: If application not found
+            RuntimeError: If API key is missing
             Exception: For other errors
         """
         # 1. Get context from backend (Neo4j + SHAP)
         context = get_application_explanation_data(request.application_id)
 
-        # 2. Call LLM for explanation
+        # 2. Call LLM for explanation with optional user-provided API key
         explanation = call_llm_for_explanation(
             context,
             audience=request.audience,
-            use_concepts=request.use_concepts
+            use_concepts=request.use_concepts,
+            api_key=api_key,
+            model=model
         )
 
         # 3. Transform to DTO

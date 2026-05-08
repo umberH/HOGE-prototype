@@ -120,11 +120,11 @@ with st.sidebar:
     except:
         st.error("Neo4j Disconnected")
 
-    # Check OpenAI key
-    if os.getenv("OPENAI_API_KEY"):
-        st.success("OpenAI Configured")
+    # Check OpenAI key (from user input in sidebar)
+    if st.session_state.get('user_openai_key'):
+        st.success("OpenAI API Key Provided")
     else:
-        st.warning("OpenAI Key Missing")
+        st.warning("OpenAI API Key Required - Enter in sidebar ➡️")
 
 
 # Main content
@@ -493,6 +493,15 @@ elif page == "Explain Application":
         else:
             with st.spinner(f"Generating fresh explanation for {loan_id} (calling LLM)..."):
                 try:
+                    # Get user's API key from session state
+                    user_api_key = st.session_state.get('user_openai_key')
+                    user_model = st.session_state.get('user_openai_model', 'gpt-4o')
+
+                    # Check if API key is provided
+                    if not user_api_key:
+                        st.error("⚠️ Please provide your OpenAI API key in the sidebar to generate explanations.")
+                        st.stop()
+
                     # Use ExplanationService (abstraction layer)
                     request = ExplanationRequest(
                         application_id=loan_id,
@@ -500,8 +509,12 @@ elif page == "Explain Application":
                         use_concepts=use_concepts
                     )
 
-                    # Generate explanation via service
-                    response = explanation_service.generate_explanation(request)
+                    # Generate explanation via service with user's API key
+                    response = explanation_service.generate_explanation(
+                        request,
+                        api_key=user_api_key,
+                        model=user_model
+                    )
 
                     # Convert response DTO back to dict format for compatibility with existing UI code
                     explanation = response.to_dict()
@@ -1385,6 +1398,15 @@ elif page == "Batch Analysis":
             if not selected_apps:
                 st.warning("Please select at least one application")
             else:
+                # Get user's API key from session state
+                user_api_key = st.session_state.get('user_openai_key')
+                user_model = st.session_state.get('user_openai_model', 'gpt-4o')
+
+                # Check if API key is provided
+                if not user_api_key:
+                    st.error("⚠️ Please provide your OpenAI API key in the sidebar to generate explanations.")
+                    st.stop()
+
                 results = []
                 progress_bar = st.progress(0)
 
@@ -1396,7 +1418,11 @@ elif page == "Batch Analysis":
                             audience=batch_audience_key,
                             use_concepts=False
                         )
-                        response = explanation_service.generate_explanation(request)
+                        response = explanation_service.generate_explanation(
+                            request,
+                            api_key=user_api_key,
+                            model=user_model
+                        )
                         explanation = response.to_dict()
 
                         # Get context for compatibility
@@ -1785,8 +1811,18 @@ elif page == "Settings":
 
     # OpenAI settings
     st.markdown("#### 🤖 OpenAI Configuration")
-    openai_key = st.text_input("OpenAI API Key", type="password", value="")
+    st.markdown("*Provide your own OpenAI API key to use this app*")
+    openai_key = st.text_input("OpenAI API Key", type="password", value="",
+                                help="Get your API key from https://platform.openai.com/api-keys")
     openai_model = st.selectbox("Model", ["gpt-4o", "gpt-4", "gpt-3.5-turbo"], index=0)
+
+    # Store in session state for use in explanation generation
+    st.session_state['user_openai_key'] = openai_key
+    st.session_state['user_openai_model'] = openai_model
+
+    # Warn if no API key provided
+    if not openai_key:
+        st.warning("⚠️ Please provide your OpenAI API key to generate explanations")
 
     st.markdown("---")
 

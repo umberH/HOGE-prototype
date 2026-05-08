@@ -447,7 +447,9 @@ Now generate the explanation.
 def call_llm_for_explanation(context: dict,
                              audience: str = "technical",
                              use_concepts: bool = None,
-                             enable_logging: bool = True) -> dict:
+                             enable_logging: bool = True,
+                             api_key: str = None,
+                             model: str = None) -> dict:
     """
     Calls the LLM with ontology-grounded context and returns
     both structured JSON and the raw narrative.
@@ -457,12 +459,19 @@ def call_llm_for_explanation(context: dict,
         audience: Target audience type - "technical", "non_technical", "executive", or "business"
         use_concepts: Whether to use concept-level explanation. If None, auto-enables for executive/business
         enable_logging: Whether to log explanation for drift detection and comparison (default: True)
+        api_key: Optional OpenAI API key. If not provided, uses OPENAI_API_KEY from environment
+        model: Optional model name. If not provided, uses OPENAI_MODEL from environment
     """
-    if not OPENAI_API_KEY:
+    # Use provided API key or fall back to environment variable
+    effective_api_key = api_key or OPENAI_API_KEY
+    if not effective_api_key:
         raise RuntimeError(
-            "OPENAI_API_KEY environment variable is not set. "
-            "Set it with: export OPENAI_API_KEY=sk-..."
+            "OpenAI API key required. Please provide your API key in the sidebar. "
+            "Get your API key from https://platform.openai.com/api-keys"
         )
+
+    # Use provided model or fall back to environment variable
+    effective_model = model or OPENAI_MODEL
 
     # Initialize enhanced provenance tracker
     tracker = None
@@ -498,14 +507,14 @@ def call_llm_for_explanation(context: dict,
             # Concept mapper not available, continue without it
             pass
 
-    client = OpenAI(api_key=OPENAI_API_KEY)
+    client = OpenAI(api_key=effective_api_key)
     prompt = build_llm_prompt(context, audience=audience, use_concepts=use_concepts)
 
     # Track generation time for performance monitoring
     start_time = time.time()
 
     response = client.chat.completions.create(
-        model=OPENAI_MODEL,
+        model=effective_model,
         messages=[
             {
                 "role": "system",
