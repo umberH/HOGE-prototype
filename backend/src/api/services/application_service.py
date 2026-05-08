@@ -12,9 +12,9 @@ import os
 from dotenv import load_dotenv
 
 # Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
 
-from src.api.models.application_dto import ApplicationInfo, ApplicationListResponse
+from backend.src.api.models.application_dto import ApplicationInfo, ApplicationListResponse
 
 load_dotenv()
 

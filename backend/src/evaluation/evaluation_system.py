@@ -28,11 +28,23 @@ import numpy as np
 import pandas as pd
 import joblib
 import shap
+from pathlib import Path
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
 from openai import OpenAI
 
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
+
 load_dotenv()
+
+try:
+    from src.provenance.enhanced_provenance import ProvenanceTracker
+    PROVENANCE_AVAILABLE = True
+except ImportError:
+    PROVENANCE_AVAILABLE = False
+    print("Warning: Provenance tracking not available")
 
 
 # ============================================================
@@ -107,7 +119,7 @@ def get_feature_names(preprocessor):
 
 def get_kg_context(application_id: str) -> dict:
     """Retrieve full explanation context from the KG."""
-    from llm_explainer import get_application_explanation_data
+    from src.explainability.llm_explainer import get_application_explanation_data
     return get_application_explanation_data(application_id)
 
 
@@ -310,7 +322,7 @@ def run_hallucination_evaluation(sample_ids=None, n_samples=10):
     print("A2. HALLUCINATION RATE / GROUNDING PRECISION")
     print("="*60)
 
-    from llm_explainer import get_application_explanation_data, call_llm_for_explanation
+    from src.explainability.llm_explainer import get_application_explanation_data, call_llm_for_explanation
 
     shap_long = pd.read_csv(SHAP_LONG_FILE)
 
@@ -638,3 +650,37 @@ if __name__ == "__main__":
         print("\n" + "="*60)
         print("ALL SYSTEM EVALUATIONS COMPLETE")
         print("="*60)
+
+        # Save evaluation provenance
+        if PROVENANCE_AVAILABLE:
+            print("\nCapturing evaluation provenance...")
+
+            tracker = ProvenanceTracker()
+
+            # Aggregate evaluation metadata
+            eval_metadata = {
+                "evaluation_date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "n_samples": args.n_samples,
+                "evaluations_run": list(all_results.keys()),
+                "faithfulness_metrics": all_results.get("faithfulness", {}).get("summary", {}),
+                "hallucination_metrics": all_results.get("hallucination", {}).get("summary", {}),
+                "retrieval_metrics": all_results.get("retrieval", {}).get("summary", {}),
+                "output_files": {
+                    "faithfulness": "data/evaluation/eval_faithfulness.json",
+                    "hallucination": "data/evaluation/eval_hallucination.json",
+                    "retrieval": "data/evaluation/eval_retrieval.json",
+                    "combined": "data/evaluation/eval_system_all.json"
+                }
+            }
+
+            tracker.add_evaluation_provenance(eval_metadata)
+
+            # Save provenance
+            provenance_output = tracker.export_provenance()
+            os.makedirs("data/provenance", exist_ok=True)
+            with open("data/provenance/eval_provenance.json", "w") as f:
+                json.dump(provenance_output, f, indent=2, default=str)
+
+            print("Evaluation provenance saved to data/provenance/eval_provenance.json ✔")
+        else:
+            print("\nSkipping evaluation provenance capture (module not available)")

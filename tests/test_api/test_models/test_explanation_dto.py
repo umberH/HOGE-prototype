@@ -9,14 +9,14 @@ from typing import List
 import pytest
 
 # Local application
-from src.api.models.explanation_dto import (
+from backend.src.api.models.explanation_dto import (
     ExplanationRequest,
     ExplanationResponse,
     ShapFeature,
     CounterfactualScenario,
     BusinessConcept,
 )
-from src.api.models.common_dto import ProvenanceInfo
+from backend.src.api.models.common_dto import ProvenanceInfo
 
 
 class TestExplanationRequest:

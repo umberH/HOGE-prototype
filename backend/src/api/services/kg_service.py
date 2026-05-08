@@ -9,9 +9,9 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 
 # Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
 
-from src.knowledge_graph.kg_visualizer import KGVisualizer
+from backend.src.knowledge_graph.kg_visualizer import KGVisualizer
 
 
 class KnowledgeGraphService:

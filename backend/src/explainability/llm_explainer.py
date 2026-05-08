@@ -2,9 +2,21 @@ import os
 import sys
 import json
 import datetime
+import time
+from pathlib import Path
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
 from openai import OpenAI
+from typing import Optional
+
+# Add parent directory to path for provenance import
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+try:
+    from src.provenance.enhanced_provenance import ProvenanceTracker
+    PROVENANCE_AVAILABLE = True
+except ImportError:
+    PROVENANCE_AVAILABLE = False
 
 load_dotenv()
 
@@ -15,6 +27,7 @@ load_dotenv()
 NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
+NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
@@ -49,7 +62,7 @@ def get_application_explanation_data(application_id: str):
     Returns a dict ready to feed into the LLM (Component C).
     """
 
-    with driver.session(database="neo4j") as session:
+    with driver.session(database=NEO4J_DATABASE) as session:
         # ---------- 1) Prediction + SHAP rows ----------
         shap_query = """
         MATCH (app:LoanApplication {application_id: $application_id})
@@ -223,7 +236,7 @@ def get_application_explanation_data(application_id: str):
 # LLM HELPER
 # ============================================================
 
-def build_llm_prompt(context: dict) -> str:
+def build_llm_prompt(context: dict, audience: str = "technical", use_concepts: bool = False) -> str:
     """
     HOGE Component C – Narrative Explainer.
 
@@ -232,6 +245,12 @@ def build_llm_prompt(context: dict) -> str:
     - Requires the LLM to cite evidence for each claim
     - Asks for structured JSON + plain-text explanation
     - Prevents hallucination by listing ALL available policy rules
+    - Adapts explanation style based on target audience
+
+    Args:
+        context: Dictionary containing application data and SHAP explanations
+        audience: Target audience type - "technical", "non_technical", "executive", or "business"
+        use_concepts: If True, use business concepts instead of raw features (for executive/business)
     """
 
     application_id = context["application_id"]
@@ -309,8 +328,71 @@ def build_llm_prompt(context: dict) -> str:
     else:
         cf_str = "No counterfactual scenarios available."
 
+    # Audience-specific instructions
+    audience_configs = {
+        "technical": {
+            "persona": "a data scientist or ML engineer",
+            "focus": "Provide detailed technical analysis including feature importance metrics, model behavior, and statistical patterns. Use precise terminology.",
+            "style": "technical and detailed",
+            "depth": "comprehensive technical details",
+            "jargon": "Use technical ML/data science terminology freely (e.g., SHAP values, feature contributions, model confidence)",
+            "grounding_rules": "3. You MAY mention SHAP values, feature importances, and technical ML concepts."
+        },
+        "non_technical": {
+            "persona": "a loan applicant or customer service representative without technical background",
+            "focus": "Use simple, everyday language. Focus on what matters most to the applicant: why the decision was made and what they can do. Avoid ALL technical jargon.",
+            "style": "simple and conversational",
+            "depth": "high-level overview with clear, actionable insights",
+            "jargon": "NO technical jargon - explain everything in plain English using analogies when helpful",
+            "grounding_rules": "3. Do NOT mention SHAP values, log-odds, feature importances, or any technical ML jargon."
+        },
+        "executive": {
+            "persona": "a C-suite executive (CEO, CFO, CRO)",
+            "focus": "Provide strategic insights, business impact, risk assessment, and ROI implications. Be concise and focus on key decision factors and business outcomes.",
+            "style": "concise and strategic",
+            "depth": "high-level summary focused on business impact and risk",
+            "jargon": "Use business terminology (risk exposure, portfolio impact, approval rates) but avoid deep technical ML terms",
+            "grounding_rules": "3. Focus on business metrics and strategic implications. Avoid technical ML jargon."
+        },
+        "business": {
+            "persona": "a business analyst, product manager, or loan officer",
+            "focus": "Focus on actionable insights, business metrics, patterns, and operational implications. Balance technical understanding with business context.",
+            "style": "professional and actionable",
+            "depth": "balanced detail with emphasis on business relevance",
+            "jargon": "Use business-friendly language with moderate technical terms when necessary for clarity",
+            "grounding_rules": "3. Balance business language with limited technical terms only when essential for clarity."
+        }
+    }
+
+    # Get audience configuration (default to technical if not found)
+    audience_config = audience_configs.get(audience, audience_configs["technical"])
+
+    # Check if we should use concepts (only for executive/business audiences)
+    use_concept_mode = use_concepts and audience in ["executive", "business"]
+
+    # Concept-level explanation (if enabled)
+    concept_section = ""
+    if use_concept_mode and "business_concepts" in context:
+        concepts = context["business_concepts"]
+        concept_section = "\n\n=== BUSINESS CONCEPT VIEW ===\n"
+        concept_section += "The following high-level business concepts aggregate the technical features:\n\n"
+
+        for concept in concepts[:5]:  # Top 5 concepts
+            concept_section += f"**{concept['concept_name']}** ({concept['concept_category']})\n"
+            concept_section += f"  - Impact: {concept['aggregated_shap_value']:+.3f} (Direction: {concept['overall_direction']})\n"
+            concept_section += f"  - Interpretation: {concept['business_interpretation']}\n"
+            concept_section += f"  - Based on features: {', '.join(concept['related_features'])}\n\n"
+
+        concept_section += "\nYou SHOULD use these business concepts in your explanation rather than individual features.\n"
+
     prompt = f"""You are an explainable-AI assistant operating under the HOGE framework.
-You explain loan decisions using ONLY the evidence provided below.
+You are explaining a loan decision to {audience_config['persona']}.
+
+AUDIENCE-SPECIFIC REQUIREMENTS:
+- Communication Style: {audience_config['style']}
+- Level of Detail: {audience_config['depth']}
+- Technical Language: {audience_config['jargon']}
+- Primary Focus: {audience_config['focus']}
 
 === APPLICATION ID: {application_id} ===
 
@@ -335,11 +417,11 @@ ALL known policy rules in the domain ontology:
 
 Counterfactual what-if scenarios (what could change the decision):
 {cf_str}
-
+{concept_section}
 === STRICT GROUNDING RULES ===
 1. You must ONLY reference features and rules listed above. Do NOT invent or assume any fact not provided.
 2. Every claim must be traceable to the evidence above.
-3. Do NOT mention SHAP values, log-odds, or any technical jargon.
+{audience_config['grounding_rules']}
 4. If a HARD policy rule was violated, state it explicitly as the primary reason for decline.
 5. Do NOT promise that the decision can be changed.
 
@@ -348,12 +430,12 @@ You must respond with a valid JSON object with EXACTLY these keys:
 
 {{
   "summary": "One-sentence summary of the decision",
-  "positive_drivers": ["List of plain-language sentences about features supporting approval"],
-  "negative_drivers": ["List of plain-language sentences about features supporting decline"],
+  "positive_drivers": ["List of plain-language sentences about features supporting approval. IMPORTANT: Include actual feature values in parentheses, e.g., 'The applicant had strong income (ApplicantIncome: 5000) supporting approval.'"],
+  "negative_drivers": ["List of plain-language sentences about features supporting decline. IMPORTANT: Include actual feature values in parentheses, e.g., 'The loan amount (LoanAmount: 200) was relatively high.'"],
   "policy_violations": ["List of plain-language sentences about violated rules, or empty list"],
   "recommendation": "One actionable suggestion for future applications",
   "counterfactual_what_if": "One sentence describing the most impactful change that could flip the decision, based ONLY on the counterfactual scenarios above. If none available, say so.",
-  "narrative": "Full 2-4 paragraph plain-language explanation combining all of the above, including a what-if paragraph",
+  "narrative": "Full 2-4 paragraph plain-language explanation combining all of the above, including a what-if paragraph. IMPORTANT: Include actual feature values in parentheses when mentioning features.",
   "features_used": ["List of feature names referenced in the narrative"]
 }}
 
@@ -362,10 +444,19 @@ Now generate the explanation.
     return prompt
 
 
-def call_llm_for_explanation(context: dict) -> dict:
+def call_llm_for_explanation(context: dict,
+                             audience: str = "technical",
+                             use_concepts: bool = None,
+                             enable_logging: bool = True) -> dict:
     """
     Calls the LLM with ontology-grounded context and returns
     both structured JSON and the raw narrative.
+
+    Args:
+        context: Dictionary containing application data and SHAP explanations
+        audience: Target audience type - "technical", "non_technical", "executive", or "business"
+        use_concepts: Whether to use concept-level explanation. If None, auto-enables for executive/business
+        enable_logging: Whether to log explanation for drift detection and comparison (default: True)
     """
     if not OPENAI_API_KEY:
         raise RuntimeError(
@@ -373,8 +464,45 @@ def call_llm_for_explanation(context: dict) -> dict:
             "Set it with: export OPENAI_API_KEY=sk-..."
         )
 
+    # Initialize enhanced provenance tracker
+    tracker = None
+    if PROVENANCE_AVAILABLE:
+        tracker = ProvenanceTracker()
+        tracker.add_system_environment()
+
+    # Auto-enable concepts for executive/business if not specified
+    if use_concepts is None:
+        use_concepts = audience in ["executive", "business"]
+
+    # Add concept mapping if enabled and not already present
+    if use_concepts and "business_concepts" not in context:
+        try:
+            from src.explainability.concept_mapper import ConceptMapper
+            mapper = ConceptMapper()
+            concepts = mapper.map_features_to_concepts(
+                context.get('shap_details', []),
+                context
+            )
+            context['business_concepts'] = [
+                {
+                    'concept_name': c.concept_name,
+                    'concept_category': c.concept_category,
+                    'related_features': c.related_features,
+                    'aggregated_shap_value': c.aggregated_shap_value,
+                    'overall_direction': c.overall_direction,
+                    'business_interpretation': c.business_interpretation
+                }
+                for c in concepts
+            ]
+        except ImportError:
+            # Concept mapper not available, continue without it
+            pass
+
     client = OpenAI(api_key=OPENAI_API_KEY)
-    prompt = build_llm_prompt(context)
+    prompt = build_llm_prompt(context, audience=audience, use_concepts=use_concepts)
+
+    # Track generation time for performance monitoring
+    start_time = time.time()
 
     response = client.chat.completions.create(
         model=OPENAI_MODEL,
@@ -396,6 +524,28 @@ def call_llm_for_explanation(context: dict) -> dict:
         response_format={"type": "json_object"},
     )
 
+    generation_time_ms = (time.time() - start_time) * 1000
+
+    # Add LLM provenance to tracker
+    if tracker:
+        tracker.add_llm_provenance(
+            llm_response=response,
+            prompt_config={
+                "model": OPENAI_MODEL,
+                "temperature": 0.3,
+                "max_tokens": 1000,
+                "response_format": "json_object",
+                "prompt_template_version": "v1.2_semantic_contract",
+                "latency_ms": generation_time_ms,
+                "grounding_rules_applied": [
+                    "no_invented_features",
+                    "cite_all_evidence",
+                    "use_only_available_rules",
+                    "include_feature_values"
+                ]
+            }
+        )
+
     raw_text = response.choices[0].message.content.strip()
 
     try:
@@ -415,6 +565,43 @@ def call_llm_for_explanation(context: dict) -> dict:
     # Attach provenance and evidence bundle to the output
     structured["provenance"] = context.get("provenance", {})
     structured["evidence_bundle"] = context.get("evidence_bundle", [])
+    structured["audience"] = audience  # Track which audience this explanation was generated for
+    structured["used_concepts"] = use_concepts and "business_concepts" in context
+    if structured["used_concepts"]:
+        structured["business_concepts"] = context.get("business_concepts", [])
+
+    # Add enhanced provenance
+    if tracker:
+        # Add explanation provenance
+        tracker.add_explanation_provenance(structured, context, audience)
+
+        # Attach compact provenance for display
+        structured["provenance_compact"] = tracker.get_compact_provenance()
+
+        # Attach full provenance for download (don't save to file here, just attach to output)
+        full_prov = tracker.export_provenance()  # Returns dict without saving
+        structured["provenance_full"] = full_prov
+
+    # Log explanation for drift detection and comparison
+    if enable_logging:
+        try:
+            from src.explainability.explanation_logger import ExplanationLogger
+            logger = ExplanationLogger()
+            log_id = logger.log_explanation(
+                context=context,
+                explanation=structured,
+                llm_model=OPENAI_MODEL,
+                llm_temperature=0.3,
+                audience=audience,
+                generation_time_ms=generation_time_ms,
+                used_concepts=use_concepts and "business_concepts" in context
+            )
+            structured["log_id"] = log_id
+            logger.close()
+        except Exception as e:
+            # Don't fail the explanation if logging fails
+            print(f"Warning: Failed to log explanation: {e}")
+            structured["log_id"] = None
 
     return structured
 

@@ -10,19 +10,19 @@ from pathlib import Path
 from typing import Optional
 from datetime import datetime
 
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+# Add project root to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
 
 # Local application imports
-from src.api.models.explanation_dto import (
+from backend.src.api.models.explanation_dto import (
     ExplanationRequest,
     ExplanationResponse,
     ShapFeature,
     CounterfactualScenario,
     BusinessConcept,
 )
-from src.api.models.common_dto import ProvenanceInfo
-from src.explainability.llm_explainer import (
+from backend.src.api.models.common_dto import ProvenanceInfo
+from backend.src.explainability.llm_explainer import (
     get_application_explanation_data,
     call_llm_for_explanation,
 )

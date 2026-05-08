@@ -6,7 +6,7 @@ Unit tests for Application DTOs.
 import pytest
 
 # Local application
-from src.api.models.application_dto import ApplicationInfo, ApplicationListResponse
+from backend.src.api.models.application_dto import ApplicationInfo, ApplicationListResponse
 
 
 class TestApplicationInfo:

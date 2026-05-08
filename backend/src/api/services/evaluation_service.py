@@ -8,9 +8,9 @@ import sys
 from pathlib import Path
 
 # Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
 
-from src.api.models.evaluation_dto import EvaluationMetrics, EvaluationResult
+from backend.src.api.models.evaluation_dto import EvaluationMetrics, EvaluationResult
 
 
 class EvaluationService:

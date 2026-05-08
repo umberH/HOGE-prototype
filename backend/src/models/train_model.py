@@ -4,9 +4,23 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
-from sklearn.metrics import classification_report, roc_auc_score
+from sklearn.metrics import classification_report, roc_auc_score, precision_score, recall_score, f1_score, accuracy_score
 from xgboost import XGBClassifier
 import joblib
+import datetime
+import json
+import sys
+from pathlib import Path
+
+# Add project root to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+try:
+    from src.provenance.enhanced_provenance import ProvenanceTracker
+    PROVENANCE_AVAILABLE = True
+except ImportError:
+    PROVENANCE_AVAILABLE = False
+    print("Warning: Provenance tracking not available")
 
 
 # ============================================================
@@ -179,3 +193,73 @@ print("ROC-AUC Score:", roc_auc_score(y_test, y_proba))
 
 joblib.dump(pipeline, "models/loan_xgb_monotonic.joblib")
 print("\nModel saved as loan_xgb_monotonic.joblib ✔")
+
+
+# ============================================================
+# 13. SAVE MODEL PROVENANCE
+# ============================================================
+
+if PROVENANCE_AVAILABLE:
+    print("\nCapturing model provenance...")
+
+    # Calculate detailed metrics
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, zero_division=0)
+    recall = recall_score(y_test, y_pred, zero_division=0)
+    f1 = f1_score(y_test, y_pred, zero_division=0)
+    roc_auc = roc_auc_score(y_test, y_proba)
+
+    # Initialize tracker
+    tracker = ProvenanceTracker()
+
+    # Add model metadata
+    model_metadata = {
+        "model_path": "models/loan_xgb_monotonic.joblib",
+        "model_type": "XGBoost",
+        "model_class": "XGBClassifier",
+        "training_samples": len(X_train),
+        "test_samples": len(X_test),
+        "total_samples": len(df),
+        "feature_count": len(X.columns),
+        "features": list(X.columns),
+        "target": "Loan_Status",
+        "hyperparameters": {
+            "n_estimators": 350,
+            "learning_rate": 0.05,
+            "max_depth": 4,
+            "subsample": 0.9,
+            "colsample_bytree": 0.9,
+            "eval_metric": "logloss",
+            "n_jobs": -1
+        },
+        "monotonic_constraints": {
+            "ApplicantIncome": +1,
+            "CoapplicantIncome": +1,
+            "LoanAmount": -1,
+            "DTI": -1,
+            "other": 0
+        },
+        "monotonic_constraints_string": mono_string,
+        "performance_metrics": {
+            "accuracy": float(accuracy),
+            "precision": float(precision),
+            "recall": float(recall),
+            "f1_score": float(f1),
+            "roc_auc": float(roc_auc)
+        },
+        "training_date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "random_seed": 42,
+        "test_split_ratio": 0.2,
+        "stratified": True
+    }
+
+    tracker.add_model_provenance(model_metadata)
+
+    # Save provenance to JSON
+    provenance_output = tracker.export_provenance()
+    with open("models/model_provenance.json", "w") as f:
+        json.dump(provenance_output, f, indent=2, default=str)
+
+    print("Model provenance saved to models/model_provenance.json ✔")
+else:
+    print("\nSkipping provenance capture (module not available)")

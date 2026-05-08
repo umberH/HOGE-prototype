@@ -1,9 +1,23 @@
 from neo4j import GraphDatabase
 import pandas as pd
 import os
+import json
+import datetime
+import sys
+from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Add project root to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+try:
+    from src.provenance.enhanced_provenance import ProvenanceTracker
+    PROVENANCE_AVAILABLE = True
+except ImportError:
+    PROVENANCE_AVAILABLE = False
+    print("Warning: Provenance tracking not available")
 
 # ============================================================
 # CONFIG
@@ -352,4 +366,87 @@ else:
 
 
 print("\n🚀 Neo4j KG successfully built!")
+
+# ============================================================
+# SAVE KG PROVENANCE
+# ============================================================
+
+if PROVENANCE_AVAILABLE:
+    print("\nCapturing KG provenance...")
+
+    # Query Neo4j for node and relationship counts
+    def get_counts(query):
+        with driver.session(database=NEO4J_DATABASE) as session:
+            result = session.run(query)
+            return result.single()[0]
+
+    # Get node counts by label
+    node_count_query = """
+    MATCH (n)
+    RETURN labels(n)[0] as label, count(n) as count
+    """
+
+    # Get relationship counts by type
+    rel_count_query = """
+    MATCH ()-[r]->()
+    RETURN type(r) as type, count(r) as count
+    """
+
+    # Get total counts
+    total_nodes = get_counts("MATCH (n) RETURN count(n)")
+    total_rels = get_counts("MATCH ()-[r]->() RETURN count(r)")
+
+    # Get Neo4j version
+    version_query = "CALL dbms.components() YIELD name, versions RETURN versions[0]"
+    try:
+        neo4j_version = get_counts(version_query)
+    except:
+        neo4j_version = "unknown"
+
+    # Initialize tracker
+    tracker = ProvenanceTracker()
+
+    # Add KG metadata
+    kg_metadata = {
+        "kg_loader_version": "1.0.0",
+        "neo4j_uri": NEO4J_URI,
+        "neo4j_version": neo4j_version,
+        "database_name": NEO4J_DATABASE,
+        "total_nodes": int(total_nodes),
+        "total_relationships": int(total_rels),
+        "node_counts": {
+            "LoanApplication": len(apps),
+            "Applicant": len(apps),
+            "Feature": "multiple",
+            "FeatureValue": "multiple",
+            "FeatureContribution": len(shap_long) if os.path.exists(SHAP_LONG_FILE) else 0,
+            "PolicyRule": 4,  # Hardcoded rules count
+        },
+        "relationship_counts": {
+            "HAS_APPLICATION": len(apps),
+            "HAS_FEATURE_VALUE": "multiple",
+            "HAS_SHAP_CONTRIBUTION": len(shap_long) if os.path.exists(SHAP_LONG_FILE) else 0,
+            "VIOLATES_RULE": "conditional",
+            "HAS_COUNTERFACTUAL": count if os.path.exists(COUNTERFACTUAL_FILE) else 0,
+        },
+        "data_sources": {
+            "applications": APPLICATION_DATA_FILE,
+            "shap_values": SHAP_LONG_FILE,
+            "counterfactuals": COUNTERFACTUAL_FILE if os.path.exists("data/processed/counterfactuals.csv") else None,
+        },
+        "loading_date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+
+    tracker.add_kg_provenance(kg_metadata)
+
+    # Save provenance to JSON
+    provenance_output = tracker.export_provenance()
+    os.makedirs("data/provenance", exist_ok=True)
+    with open("data/provenance/kg_provenance.json", "w") as f:
+        json.dump(provenance_output, f, indent=2, default=str)
+
+    print("KG provenance saved to data/provenance/kg_provenance.json ✔")
+else:
+    print("\nSkipping KG provenance capture (module not available)")
+
 driver.close()

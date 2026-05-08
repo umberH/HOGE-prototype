@@ -11,9 +11,9 @@ import json
 from typing import Dict, Any, Optional
 
 # Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
 
-from src.api.models.common_dto import ProvenanceInfo
+from backend.src.api.models.common_dto import ProvenanceInfo
 
 
 class ProvenanceService:

@@ -117,6 +117,34 @@ python generate_kg_visualizations.py
 ```
 **Output**: `neo4j_kg_schema.png`, `neo4j_kg_instance.png`
 
+### Optional: Test Explanation Logging & Drift Detection
+```bash
+python test_explanation_logging.py
+```
+**Output**: Logged explanations in Neo4j, JSON backups, HTML quality reports
+
+**What it does**:
+- Automatically logs all LLM explanations with metadata
+- Tracks quality metrics (citation quality, feature coverage, etc.)
+- Detects drift over time, models, and audiences
+- Generates interactive visualizations and quality reports
+
+**See**: [EXPLANATION_LOGGING_SUMMARY.md](EXPLANATION_LOGGING_SUMMARY.md) for full documentation
+
+### Optional: Test Interactive Tree Visualizations
+```bash
+python test_interactive_trees.py LP001006
+```
+**Output**: Interactive Plotly HTML visualizations in `figures/mechanistic_interactive/`
+
+**What it does**:
+- Generates interactive decision path visualizations (6-panel dashboard)
+- Creates feature interaction network charts
+- Produces tree ensemble summary statistics
+- All visualizations support hover, zoom, pan, and export
+
+**See**: [docs/INTERACTIVE_TREE_VISUALIZATION.md](docs/INTERACTIVE_TREE_VISUALIZATION.md) for full documentation
+
 ## File Reference
 
 ### Source Code
@@ -133,6 +161,12 @@ python generate_kg_visualizations.py
 | `evaluation_human.py` | Human-centric evaluation: alignment, traceability, Excel workbook |
 | `counterfactual_explainer.py` | Counterfactual what-if analysis: minimal feature changes to flip predictions |
 | `generate_kg_visualizations.py` | Generate KG schema and instance PNG visualizations |
+| `explanation_logger.py` | **NEW**: Automatic logging of LLM explanations with drift detection |
+| `explanation_analyzer.py` | **NEW**: Drift analysis, model comparison, quality metrics |
+| `explanation_dashboard.py` | **NEW**: Interactive visualizations and quality reports |
+| `tree_visualizer.py` | **NEW**: Interactive Plotly visualizations for decision trees |
+| `test_explanation_logging.py` | **NEW**: Test suite for explanation logging system |
+| `test_interactive_trees.py` | **NEW**: Test suite for interactive tree visualizations |
 
 ### Data Files
 
@@ -199,3 +233,78 @@ The evaluation workbook contains four sheets for supervisor review:
 - **openpyxl** — Excel workbook generation
 - **matplotlib + networkx** — KG visualizations
 - **LaTeX** (Springer LNBIP `svmultln`) — Paper format
+
+---
+
+## Multimodal Extension (NEW)
+
+The HOGE framework is being extended to **multimodal sentiment analysis** using the CMU-MOSEI dataset (text + audio + video).
+
+### Status: Initial Setup Complete
+
+**Implementation Approach**: Minimal proof-of-concept (3-4 weeks)
+
+**Dataset**: CMU-MOSEI
+- 23,453 utterances from 1,000+ speakers
+- 3 modalities: Text (BERT), Audio (COVAREP), Video (Facet)
+- Sentiment labels: [-3, +3] scale
+
+**Key Differences from Loan HOGE**:
+| Aspect | Loan HOGE | Multimodal HOGE |
+|--------|-----------|----------------|
+| Data | Tabular (CSV) | Multimodal (Text+Audio+Video) |
+| Model | XGBoost | Transformer (BERT-based) |
+| XAI | SHAP TreeExplainer | Attention weights + Ablation |
+| Predictions | Binary (Approve/Reject) | Regression (Sentiment -3 to +3) |
+| Explanations | Feature importance | Modality importance + Token attention |
+
+### Getting Started with Multimodal
+
+1. **Read the documentation**:
+   - [MULTIMODAL_SETUP_SUMMARY.md](MULTIMODAL_SETUP_SUMMARY.md) - Overview & status
+   - [MULTIMODAL_QUICKSTART.md](MULTIMODAL_QUICKSTART.md) - Step-by-step guide
+   - [docs/MULTIMODAL_GAP_ANALYSIS.md](docs/MULTIMODAL_GAP_ANALYSIS.md) - Detailed gap analysis
+
+2. **Install multimodal dependencies**:
+   ```bash
+   pip install -r requirements_multimodal.txt
+   ```
+
+3. **Download CMU-MOSEI dataset**:
+   ```bash
+   python scripts/download_cmu_mosei.py
+   ```
+
+4. **Test the data loader**:
+   ```python
+   from src.data.cmu_mosei_loader import CMUMOSEILoader
+   loader = CMUMOSEILoader()
+   data = loader.load_aligned_features(split='train', max_samples=10)
+   ```
+
+### Multimodal Files Created
+
+**Documentation**:
+- `MULTIMODAL_SETUP_SUMMARY.md` - Complete setup guide
+- `MULTIMODAL_QUICKSTART.md` - Quick start tutorial
+- `docs/MULTIMODAL_GAP_ANALYSIS.md` - Gap analysis (550+ lines)
+- `docs/MULTIMODAL_MINIMAL_IMPLEMENTATION_PLAN.md` - Implementation plan (400+ lines)
+
+**Code**:
+- `src/data/cmu_mosei_loader.py` - Data loader for CMU-MOSEI
+- `scripts/download_cmu_mosei.py` - Automated download script
+- `requirements_multimodal.txt` - Additional dependencies
+
+**Status**: Foundation ready, implementation in progress
+
+### Research Contribution
+
+Extending HOGE to multimodal data enables:
+1. First multimodal ontology-grounded explanation framework
+2. Cross-modal attention analysis (which modality is most important?)
+3. Modality-specific XAI integration
+4. Comparison: Tabular vs Multimodal explainability
+
+**Timeline**: 3-4 weeks to working proof-of-concept
+
+For detailed implementation guidance, see [MULTIMODAL_QUICKSTART.md](MULTIMODAL_QUICKSTART.md).
