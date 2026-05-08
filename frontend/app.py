@@ -23,6 +23,7 @@ from backend.src.api.models import ExplanationRequest
 
 # Import backend modules for features not yet in services
 from backend.src.explainability.concept_mapper import ConceptMapper
+from backend.src.explainability.explanation_cache import ExplanationCache
 from neo4j import GraphDatabase
 import os
 from dotenv import load_dotenv
@@ -32,6 +33,9 @@ load_dotenv()
 # Initialize services
 explanation_service = ExplanationService()
 application_service = ApplicationService()
+
+# Initialize explanation cache
+explanation_cache = ExplanationCache()
 
 # Page config
 st.set_page_config(
@@ -518,22 +522,40 @@ elif page == "Explain Application":
                         st.error("⚠️ Please provide your OpenAI API key in the sidebar to generate explanations.")
                         st.stop()
 
-                    # Use ExplanationService (abstraction layer)
-                    request = ExplanationRequest(
-                        application_id=loan_id,
+                    # Check if explanation is cached first
+                    cached_explanation = explanation_cache.get_explanation(
+                        loan_id,
                         audience=audience,
                         use_concepts=use_concepts
                     )
 
-                    # Generate explanation via service with user's API key
-                    response = explanation_service.generate_explanation(
-                        request,
-                        api_key=user_api_key,
-                        model=user_model
-                    )
+                    if cached_explanation:
+                        st.info("📦 Using cached explanation (pre-generated locally)")
+                        explanation = cached_explanation
+                    else:
+                        # Check if user provided API key
+                        if not user_api_key:
+                            st.error("⚠️ No cached explanation found. Please provide your OpenAI API key in the sidebar to generate a new explanation.")
+                            st.stop()
 
-                    # Convert response DTO back to dict format for compatibility with existing UI code
-                    explanation = response.to_dict()
+                        st.info("🤖 Generating new explanation using your OpenAI API key...")
+
+                        # Use ExplanationService (abstraction layer)
+                        request = ExplanationRequest(
+                            application_id=loan_id,
+                            audience=audience,
+                            use_concepts=use_concepts
+                        )
+
+                        # Generate explanation via service with user's API key
+                        response = explanation_service.generate_explanation(
+                            request,
+                            api_key=user_api_key,
+                            model=user_model
+                        )
+
+                        # Convert response DTO back to dict format for compatibility with existing UI code
+                        explanation = response.to_dict()
 
                     # For now, also get raw context for visualizations (TODO: refactor visualizations)
                     from backend.src.explainability.llm_explainer import get_application_explanation_data
@@ -1428,18 +1450,28 @@ elif page == "Batch Analysis":
 
                 for i, app_id in enumerate(selected_apps):
                     try:
-                        # Use ExplanationService for batch processing
-                        request = ExplanationRequest(
-                            application_id=app_id,
+                        # Check cache first
+                        cached_explanation = explanation_cache.get_explanation(
+                            app_id,
                             audience=batch_audience_key,
                             use_concepts=False
                         )
-                        response = explanation_service.generate_explanation(
-                            request,
-                            api_key=user_api_key,
-                            model=user_model
-                        )
-                        explanation = response.to_dict()
+
+                        if cached_explanation:
+                            explanation = cached_explanation
+                        else:
+                            # Use ExplanationService for batch processing
+                            request = ExplanationRequest(
+                                application_id=app_id,
+                                audience=batch_audience_key,
+                                use_concepts=False
+                            )
+                            response = explanation_service.generate_explanation(
+                                request,
+                                api_key=user_api_key,
+                                model=user_model
+                            )
+                            explanation = response.to_dict()
 
                         # Get context for compatibility
                         from backend.src.explainability.llm_explainer import get_application_explanation_data
