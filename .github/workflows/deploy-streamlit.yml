@@ -1,0 +1,44 @@
+name: Deploy to Streamlit Cloud
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
+      - 'requirements.txt'
+      - '.streamlit/**'
+  workflow_dispatch:
+
+jobs:
+  notify-deployment:
+    name: Notify Streamlit Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Comment on deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commits = context.payload.commits || [];
+            const commitMessages = commits.map(c => `- ${c.message}`).join('\n');
+
+            const comment = `🚀 **Streamlit Cloud Deployment Triggered**
+
+            Changes detected in frontend/backend code.
+
+            **Commits:**
+            ${commitMessages}
+
+            **Deployment will be available at:**
+            https://phd-experiment1.streamlit.app
+
+            Note: Streamlit Community Cloud auto-deploys from the main branch.
+            `;
+
+            // This would post to discussions or create an issue
+            // For now, just log
+            console.log(comment);

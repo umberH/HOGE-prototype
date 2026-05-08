@@ -72,3 +72,4 @@ build/
 .documentation/
 *.md
 !README.md
+!CONTRIBUTING.md

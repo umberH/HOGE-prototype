@@ -1,0 +1,132 @@
+name: Project Automation
+
+on:
+  issues:
+    types: [opened, reopened, labeled]
+  pull_request:
+    types: [opened, ready_for_review, converted_to_draft]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  auto-assign-project:
+    name: Auto-assign to Project Board
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add issue to project
+        if: github.event_name == 'issues'
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/${{ github.repository_owner }}/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add PR to project
+        if: github.event_name == 'pull_request'
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/${{ github.repository_owner }}/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  label-feature-branch:
+    name: Auto-label feature branches
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Label feature PRs
+        if: startsWith(github.head_ref, 'feature/')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['feature']
+            });
+
+      - name: Label bugfix PRs
+        if: startsWith(github.head_ref, 'bugfix/') || startsWith(github.head_ref, 'fix/')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['bug']
+            });
+
+      - name: Label chore PRs
+        if: startsWith(github.head_ref, 'chore/')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['chore']
+            });
+
+  branch-protection-check:
+    name: Check branch naming convention
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Validate branch name
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = context.payload.pull_request.head.ref;
+            const validPrefixes = ['feature/', 'bugfix/', 'fix/', 'chore/', 'docs/', 'test/'];
+            const isValid = validPrefixes.some(prefix => branch.startsWith(prefix));
+
+            if (!isValid && branch !== 'develop' && branch !== 'main') {
+              github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `⚠️ **Branch naming convention warning**\n\nYour branch \`${branch}\` doesn't follow the naming convention.\n\nPlease use one of these prefixes:\n- \`feature/\` - New features\n- \`bugfix/\` or \`fix/\` - Bug fixes\n- \`chore/\` - Maintenance tasks\n- \`docs/\` - Documentation\n- \`test/\` - Test updates`
+              });
+            }
+
+  check-tests:
+    name: Verify tests exist for features
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'feature/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for test files
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const hasTestFiles = files.some(file =>
+              file.filename.startsWith('tests/') && file.filename.endsWith('.py')
+            );
+
+            const hasCodeChanges = files.some(file =>
+              (file.filename.startsWith('backend/') || file.filename.startsWith('frontend/'))
+              && file.filename.endsWith('.py')
+            );
+
+            if (hasCodeChanges && !hasTestFiles) {
+              github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `⚠️ **Missing tests**\n\nThis PR includes code changes but no test files.\n\nPlease add tests in the \`tests/\` directory following the developer guidelines.`
+              });
+            }
