@@ -1,0 +1,32 @@
+# Streamlit Cloud Production Requirements
+# Minimal dependencies needed to run the app
+
+# Core ML & Data Science
+numpy>=1.24.0,<2.0.0
+pandas>=2.0.0
+scikit-learn==1.3.2
+xgboost==1.7.6
+
+# SHAP for explainability
+shap==0.44.0
+
+# Neo4j knowledge graph
+neo4j>=5.14.0
+
+# OpenAI for LLM explanations
+openai>=1.6.0
+
+# Environment management
+python-dotenv>=1.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+networkx>=3.1
+plotly>=5.18.0
+
+# Web frontend
+streamlit>=1.29.0
+
+# Pydantic for data models
+pydantic>=2.5.0
