@@ -1,5 +1,9 @@
+# Python
 __pycache__/
-.env
+*.pyc
+*.pyo
+*.pyd
+.Python
 
 # Virtual environments
 venv/
@@ -7,7 +11,59 @@ env/
 ENV/
 .venv
 
+# Environment variables and secrets
+.env
+.env.local
+.env.production
+*.pem
+*.key
+credentials.json
+openai_key.txt
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Neo4j
+.neo4j/
+
+# Data caches (generated)
+data/cache/
+data/explanation_logs/*.json
+
+# Temporary files
+*.tmp
+*.tmp.*
+nul
+
+# Models (if large or contain sensitive data)
+# models/*.joblib  # Uncomment if models are sensitive
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
 # Legacy files
 paper_HOGE_updated.tex
 paper_HOGE_condensed.tex
 hoge_evaluation_workbook.xlsx
+
+# Test outputs
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

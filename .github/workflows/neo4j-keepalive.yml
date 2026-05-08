@@ -1,0 +1,33 @@
+name: Neo4j Aura Keep-Alive
+
+on:
+  schedule:
+    # Run every 2 days at 9 AM UTC
+    - cron: '0 9 */2 * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  ping-neo4j:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install neo4j python-dotenv
+
+      - name: Ping Neo4j Aura
+        env:
+          NEO4J_URI: ${{ secrets.NEO4J_URI }}
+          NEO4J_USER: ${{ secrets.NEO4J_USER }}
+          NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
+          NEO4J_DATABASE: ${{ secrets.NEO4J_DATABASE }}
+        run: |
+          python scripts/ping_neo4j.py
