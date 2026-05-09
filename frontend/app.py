@@ -476,38 +476,22 @@ elif page == "Explain Application":
 
     # Cache Management Section
     with st.sidebar:
-        st.markdown("### 💾 LLM Response Cache")
+        st.markdown("### 💾 Explanation Cache")
 
-        # Initialize cache if not already done
-        if 'llm_cache' not in st.session_state:
-            st.session_state.llm_cache = {}
+        # Show file-based cache stats (for deployment)
+        cache_stats = explanation_cache.stats()
 
-        cache_size = len(st.session_state.llm_cache)
+        if cache_stats['total_cached'] > 0:
+            st.metric("Pre-cached Explanations", cache_stats['total_cached'])
+            st.caption(f"For {cache_stats['application_ids']} app IDs")
 
-        if cache_size > 0:
-            st.metric("Cached Responses", cache_size)
-
-            # Show cache details in expander
-            with st.expander("📋 View Cache Details"):
-                for cache_key, cache_data in st.session_state.llm_cache.items():
-                    st.markdown(f"**Key:** `{cache_key}`")
-                    st.caption(f"Cached at: {cache_data.get('cached_at', 'Unknown')}")
-                    st.markdown("---")
-
-            # Clear cache button
-            if st.button("🗑️ Clear Cache", help="Remove all cached LLM responses"):
-                st.session_state.llm_cache = {}
-                # Also delete cache file
-                try:
-                    cache_file = "data/cache/llm_responses.json"
-                    if os.path.exists(cache_file):
-                        os.remove(cache_file)
-                except:
-                    pass
-                st.success("✅ Cache cleared!")
-                st.rerun()
+            with st.expander("📋 View Cached Apps"):
+                cached_ids = explanation_cache.get_all_cached_ids()
+                for app_id in cached_ids:
+                    st.markdown(f"- {app_id}")
         else:
-            st.info("No cached responses yet")
+            st.info("No cached explanations yet")
+            st.caption("Generate explanations to build cache")
 
     st.markdown("---")
 
