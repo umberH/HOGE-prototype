@@ -1,2 +1,3 @@
 # This directory stores pre-generated LLM explanations
 # Generate them locally using: python .development/scripts/generate_cached_explanations.py
+# Cache updated Sun, May 10, 2026  9:04:51 AM
