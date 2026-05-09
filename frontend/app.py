@@ -159,12 +159,6 @@ with st.sidebar:
     except Exception as e:
         st.error(f"Neo4j Disconnected: {str(e)}")
 
-    # Check OpenAI key (from user input in sidebar)
-    if st.session_state.get('user_openai_key'):
-        st.success("OpenAI API Key Provided")
-    else:
-        st.warning("OpenAI API Key Required - Enter in sidebar ➡️")
-
 
 # Main content
 if page == "Home":
@@ -1942,9 +1936,11 @@ elif page == "Settings":
     st.session_state['user_openai_key'] = openai_key
     st.session_state['user_openai_model'] = openai_model
 
-    # Warn if no API key provided
-    if not openai_key:
-        st.warning("⚠️ Please provide your OpenAI API key to generate explanations")
+    # Show status
+    if openai_key:
+        st.success("✓ OpenAI API Key Loaded")
+    else:
+        st.info("ℹ️ Enter your OpenAI API key above to enable explanation generation")
 
     st.markdown("---")
 
