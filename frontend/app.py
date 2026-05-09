@@ -30,8 +30,24 @@ import os
 from dotenv import load_dotenv
 
 # Load .env from project root
-project_root = Path(__file__).parent.parent
-load_dotenv(dotenv_path=project_root / ".env")
+project_root = Path(__file__).resolve().parent.parent
+env_path = project_root / ".env"
+load_dotenv(dotenv_path=env_path)
+
+# Debug: verify .env is loaded (only for local dev)
+if not os.getenv("OPENAI_API_KEY"):
+    # Try alternative loading methods
+    load_dotenv(override=True)  # Try current directory
+    if not os.getenv("OPENAI_API_KEY"):
+        # Try explicit path
+        import sys
+        if hasattr(sys, '_MEIPASS'):  # Running as PyInstaller bundle
+            pass
+        else:
+            # Development mode - try parent directory
+            load_dotenv(dotenv_path=Path.cwd() / ".env", override=True)
+            if not os.getenv("OPENAI_API_KEY"):
+                load_dotenv(dotenv_path=Path.cwd().parent / ".env", override=True)
 
 # Initialize services
 explanation_service = ExplanationService()
