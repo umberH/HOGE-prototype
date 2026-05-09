@@ -1907,10 +1907,16 @@ elif page == "Settings":
     default_key = os.getenv("OPENAI_API_KEY", "")
     default_model = os.getenv("OPENAI_MODEL", "gpt-4o")
 
+    # Debug info
     if default_key:
         st.markdown("*Using API key from .env file (local development)*")
+        st.caption(f"✓ Key loaded (starts with: {default_key[:10]}...)")
     else:
         st.markdown("*Provide your own OpenAI API key to use this app*")
+        # Show debug info to help troubleshoot
+        st.caption(f"⚠️ .env not loaded | CWD: {os.getcwd()}")
+        env_file = Path(__file__).resolve().parent.parent / ".env"
+        st.caption(f"Looking for: {env_file} | Exists: {env_file.exists()}")
 
     openai_key = st.text_input("OpenAI API Key", type="password", value=default_key,
                                 help="Get your API key from https://platform.openai.com/api-keys")
