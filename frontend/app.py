@@ -1356,8 +1356,8 @@ elif page == "Explain Application":
                     import traceback
                     st.code(traceback.format_exc())
 
-            # TAB 8: EVIDENCE & PROVENANCE
-            with tabs[tab_idx + 3]:
+            # TAB: EVIDENCE & PROVENANCE (last tab)
+            with tabs[6]:  # Fixed: always use last tab for technical audience
                 st.markdown("**Full Traceability & Reproducibility**")
                 st.markdown("- Complete provenance metadata for all pipeline components")
                 st.markdown("- Download options for explanation, context, and provenance")
