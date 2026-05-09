@@ -48,20 +48,25 @@ st.set_page_config(
 # Helper function to get Neo4j config from Streamlit secrets or environment
 def get_neo4j_config():
     """Get Neo4j configuration from Streamlit secrets (production) or environment (local)"""
-    if hasattr(st, 'secrets') and 'neo4j' in st.secrets:
-        return {
-            'uri': st.secrets["neo4j"]["uri"],
-            'user': st.secrets["neo4j"]["user"],
-            'password': st.secrets["neo4j"]["password"],
-            'database': st.secrets["neo4j"].get("database", "neo4j")
-        }
-    else:
-        return {
-            'uri': os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687"),
-            'user': os.getenv("NEO4J_USER", "neo4j"),
-            'password': os.getenv("NEO4J_PASSWORD", "test1234"),
-            'database': os.getenv("NEO4J_DATABASE", "neo4j")
-        }
+    try:
+        # Try to read from Streamlit secrets (production)
+        if hasattr(st, 'secrets') and 'neo4j' in st.secrets:
+            return {
+                'uri': st.secrets["neo4j"]["uri"],
+                'user': st.secrets["neo4j"]["user"],
+                'password': st.secrets["neo4j"]["password"],
+                'database': st.secrets["neo4j"].get("database", "neo4j")
+            }
+    except Exception:
+        pass
+
+    # Fall back to environment variables (local development)
+    return {
+        'uri': os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687"),
+        'user': os.getenv("NEO4J_USER", "neo4j"),
+        'password': os.getenv("NEO4J_PASSWORD", "test1234"),
+        'database': os.getenv("NEO4J_DATABASE", "neo4j")
+    }
 
 # Custom CSS
 st.markdown("""
