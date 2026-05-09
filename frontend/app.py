@@ -149,7 +149,7 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("#### System Status")
 
-    # Check Neo4j connection
+    # Check Neo4j connection (optional - cached explanations work without it)
     try:
         config = get_neo4j_config()
         driver = GraphDatabase.driver(config['uri'], auth=(config['user'], config['password']))
@@ -157,7 +157,8 @@ with st.sidebar:
         st.success("Neo4j Connected")
         driver.close()
     except Exception as e:
-        st.error(f"Neo4j Disconnected: {str(e)}")
+        st.warning("Neo4j Unavailable")
+        st.caption("Cached explanations will work. Live generation requires Neo4j.")
 
     st.markdown("---")
 
