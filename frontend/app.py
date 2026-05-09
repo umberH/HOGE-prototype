@@ -612,9 +612,20 @@ elif page == "Explain Application":
                         st.code(traceback.format_exc())
                     st.stop()
 
-            # For now, also get raw context for visualizations (TODO: refactor visualizations)
-            from backend.src.explainability.llm_explainer import get_application_explanation_data
-            context = get_application_explanation_data(loan_id)
+            # Try to get raw context for visualizations (optional for cached explanations)
+            try:
+                from backend.src.explainability.llm_explainer import get_application_explanation_data
+                context = get_application_explanation_data(loan_id)
+            except Exception as e:
+                # If Neo4j is unavailable, use minimal context from cached explanation
+                st.warning(f"⚠️ Could not connect to Neo4j for additional context. Using cached data only.")
+                context = {
+                    'application_id': loan_id,
+                    'model_prediction': explanation.get('decision', 'Unknown'),
+                    'prediction_probability': explanation.get('probability', 0),
+                    'features': {},
+                    'shap_values': {}
+                }
 
             # Store in session state
             st.session_state.current_explanation = explanation
