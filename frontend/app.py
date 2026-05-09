@@ -399,6 +399,9 @@ elif page == "Explain Application":
         )
         audience = audience_options[selected_audience_label]
 
+        # Store in session state for tab rendering
+        st.session_state['selected_audience'] = audience
+
         with st.expander("Help"):
             st.markdown("""
             **Technical**
