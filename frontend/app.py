@@ -559,6 +559,18 @@ elif page == "Explain Application":
                         # Convert response DTO back to dict format for compatibility with existing UI code
                         explanation = response.to_dict()
 
+                        # Auto-save to cache when running locally (for deployment later)
+                        try:
+                            explanation_cache.set_explanation(
+                                loan_id,
+                                audience,
+                                use_concepts,
+                                explanation
+                            )
+                            st.success("💾 Saved to local cache for future deployment")
+                        except Exception as e:
+                            st.warning(f"Could not save to cache: {e}")
+
                     # For now, also get raw context for visualizations (TODO: refactor visualizations)
                     from backend.src.explainability.llm_explainer import get_application_explanation_data
                     context = get_application_explanation_data(loan_id)
@@ -1475,6 +1487,17 @@ elif page == "Batch Analysis":
                             )
                             explanation = response.to_dict()
 
+                            # Auto-save to cache
+                            try:
+                                explanation_cache.set_explanation(
+                                    app_id,
+                                    batch_audience_key,
+                                    False,
+                                    explanation
+                                )
+                            except Exception:
+                                pass  # Silently fail in batch mode
+
                         # Get context for compatibility
                         from backend.src.explainability.llm_explainer import get_application_explanation_data
                         context = get_application_explanation_data(app_id)
@@ -1861,10 +1884,22 @@ elif page == "Settings":
 
     # OpenAI settings
     st.markdown("#### 🤖 OpenAI Configuration")
-    st.markdown("*Provide your own OpenAI API key to use this app*")
-    openai_key = st.text_input("OpenAI API Key", type="password", value="",
+
+    # Pre-fill with .env key for local development
+    default_key = os.getenv("OPENAI_API_KEY", "")
+    default_model = os.getenv("OPENAI_MODEL", "gpt-4o")
+
+    if default_key:
+        st.markdown("*Using API key from .env file (local development)*")
+    else:
+        st.markdown("*Provide your own OpenAI API key to use this app*")
+
+    openai_key = st.text_input("OpenAI API Key", type="password", value=default_key,
                                 help="Get your API key from https://platform.openai.com/api-keys")
-    openai_model = st.selectbox("Model", ["gpt-4o", "gpt-4", "gpt-3.5-turbo"], index=0)
+
+    model_options = ["gpt-4o", "gpt-4", "gpt-3.5-turbo"]
+    default_index = model_options.index(default_model) if default_model in model_options else 0
+    openai_model = st.selectbox("Model", model_options, index=default_index)
 
     # Store in session state for use in explanation generation
     st.session_state['user_openai_key'] = openai_key
