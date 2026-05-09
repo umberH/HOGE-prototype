@@ -1208,271 +1208,274 @@ elif page == "Explain Application":
 
                         st.caption("💡 Concepts aggregate multiple features for simpler understanding")
 
-            # TAB 6: MECHANISTIC DEEP DIVE
-            with tabs[tab_idx + 1]:
-                st.markdown("**Deep mechanistic analysis of XGBoost decision-making**")
-                st.caption("Understand how the model makes decisions at the tree level, including decision paths, feature interactions, and ensemble patterns.")
-                st.markdown("---")
+            # TAB: MECHANISTIC DEEP DIVE (only for technical audience)
+            if audience_key == "technical":
+                with tabs[4]:  # Tab 5 for technical audience
+                    st.markdown("**Deep mechanistic analysis of XGBoost decision-making**")
+                    st.caption("Understand how the model makes decisions at the tree level, including decision paths, feature interactions, and ensemble patterns.")
+                    st.markdown("---")
 
-                # Mechanistic Interpretability Analysis
-                st.markdown("#### 🧠 Mechanistic Interpretability Analysis")
+                    # Mechanistic Interpretability Analysis
+                    st.markdown("#### 🧠 Mechanistic Interpretability Analysis")
 
-                if st.button("🔬 Run Deep Model Analysis", help="Analyze decision paths, feature interactions, and tree-level patterns"):
-                    with st.spinner("Running mechanistic analysis..."):
-                        try:
-                            from backend.src.explainability.mechanistic_interpreter import MechanisticInterpreter
-                            import pandas as pd
-                            import joblib
+                    if st.button("🔬 Run Deep Model Analysis", help="Analyze decision paths, feature interactions, and tree-level patterns"):
+                        with st.spinner("Running mechanistic analysis..."):
+                            try:
+                                from backend.src.explainability.mechanistic_interpreter import MechanisticInterpreter
+                                import pandas as pd
+                                import joblib
 
-                            # Load model and data
-                            MODEL_PATH = "models/loan_xgb_monotonic.joblib"
+                                # Load model and data
+                                MODEL_PATH = "models/loan_xgb_monotonic.joblib"
 
-                            # Try multiple data sources
-                            import os
-                            if os.path.exists("data/raw/df1_loan.csv"):
-                                df = pd.read_csv("data/raw/df1_loan.csv")
-                                df = df.drop(columns=["Unnamed: 0"], errors="ignore")
+                                # Try multiple data sources
+                                import os
+                                if os.path.exists("data/raw/df1_loan.csv"):
+                                    df = pd.read_csv("data/raw/df1_loan.csv")
+                                    df = df.drop(columns=["Unnamed: 0"], errors="ignore")
 
-                                # Clean ALL currency and numeric columns thoroughly
-                                numeric_cols = ["ApplicantIncome", "CoapplicantIncome", "LoanAmount", "Total_Income"]
-                                for col in numeric_cols:
-                                    if col in df.columns:
-                                        df[col] = (df[col].astype(str)
-                                                  .str.replace("$", "", regex=False)
-                                                  .str.replace(",", "", regex=False)
-                                                  .str.strip())
-                                        df[col] = pd.to_numeric(df[col], errors="coerce")
+                                    # Clean ALL currency and numeric columns thoroughly
+                                    numeric_cols = ["ApplicantIncome", "CoapplicantIncome", "LoanAmount", "Total_Income"]
+                                    for col in numeric_cols:
+                                        if col in df.columns:
+                                            df[col] = (df[col].astype(str)
+                                                      .str.replace("$", "", regex=False)
+                                                      .str.replace(",", "", regex=False)
+                                                      .str.strip())
+                                            df[col] = pd.to_numeric(df[col], errors="coerce")
 
-                                # Add DTI
-                                df["DTI"] = df["LoanAmount"] / (df["ApplicantIncome"] + df["CoapplicantIncome"] + 1)
-                            else:
-                                st.error("Raw data file not found: data/raw/df1_loan.csv")
-                                raise FileNotFoundError("data/raw/df1_loan.csv")
+                                    # Add DTI
+                                    df["DTI"] = df["LoanAmount"] / (df["ApplicantIncome"] + df["CoapplicantIncome"] + 1)
+                                else:
+                                    st.error("Raw data file not found: data/raw/df1_loan.csv")
+                                    raise FileNotFoundError("data/raw/df1_loan.csv")
 
-                            app_data = df[df['Loan_ID'] == loan_id]
+                                app_data = df[df['Loan_ID'] == loan_id]
 
-                            if not app_data.empty:
-                                feature_cols = [col for col in df.columns if col not in ['Loan_ID', 'Loan_Status', 'Total_Income', 'DTI', 'Unnamed: 0']]
-                                # Add the engineered features
-                                feature_cols = feature_cols + ['Total_Income', 'DTI']
-                                X = app_data[feature_cols]
+                                if not app_data.empty:
+                                    feature_cols = [col for col in df.columns if col not in ['Loan_ID', 'Loan_Status', 'Total_Income', 'DTI', 'Unnamed: 0']]
+                                    # Add the engineered features
+                                    feature_cols = feature_cols + ['Total_Income', 'DTI']
+                                    X = app_data[feature_cols]
 
-                                # Initialize interpreter
-                                interpreter = MechanisticInterpreter(MODEL_PATH, feature_cols)
+                                    # Initialize interpreter
+                                    interpreter = MechanisticInterpreter(MODEL_PATH, feature_cols)
 
-                                # Extract decision paths
-                                paths = interpreter.extract_decision_path(loan_id, X, tree_limit=50)
-                                interactions = interpreter.detect_feature_interactions(min_co_occurrence=5)
-                                tree_insights = interpreter.analyze_tree_level_patterns()
+                                    # Extract decision paths
+                                    paths = interpreter.extract_decision_path(loan_id, X, tree_limit=50)
+                                    interactions = interpreter.detect_feature_interactions(min_co_occurrence=5)
+                                    tree_insights = interpreter.analyze_tree_level_patterns()
 
-                                # Generate narrative
-                                narrative = interpreter.generate_narrative_explanation(
-                                    loan_id, paths, interactions, tree_insights, audience=audience
-                                )
+                                    # Generate narrative
+                                    narrative = interpreter.generate_narrative_explanation(
+                                        loan_id, paths, interactions, tree_insights, audience=audience
+                                    )
 
-                                st.markdown(narrative)
+                                    st.markdown(narrative)
 
-                                # Show interactive visualizations
-                                st.markdown("**📊 Interactive Decision Path Visualization**")
+                                    # Show interactive visualizations
+                                    st.markdown("**📊 Interactive Decision Path Visualization**")
 
-                                from backend.src.explainability.tree_visualizer import TreeVisualizer
-                                visualizer = TreeVisualizer()
+                                    from backend.src.explainability.tree_visualizer import TreeVisualizer
+                                    visualizer = TreeVisualizer()
 
-                                # Decision paths (interactive 6-panel dashboard)
-                                fig_paths = visualizer.visualize_decision_paths_interactive(paths, top_k=20)
-                                if fig_paths:
-                                    st.plotly_chart(fig_paths, width="stretch")
+                                    # Decision paths (interactive 6-panel dashboard)
+                                    fig_paths = visualizer.visualize_decision_paths_interactive(paths, top_k=20)
+                                    if fig_paths:
+                                        st.plotly_chart(fig_paths, width="stretch")
 
-                                # Feature interaction network
-                                st.markdown("**🔗 Feature Interaction Network**")
-                                fig_interactions = visualizer.visualize_feature_interactions_network(interactions, top_k=15)
-                                if fig_interactions:
-                                    st.plotly_chart(fig_interactions, width="stretch")
+                                    # Feature interaction network
+                                    st.markdown("**🔗 Feature Interaction Network**")
+                                    fig_interactions = visualizer.visualize_feature_interactions_network(interactions, top_k=15)
+                                    if fig_interactions:
+                                        st.plotly_chart(fig_interactions, width="stretch")
 
-                                # Tree ensemble summary
-                                st.markdown("**🌲 Tree Ensemble Summary**")
-                                fig_ensemble = visualizer.visualize_tree_ensemble_summary(tree_insights)
-                                if fig_ensemble:
-                                    st.plotly_chart(fig_ensemble, width="stretch")
+                                    # Tree ensemble summary
+                                    st.markdown("**🌲 Tree Ensemble Summary**")
+                                    fig_ensemble = visualizer.visualize_tree_ensemble_summary(tree_insights)
+                                    if fig_ensemble:
+                                        st.plotly_chart(fig_ensemble, width="stretch")
 
-                                st.success("Mechanistic analysis complete - all visualizations are interactive (hover, zoom, pan)")
-                            else:
-                                st.error(f"Application {loan_id} not found in processed data")
+                                    st.success("Mechanistic analysis complete - all visualizations are interactive (hover, zoom, pan)")
+                                else:
+                                    st.error(f"Application {loan_id} not found in processed data")
 
-                        except FileNotFoundError as e:
-                            st.error(f"Required file not found: {e}")
-                            st.info("Make sure model and data files exist at the specified paths")
-                        except Exception as e:
-                            st.error(f"Error during mechanistic analysis: {e}")
-                            import traceback
-                            st.code(traceback.format_exc())
+                            except FileNotFoundError as e:
+                                st.error(f"Required file not found: {e}")
+                                st.info("Make sure model and data files exist at the specified paths")
+                            except Exception as e:
+                                st.error(f"Error during mechanistic analysis: {e}")
+                                import traceback
+                                st.code(traceback.format_exc())
 
-            # TAB 7: KNOWLEDGE GRAPH
-            with tabs[tab_idx + 2]:
-                st.markdown("**Knowledge Graph Network Visualization**")
-                st.caption("Ontology-grounded evidence showing the relationships between this loan, SHAP values, policy rules, and counterfactuals.")
-                st.markdown("---")
+            # TAB: KNOWLEDGE GRAPH (only for technical audience)
+            if audience_key == "technical":
+                with tabs[5]:  # Tab 6 for technical audience
+                    st.markdown("**Knowledge Graph Network Visualization**")
+                    st.caption("Ontology-grounded evidence showing the relationships between this loan, SHAP values, policy rules, and counterfactuals.")
+                    st.markdown("---")
 
-                # Knowledge Graph Network Visualization using Graphviz
-                try:
-                    from backend.src.knowledge_graph.kg_visualizer import KGVisualizer
-
-                    kg_viz = KGVisualizer()
-
-                    # Extract evidence from context
-                    evidence = kg_viz.extract_evidence_from_context(context)
-
-                    # Try Neo4j query first, fall back to context-based
+                    # Knowledge Graph Network Visualization using Graphviz
                     try:
-                        graph_viz = kg_viz.create_graphviz_from_neo4j(loan_id)
-                        if graph_viz:
-                            st.graphviz_chart(graph_viz)
-                            st.success("✅ Network loaded from Neo4j knowledge graph")
-                        else:
+                        from backend.src.knowledge_graph.kg_visualizer import KGVisualizer
+
+                        kg_viz = KGVisualizer()
+
+                        # Extract evidence from context
+                        evidence = kg_viz.extract_evidence_from_context(context)
+
+                        # Try Neo4j query first, fall back to context-based
+                        try:
+                            graph_viz = kg_viz.create_graphviz_from_neo4j(loan_id)
+                            if graph_viz:
+                                st.graphviz_chart(graph_viz)
+                                st.success("✅ Network loaded from Neo4j knowledge graph")
+                            else:
+                                # Fallback to context-based network
+                                graph_viz = kg_viz.create_graphviz_network(evidence)
+                                st.graphviz_chart(graph_viz)
+                                st.info("ℹ️ Network generated from explanation context (Neo4j not available)")
+                        except Exception as e:
                             # Fallback to context-based network
                             graph_viz = kg_viz.create_graphviz_network(evidence)
                             st.graphviz_chart(graph_viz)
-                            st.info("ℹ️ Network generated from explanation context (Neo4j not available)")
+                            st.info("ℹ️ Network generated from explanation context")
+
+                        st.markdown("""
+                        **Legend:**
+                        - 🔵 **Blue (Ellipse)**: Loan application node
+                        - 🟢 **Green**: Positive SHAP features (↑ approval)
+                        - 🔴 **Red**: Negative SHAP features or policy violations (↓ approval)
+                        - 🟠 **Orange**: Counterfactual scenarios
+                        - **Dashed lines**: Policy rule violations
+                        - **Dotted lines**: Counterfactual relationships
+                        """)
+
+                        # Close connection
+                        kg_viz.close()
+
+                    except ImportError as e:
+                        st.warning(f"⚠️ KG Visualizer not available: {e}")
                     except Exception as e:
-                        # Fallback to context-based network
-                        graph_viz = kg_viz.create_graphviz_network(evidence)
-                        st.graphviz_chart(graph_viz)
-                        st.info("ℹ️ Network generated from explanation context")
+                        st.error(f"❌ Error creating KG visualization: {e}")
+                        import traceback
+                        st.code(traceback.format_exc())
 
-                    st.markdown("""
-                    **Legend:**
-                    - 🔵 **Blue (Ellipse)**: Loan application node
-                    - 🟢 **Green**: Positive SHAP features (↑ approval)
-                    - 🔴 **Red**: Negative SHAP features or policy violations (↓ approval)
-                    - 🟠 **Orange**: Counterfactual scenarios
-                    - **Dashed lines**: Policy rule violations
-                    - **Dotted lines**: Counterfactual relationships
-                    """)
+            # TAB: EVIDENCE & PROVENANCE (only for technical audience)
+            if audience_key == "technical":
+                with tabs[6]:  # Last tab for technical audience
+                    st.markdown("**Full Traceability & Reproducibility**")
+                    st.markdown("- Complete provenance metadata for all pipeline components")
+                    st.markdown("- Download options for explanation, context, and provenance")
+                    st.markdown("---")
 
-                    # Close connection
-                    kg_viz.close()
+                    # Provenance
+                    st.markdown("#### 🔍 Provenance & Metadata")
 
-                except ImportError as e:
-                    st.warning(f"⚠️ KG Visualizer not available: {e}")
-                except Exception as e:
-                    st.error(f"❌ Error creating KG visualization: {e}")
-                    import traceback
-                    st.code(traceback.format_exc())
+                    # Check if enhanced provenance is available
+                    prov_compact = explanation.get('provenance_compact', {})
+                    prov_full = explanation.get('provenance_full', {})
 
-            # TAB: EVIDENCE & PROVENANCE (last tab)
-            with tabs[6]:  # Fixed: always use last tab for technical audience
-                st.markdown("**Full Traceability & Reproducibility**")
-                st.markdown("- Complete provenance metadata for all pipeline components")
-                st.markdown("- Download options for explanation, context, and provenance")
-                st.markdown("---")
+                    # Load saved provenance files (model, KG, eval)
+                    def load_provenance_file(filepath):
+                        """Load provenance JSON file if it exists"""
+                        try:
+                            if os.path.exists(filepath):
+                                with open(filepath, 'r') as f:
+                                    return json.load(f)
+                        except Exception as e:
+                            print(f"Error loading {filepath}: {e}")
+                        return {}
 
-                # Provenance
-                st.markdown("#### 🔍 Provenance & Metadata")
+                    # Load external provenance sources
+                    model_prov_file = load_provenance_file("models/model_provenance.json")
+                    kg_prov_file = load_provenance_file("data/provenance/kg_provenance.json")
+                    eval_prov_file = load_provenance_file("data/provenance/eval_provenance.json")
 
-                # Check if enhanced provenance is available
-                prov_compact = explanation.get('provenance_compact', {})
-                prov_full = explanation.get('provenance_full', {})
+                    # Merge external provenance into prov_full
+                    if model_prov_file and 'model_provenance' in model_prov_file:
+                            prov_full['model_provenance'] = model_prov_file['model_provenance']
 
-                # Load saved provenance files (model, KG, eval)
-                def load_provenance_file(filepath):
-                    """Load provenance JSON file if it exists"""
-                    try:
-                        if os.path.exists(filepath):
-                            with open(filepath, 'r') as f:
-                                return json.load(f)
-                    except Exception as e:
-                        print(f"Error loading {filepath}: {e}")
-                    return {}
+                    if kg_prov_file and 'kg_provenance' in kg_prov_file:
+                            prov_full['kg_provenance'] = kg_prov_file['kg_provenance']
 
-                # Load external provenance sources
-                model_prov_file = load_provenance_file("models/model_provenance.json")
-                kg_prov_file = load_provenance_file("data/provenance/kg_provenance.json")
-            eval_prov_file = load_provenance_file("data/provenance/eval_provenance.json")
+                    if eval_prov_file and 'evaluation_provenance' in eval_prov_file:
+                            prov_full['evaluation_provenance'] = eval_prov_file['evaluation_provenance']
 
-            # Merge external provenance into prov_full
-            if model_prov_file and 'model_provenance' in model_prov_file:
-                prov_full['model_provenance'] = model_prov_file['model_provenance']
+                    if prov_compact:
+                            # Show compact instance-level provenance only
+                            st.markdown("**Instance-Level Metadata:**")
+                            st.caption("LLM generation details for this specific explanation")
 
-            if kg_prov_file and 'kg_provenance' in kg_prov_file:
-                prov_full['kg_provenance'] = kg_prov_file['kg_provenance']
+                            metric_cols = st.columns(4)
+                            with metric_cols[0]:
+                                st.metric("LLM Model", prov_compact.get('llm_model', 'N/A'))
+                            with metric_cols[1]:
+                                st.metric("Tokens", prov_compact.get('llm_tokens', 'N/A'))
+                            with metric_cols[2]:
+                                st.metric("Evidence Items", prov_compact.get('evidence_items', 'N/A'))
+                            with metric_cols[3]:
+                                st.metric("Audience", prov_compact.get('target_audience', 'N/A'))
 
-            if eval_prov_file and 'evaluation_provenance' in eval_prov_file:
-                prov_full['evaluation_provenance'] = eval_prov_file['evaluation_provenance']
+                    else:
+                            # Fallback to basic provenance if enhanced not available
+                            st.markdown("**Instance-Level Metadata:**")
+                            st.caption("Explanation generation details")
 
-            if prov_compact:
-                # Show compact instance-level provenance only
-                st.markdown("**Instance-Level Metadata:**")
-                st.caption("LLM generation details for this specific explanation")
+                            prov_col1, prov_col2 = st.columns(2)
 
-                metric_cols = st.columns(4)
-                with metric_cols[0]:
-                    st.metric("LLM Model", prov_compact.get('llm_model', 'N/A'))
-                with metric_cols[1]:
-                    st.metric("Tokens", prov_compact.get('llm_tokens', 'N/A'))
-                with metric_cols[2]:
-                    st.metric("Evidence Items", prov_compact.get('evidence_items', 'N/A'))
-                with metric_cols[3]:
-                    st.metric("Audience", prov_compact.get('target_audience', 'N/A'))
+                            with prov_col1:
+                                st.write(f"- Model: {explanation.get('provenance', {}).get('model_name', 'N/A')}")
+                                st.write(f"- XAI Method: {explanation.get('provenance', {}).get('xai_method', 'N/A')}")
+                                st.write(f"- HOGE Version: {explanation.get('provenance', {}).get('hoge_version', 'N/A')}")
 
-            else:
-                # Fallback to basic provenance if enhanced not available
-                st.markdown("**Instance-Level Metadata:**")
-                st.caption("Explanation generation details")
+                            with prov_col2:
+                                st.write(f"- Target Audience: {audience}")
+                                st.write(f"- Used Concepts: {explanation.get('used_concepts', False)}")
+                                st.write(f"- Evidence Items: {len(explanation.get('evidence_bundle', []))}")
 
-                prov_col1, prov_col2 = st.columns(2)
+                    # Download options
+                    st.markdown("---")
+                    st.markdown("### 📥 Download Options")
 
-                with prov_col1:
-                    st.write(f"- Model: {explanation.get('provenance', {}).get('model_name', 'N/A')}")
-                    st.write(f"- XAI Method: {explanation.get('provenance', {}).get('xai_method', 'N/A')}")
-                    st.write(f"- HOGE Version: {explanation.get('provenance', {}).get('hoge_version', 'N/A')}")
+                    col1, col2, col3 = st.columns(3)
 
-                with prov_col2:
-                    st.write(f"- Target Audience: {audience}")
-                    st.write(f"- Used Concepts: {explanation.get('used_concepts', False)}")
-                    st.write(f"- Evidence Items: {len(explanation.get('evidence_bundle', []))}")
+                    with col1:
+                            st.download_button(
+                                "📥 Explanation (JSON)",
+                                data=json.dumps(explanation, indent=2, default=str),
+                                file_name=f"explanation_{loan_id}.json",
+                                mime="application/json",
+                                help="Download complete explanation with all provenance"
+                            )
 
-            # Download options
-            st.markdown("---")
-            st.markdown("### 📥 Download Options")
+                    with col2:
+                            st.download_button(
+                                "📥 Context Data (JSON)",
+                                data=json.dumps(context, indent=2, default=str),
+                                file_name=f"context_{loan_id}.json",
+                                mime="application/json",
+                                help="Download raw context from knowledge graph"
+                            )
 
-            col1, col2, col3 = st.columns(3)
-
-            with col1:
-                st.download_button(
-                    "📥 Explanation (JSON)",
-                    data=json.dumps(explanation, indent=2, default=str),
-                    file_name=f"explanation_{loan_id}.json",
-                    mime="application/json",
-                    help="Download complete explanation with all provenance"
-                )
-
-            with col2:
-                st.download_button(
-                    "📥 Context Data (JSON)",
-                    data=json.dumps(context, indent=2, default=str),
-                    file_name=f"context_{loan_id}.json",
-                    mime="application/json",
-                    help="Download raw context from knowledge graph"
-                )
-
-            with col3:
-                # Download full provenance if available
-                if prov_full:
-                    st.download_button(
-                        "📊 Full Provenance (JSON)",
-                        data=json.dumps(prov_full, indent=2, default=str),
-                        file_name=f"provenance_{loan_id}_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-                        mime="application/json",
-                        help="Download complete provenance metadata for reproducibility"
-                    )
-                else:
-                    st.download_button(
-                        "📊 Basic Provenance (JSON)",
-                        data=json.dumps(explanation.get('provenance', {}), indent=2, default=str),
-                        file_name=f"provenance_{loan_id}.json",
-                        mime="application/json",
-                        help="Download basic provenance metadata"
-                    )
+                    with col3:
+                            # Download full provenance if available
+                            if prov_full:
+                                st.download_button(
+                                    "📊 Full Provenance (JSON)",
+                                    data=json.dumps(prov_full, indent=2, default=str),
+                                    file_name=f"provenance_{loan_id}_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                                    mime="application/json",
+                                    help="Download complete provenance metadata for reproducibility"
+                                )
+                            else:
+                                st.download_button(
+                                    "📊 Basic Provenance (JSON)",
+                                    data=json.dumps(explanation.get('provenance', {}), indent=2, default=str),
+                                    file_name=f"provenance_{loan_id}.json",
+                                    mime="application/json",
+                                    help="Download basic provenance metadata"
+                                )
 
 
 elif page == "Batch Analysis":
