@@ -1,14 +1,14 @@
 {
-  "provenance_id": "prov_20260508_141536",
-  "export_timestamp": "2026-05-08T04:15:36.155804+00:00",
+  "provenance_id": "prov_20260508_183456",
+  "export_timestamp": "2026-05-08T08:34:56.338512+00:00",
   "hoge_version": "1.0.0",
   "provenance_schema_version": "2.0",
   "framework_name": "HOGE",
   "framework_description": "Human-Centric Ontology-Grounded Explanation Framework",
   "model_provenance": {
-    "model_id": "xgb_monotonic_20260508_141536",
-    "created_at": "2026-05-08T04:15:36.155760+00:00",
-    "model_path": "models/loan_xgb_monotonic.joblib",
+    "model_id": "xgb_monotonic_20260508_183456",
+    "created_at": "2026-05-08T08:34:56.338512+00:00",
+    "model_path": ".resources\\models\\loan_xgb_monotonic.joblib",
     "model_type": "XGBoost",
     "model_class": "XGBClassifier",
     "training_samples": 400,
@@ -55,7 +55,7 @@
       "f1_score": 0.8507462686567164,
       "roc_auc": 0.852267414679757
     },
-    "training_date": "2026-05-08T04:15:36.155260+00:00",
+    "training_date": "2026-05-08T08:34:56.338512+00:00",
     "random_seed": 42,
     "test_split_ratio": 0.2,
     "stratified": true

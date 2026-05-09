@@ -1,0 +1,2476 @@
+{
+  "LP001006_non_technical_concepts-False": {
+    "application_id": "LP001006",
+    "decision": "Approved",
+    "approval_probability": 0.9250967502593994,
+    "summary": "Your loan application has been approved.",
+    "narrative": "Congratulations! Your loan application has been approved. There were several factors that worked in your favor. Having a co-applicant with a strong income (CoapplicantIncome: 2358.0) was a major plus, as it showed the ability to manage the loan payments. Your clean credit history (Credit_History: 1.0) also played a crucial role in gaining approval, as it indicates reliability in managing past debts. Additionally, the loan amount you requested (LoanAmount: 120.0) was seen as reasonable, and your total household income (Total_Income: $4,941.00) further supported your application. Having one dependent (Dependents_1: 0) was also viewed positively.\n\nOn the other hand, there were a few factors that slightly reduced your approval score. Your individual income (ApplicantIncome: 2583) was considered a bit on the lower side, which could be improved for future applications. Living in a semiurban area (Property_Area_Semiurban: 0) and not having a graduate degree (Education_Graduate: 0) were minor negative factors. Additionally, being male (Gender_Female: 0) and having two dependents (Dependents_2: 0) slightly reduced the score.\n\nImportantly, there were no policy rules violated in your application, which is great news. This means your application met all the necessary requirements without any issues.\n\nIf you're looking to strengthen future applications, consider ways to increase your individual income. However, no specific changes were identified that could have flipped the decision, as your application was already strong enough to be approved.",
+    "recommendation": "Consider increasing your individual income for even stronger applications in the future.",
+    "positive_drivers": [
+      "Having a co-applicant with a strong income (CoapplicantIncome: 2358.0) helped support the approval.",
+      "A clean credit history (Credit_History: 1.0) was a significant positive factor.",
+      "The loan amount requested (LoanAmount: 120.0) was reasonable and supported approval.",
+      "The total income of the household (Total_Income: $4,941.00) was seen as a positive factor.",
+      "Having one dependent (Dependents_1: 0) was viewed favorably."
+    ],
+    "negative_drivers": [
+      "The individual income (ApplicantIncome: 2583) was considered on the lower side.",
+      "Living in a semiurban area (Property_Area_Semiurban: 0) slightly reduced the approval score.",
+      "Not having a graduate degree (Education_Graduate: 0) was a minor negative factor.",
+      "Being male (Gender_Female: 0) slightly reduced the approval score.",
+      "Having two dependents (Dependents_2: 0) was a minor negative factor."
+    ],
+    "policy_violations": [],
+    "shap_features": [
+      {
+        "feature": "CoapplicantIncome",
+        "value": 2358.0,
+        "shap": 1.3687362670898438,
+        "importance": 1.3687362670898438,
+        "direction": "supports_approval",
+        "rank": 1
+      },
+      {
+        "feature": "Credit_History",
+        "value": 1.0,
+        "shap": 0.5458170175552368,
+        "importance": 0.5458170175552368,
+        "direction": "supports_approval",
+        "rank": 2
+      },
+      {
+        "feature": "ApplicantIncome",
+        "value": 2583,
+        "shap": -0.3594921827316284,
+        "importance": 0.3594921827316284,
+        "direction": "supports_decline",
+        "rank": 3
+      },
+      {
+        "feature": "Property_Area_Semiurban",
+        "value": 0,
+        "shap": -0.3405851423740387,
+        "importance": 0.3405851423740387,
+        "direction": "supports_decline",
+        "rank": 4
+      },
+      {
+        "feature": "LoanAmount",
+        "value": 120.0,
+        "shap": 0.3395189344882965,
+        "importance": 0.3395189344882965,
+        "direction": "supports_approval",
+        "rank": 5
+      },
+      {
+        "feature": "Total_Income",
+        "value": "$4,941.00",
+        "shap": 0.2547243237495422,
+        "importance": 0.2547243237495422,
+        "direction": "supports_approval",
+        "rank": 6
+      },
+      {
+        "feature": "Education_Graduate",
+        "value": 0,
+        "shap": -0.1802441924810409,
+        "importance": 0.1802441924810409,
+        "direction": "supports_decline",
+        "rank": 7
+      },
+      {
+        "feature": "Dependents_1",
+        "value": 0,
+        "shap": 0.0969959571957588,
+        "importance": 0.0969959571957588,
+        "direction": "supports_approval",
+        "rank": 8
+      },
+      {
+        "feature": "Property_Area_Rural",
+        "value": 0,
+        "shap": 0.0755938366055488,
+        "importance": 0.0755938366055488,
+        "direction": "supports_approval",
+        "rank": 9
+      },
+      {
+        "feature": "Gender_Female",
+        "value": 0,
+        "shap": -0.0733276605606079,
+        "importance": 0.0733276605606079,
+        "direction": "supports_decline",
+        "rank": 10
+      },
+      {
+        "feature": "Dependents_2",
+        "value": 0,
+        "shap": -0.069014586508274,
+        "importance": 0.069014586508274,
+        "direction": "supports_decline",
+        "rank": 11
+      },
+      {
+        "feature": "DTI",
+        "value": 0.024281667,
+        "shap": 0.0638990849256515,
+        "importance": 0.0638990849256515,
+        "direction": "supports_approval",
+        "rank": 12
+      },
+      {
+        "feature": "Self_Employed_No",
+        "value": 1,
+        "shap": 0.0537833534181118,
+        "importance": 0.0537833534181118,
+        "direction": "supports_approval",
+        "rank": 13
+      },
+      {
+        "feature": "Education_Not Graduate",
+        "value": 1,
+        "shap": -0.052157774567604,
+        "importance": 0.052157774567604,
+        "direction": "supports_decline",
+        "rank": 14
+      },
+      {
+        "feature": "Dependents_0",
+        "value": 1,
+        "shap": -0.0309332758188247,
+        "importance": 0.0309332758188247,
+        "direction": "supports_decline",
+        "rank": 15
+      },
+      {
+        "feature": "Married_No",
+        "value": 0,
+        "shap": -0.0188404768705368,
+        "importance": 0.0188404768705368,
+        "direction": "supports_decline",
+        "rank": 16
+      },
+      {
+        "feature": "Property_Area_Urban",
+        "value": 1,
+        "shap": -0.0169902518391609,
+        "importance": 0.0169902518391609,
+        "direction": "supports_decline",
+        "rank": 17
+      },
+      {
+        "feature": "Gender_Male",
+        "value": 1,
+        "shap": -0.0100751928985118,
+        "importance": 0.0100751928985118,
+        "direction": "supports_decline",
+        "rank": 18
+      },
+      {
+        "feature": "Self_Employed_Yes",
+        "value": 0,
+        "shap": 0.0099515253677964,
+        "importance": 0.0099515253677964,
+        "direction": "supports_approval",
+        "rank": 19
+      },
+      {
+        "feature": "Dependents_3+",
+        "value": 0,
+        "shap": -0.0047747138887643,
+        "importance": 0.0047747138887643,
+        "direction": "supports_decline",
+        "rank": 20
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "value": 360.0,
+        "shap": 0.0041646370664238,
+        "importance": 0.0041646370664238,
+        "direction": "supports_approval",
+        "rank": 21
+      },
+      {
+        "feature": "Married_Yes",
+        "value": 1,
+        "shap": 0.0041221263818442,
+        "importance": 0.0041221263818442,
+        "direction": "supports_approval",
+        "rank": 22
+      }
+    ],
+    "features_used": [
+      "CoapplicantIncome",
+      "Credit_History",
+      "LoanAmount",
+      "Total_Income",
+      "Dependents_1",
+      "ApplicantIncome",
+      "Property_Area_Semiurban",
+      "Education_Graduate",
+      "Gender_Female",
+      "Dependents_2"
+    ],
+    "counterfactual_what_if": "No counterfactual scenarios are available.",
+    "counterfactual_scenarios": [],
+    "used_concepts": false,
+    "business_concepts": [],
+    "provenance": {
+      "llm_model": "gpt-4o",
+      "llm_tokens": 2197,
+      "evidence_items": 22,
+      "target_audience": "non_technical",
+      "generation_timestamp": "2026-05-10T08:41:46.678786",
+      "model_name": "xgb_monotonic_v1",
+      "xai_method": "TreeSHAP",
+      "kg_loader_version": "neo_loader_v1",
+      "hoge_version": "1.0.0"
+    },
+    "evidence_bundle": [
+      {
+        "claim_type": "feature_contribution",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:CoapplicantIncome)",
+        "value": 2358.0,
+        "shap_value": 1.3687362670898438,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Credit_History)",
+        "value": 1.0,
+        "shap_value": 0.5458170175552368,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "ApplicantIncome",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:ApplicantIncome)",
+        "value": 2583,
+        "shap_value": -0.3594921827316284,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Semiurban",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Semiurban)",
+        "value": 0,
+        "shap_value": -0.3405851423740387,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:LoanAmount)",
+        "value": 120.0,
+        "shap_value": 0.3395189344882965,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Total_Income",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Total_Income)",
+        "value": "$4,941.00",
+        "shap_value": 0.2547243237495422,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Graduate",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Graduate)",
+        "value": 0,
+        "shap_value": -0.1802441924810409,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_1",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_1)",
+        "value": 0,
+        "shap_value": 0.0969959571957588,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Rural",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Rural)",
+        "value": 0,
+        "shap_value": 0.0755938366055488,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Female",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Female)",
+        "value": 0,
+        "shap_value": -0.0733276605606079,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_2",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_2)",
+        "value": 0,
+        "shap_value": -0.069014586508274,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "DTI",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:DTI)",
+        "value": 0.024281667,
+        "shap_value": 0.0638990849256515,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_No",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_No)",
+        "value": 1,
+        "shap_value": 0.0537833534181118,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Not Graduate",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Not Graduate)",
+        "value": 1,
+        "shap_value": -0.052157774567604,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_0",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_0)",
+        "value": 1,
+        "shap_value": -0.0309332758188247,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_No",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_No)",
+        "value": 0,
+        "shap_value": -0.0188404768705368,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Urban",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Urban)",
+        "value": 1,
+        "shap_value": -0.0169902518391609,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Male",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Male)",
+        "value": 1,
+        "shap_value": -0.0100751928985118,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_Yes",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_Yes)",
+        "value": 0,
+        "shap_value": 0.0099515253677964,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_3+",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_3+)",
+        "value": 0,
+        "shap_value": -0.0047747138887643,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Loan_Amount_Term)",
+        "value": 360.0,
+        "shap_value": 0.0041646370664238,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_Yes",
+        "kg_path": "(LoanApplication:LP001006)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_Yes)",
+        "value": 1,
+        "shap_value": 0.0041221263818442,
+        "direction": "supports_approval"
+      }
+    ],
+    "_cached_at": "2026-05-10T08:41:46.679263",
+    "_cache_key": "LP001006_non_technical_concepts-False"
+  },
+  "LP001002_non_technical_concepts-False": {
+    "application_id": "LP001002",
+    "decision": "Approved",
+    "approval_probability": 0.9279430508613586,
+    "summary": "Your loan application has been approved with a high likelihood of success.",
+    "narrative": "Congratulations! Your loan application has been approved with a high chance of success. Several factors contributed positively to this decision. Your total income of $5,849.00 and personal income of $5,849 were strong indicators of your ability to repay the loan. Additionally, having a clean credit history (1.0) and being a graduate were also viewed favorably by the decision model. \n\nOn the other hand, there were a few factors that slightly reduced your approval score. Not having any income from a co-applicant (CoapplicantIncome: 0.0) and living in a semi-urban area (Property_Area_Semiurban: 0) were seen as less favorable. Additionally, having no dependents (Dependents_0: 1) slightly reduced your score. \n\nThere were no policy violations in your application, which is great. For future applications, you might consider adding a co-applicant with income to further strengthen your application. \n\nInterestingly, if your credit history was not clean, it would have significantly impacted the decision, flipping it to a decline. This highlights the importance of maintaining a good credit history. Overall, your current financial profile was strong enough to secure the loan approval.",
+    "recommendation": "Consider adding a co-applicant with income to strengthen future applications.",
+    "positive_drivers": [
+      "Your total income was strong, which supported the approval (Total_Income: $5,849.00).",
+      "Your personal income was also a positive factor (ApplicantIncome: $5,849).",
+      "Having a clean credit history helped your application (Credit_History: 1.0).",
+      "Being a graduate contributed positively to the decision (Education_Graduate: 1)."
+    ],
+    "negative_drivers": [
+      "Having no co-applicant income slightly reduced your approval score (CoapplicantIncome: 0.0).",
+      "Living in a semi-urban area was seen as less favorable (Property_Area_Semiurban: 0).",
+      "Having no dependents slightly reduced your approval score (Dependents_0: 1)."
+    ],
+    "policy_violations": [],
+    "shap_features": [
+      {
+        "feature": "Total_Income",
+        "value": "$5,849.00",
+        "shap": 1.2258732318878174,
+        "importance": 1.2258732318878174,
+        "direction": "supports_approval",
+        "rank": 1
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "value": 0.0,
+        "shap": -0.819622278213501,
+        "importance": 0.819622278213501,
+        "direction": "supports_decline",
+        "rank": 2
+      },
+      {
+        "feature": "ApplicantIncome",
+        "value": 5849,
+        "shap": 0.7537902593612671,
+        "importance": 0.7537902593612671,
+        "direction": "supports_approval",
+        "rank": 3
+      },
+      {
+        "feature": "Credit_History",
+        "value": 1.0,
+        "shap": 0.5131633877754211,
+        "importance": 0.5131633877754211,
+        "direction": "supports_approval",
+        "rank": 4
+      },
+      {
+        "feature": "Property_Area_Semiurban",
+        "value": 0,
+        "shap": -0.4535203278064728,
+        "importance": 0.4535203278064728,
+        "direction": "supports_decline",
+        "rank": 5
+      },
+      {
+        "feature": "LoanAmount",
+        "value": NaN,
+        "shap": 0.2288675010204315,
+        "importance": 0.2288675010204315,
+        "direction": "supports_approval",
+        "rank": 6
+      },
+      {
+        "feature": "Education_Graduate",
+        "value": 1,
+        "shap": 0.2073119431734085,
+        "importance": 0.2073119431734085,
+        "direction": "supports_approval",
+        "rank": 7
+      },
+      {
+        "feature": "Married_No",
+        "value": 1,
+        "shap": 0.1507820338010788,
+        "importance": 0.1507820338010788,
+        "direction": "supports_approval",
+        "rank": 8
+      },
+      {
+        "feature": "Dependents_0",
+        "value": 1,
+        "shap": -0.1490573585033416,
+        "importance": 0.1490573585033416,
+        "direction": "supports_decline",
+        "rank": 9
+      },
+      {
+        "feature": "Property_Area_Rural",
+        "value": 0,
+        "shap": 0.1012852266430854,
+        "importance": 0.1012852266430854,
+        "direction": "supports_approval",
+        "rank": 10
+      },
+      {
+        "feature": "Gender_Female",
+        "value": 0,
+        "shap": -0.0836081728339195,
+        "importance": 0.0836081728339195,
+        "direction": "supports_decline",
+        "rank": 11
+      },
+      {
+        "feature": "Dependents_2",
+        "value": 0,
+        "shap": -0.081999734044075,
+        "importance": 0.081999734044075,
+        "direction": "supports_decline",
+        "rank": 12
+      },
+      {
+        "feature": "Dependents_1",
+        "value": 0,
+        "shap": 0.0701324716210365,
+        "importance": 0.0701324716210365,
+        "direction": "supports_approval",
+        "rank": 13
+      },
+      {
+        "feature": "DTI",
+        "value": 0.0,
+        "shap": 0.0555150248110294,
+        "importance": 0.0555150248110294,
+        "direction": "supports_approval",
+        "rank": 14
+      },
+      {
+        "feature": "Education_Not Graduate",
+        "value": 0,
+        "shap": 0.0504378862679004,
+        "importance": 0.0504378862679004,
+        "direction": "supports_approval",
+        "rank": 15
+      },
+      {
+        "feature": "Dependents_3+",
+        "value": 0,
+        "shap": -0.0322044603526592,
+        "importance": 0.0322044603526592,
+        "direction": "supports_decline",
+        "rank": 16
+      },
+      {
+        "feature": "Property_Area_Urban",
+        "value": 1,
+        "shap": -0.031732965260744,
+        "importance": 0.031732965260744,
+        "direction": "supports_decline",
+        "rank": 17
+      },
+      {
+        "feature": "Self_Employed_No",
+        "value": 1,
+        "shap": 0.0285693798214197,
+        "importance": 0.0285693798214197,
+        "direction": "supports_approval",
+        "rank": 18
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "value": 360.0,
+        "shap": -0.0144154727458953,
+        "importance": 0.0144154727458953,
+        "direction": "supports_decline",
+        "rank": 19
+      },
+      {
+        "feature": "Gender_Male",
+        "value": 1,
+        "shap": -0.0127483364194631,
+        "importance": 0.0127483364194631,
+        "direction": "supports_decline",
+        "rank": 20
+      },
+      {
+        "feature": "Married_Yes",
+        "value": 0,
+        "shap": -0.0032461676746606,
+        "importance": 0.0032461676746606,
+        "direction": "supports_decline",
+        "rank": 21
+      },
+      {
+        "feature": "Self_Employed_Yes",
+        "value": 0,
+        "shap": -0.0008893716149032,
+        "importance": 0.0008893716149032,
+        "direction": "supports_decline",
+        "rank": 22
+      }
+    ],
+    "features_used": [
+      "Total_Income",
+      "ApplicantIncome",
+      "Credit_History",
+      "Education_Graduate",
+      "CoapplicantIncome",
+      "Property_Area_Semiurban",
+      "Dependents_0"
+    ],
+    "counterfactual_what_if": "If your credit history was not clean, it would have flipped the decision to a decline.",
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "probability_shift": -0.8176,
+        "new_probability": 0.0857,
+        "flipped_prediction": true
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "probability_shift": 0.0121,
+        "new_probability": 0.9153,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": NaN,
+        "changed_to": NaN,
+        "change_description": "increase by 50%",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": NaN,
+        "changed_to": NaN,
+        "change_description": "increase by 100%",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      }
+    ],
+    "used_concepts": false,
+    "business_concepts": [],
+    "provenance": {
+      "llm_model": "gpt-4o",
+      "llm_tokens": 2213,
+      "evidence_items": 27,
+      "target_audience": "non_technical",
+      "generation_timestamp": "2026-05-10T08:41:59.489178",
+      "model_name": "xgb_monotonic_v1",
+      "xai_method": "TreeSHAP",
+      "kg_loader_version": "neo_loader_v1",
+      "hoge_version": "1.0.0"
+    },
+    "evidence_bundle": [
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Total_Income",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Total_Income)",
+        "value": "$5,849.00",
+        "shap_value": 1.2258732318878174,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:CoapplicantIncome)",
+        "value": 0.0,
+        "shap_value": -0.819622278213501,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "ApplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:ApplicantIncome)",
+        "value": 5849,
+        "shap_value": 0.7537902593612671,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Credit_History)",
+        "value": 1.0,
+        "shap_value": 0.5131633877754211,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Semiurban",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Semiurban)",
+        "value": 0,
+        "shap_value": -0.4535203278064728,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:LoanAmount)",
+        "value": NaN,
+        "shap_value": 0.2288675010204315,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Graduate",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Graduate)",
+        "value": 1,
+        "shap_value": 0.2073119431734085,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_No",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_No)",
+        "value": 1,
+        "shap_value": 0.1507820338010788,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_0",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_0)",
+        "value": 1,
+        "shap_value": -0.1490573585033416,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Rural",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Rural)",
+        "value": 0,
+        "shap_value": 0.1012852266430854,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Female",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Female)",
+        "value": 0,
+        "shap_value": -0.0836081728339195,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_2",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_2)",
+        "value": 0,
+        "shap_value": -0.081999734044075,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_1",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_1)",
+        "value": 0,
+        "shap_value": 0.0701324716210365,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "DTI",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:DTI)",
+        "value": 0.0,
+        "shap_value": 0.0555150248110294,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Not Graduate",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Not Graduate)",
+        "value": 0,
+        "shap_value": 0.0504378862679004,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_3+",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_3+)",
+        "value": 0,
+        "shap_value": -0.0322044603526592,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Urban",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Urban)",
+        "value": 1,
+        "shap_value": -0.031732965260744,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_No",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_No)",
+        "value": 1,
+        "shap_value": 0.0285693798214197,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Loan_Amount_Term)",
+        "value": 360.0,
+        "shap_value": -0.0144154727458953,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Male",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Male)",
+        "value": 1,
+        "shap_value": -0.0127483364194631,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_Yes",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_Yes)",
+        "value": 0,
+        "shap_value": -0.0032461676746606,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_Yes",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_Yes)",
+        "value": 0,
+        "shap_value": -0.0008893716149032,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:Credit_History)",
+        "change_description": "flip",
+        "probability_shift": -0.8176,
+        "flipped": true
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:Loan_Amount_Term)",
+        "change_description": "reduce to 180 months",
+        "probability_shift": 0.0121,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:CoapplicantIncome)",
+        "change_description": "remove co-applicant",
+        "probability_shift": 0.0,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:LoanAmount)",
+        "change_description": "increase by 50%",
+        "probability_shift": 0.0,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:LoanAmount)",
+        "change_description": "increase by 100%",
+        "probability_shift": 0.0,
+        "flipped": false
+      }
+    ],
+    "_cached_at": "2026-05-10T08:41:59.489178",
+    "_cache_key": "LP001002_non_technical_concepts-False"
+  },
+  "LP001002_technical_concepts-False": {
+    "application_id": "LP001002",
+    "decision": "Approved",
+    "approval_probability": 0.9279430508613586,
+    "summary": "The loan application was approved with a high probability of 92.8%.",
+    "narrative": "The loan application for ID LP001002 was approved with a high probability of 92.8%. Several key factors contributed positively to this decision. The applicant's total income was strong, with a Total_Income of $5,849.00, which significantly supported the approval. Additionally, the individual ApplicantIncome was $5849, further bolstering the decision. The applicant's clean credit history (Credit_History: 1.0) was a crucial factor in favor of approval, as it met the policy requirement for a clean credit record. Furthermore, the applicant's status as a graduate (Education_Graduate: 1) also contributed positively.\n\nHowever, there were some factors that negatively impacted the decision. The absence of coapplicant income (CoapplicantIncome: 0.0) was a notable factor supporting decline. Additionally, the property being in a non-semiurban area (Property_Area_Semiurban: 0) and having no dependents (Dependents_0: 1) were considered negative drivers. The applicant's gender being male (Gender_Female: 0) and the absence of dependents (Dependents_2: 0) also contributed slightly to the decline.\n\nThere were no policy violations for this application, indicating compliance with all known rules. For future applications, it may be beneficial to include a coapplicant with income to further strengthen the application.\n\nIn terms of counterfactual scenarios, the most impactful change that could flip the decision would be if the Credit_History changed from 1.0 to 0.0, which would result in a decision flip from approval to decline. This highlights the importance of maintaining a clean credit history for loan approval.",
+    "recommendation": "Consider including a coapplicant with income to strengthen future applications.",
+    "positive_drivers": [
+      "The applicant had a strong total income (Total_Income: $5,849.00) supporting approval.",
+      "The applicant's individual income was substantial (ApplicantIncome: 5849) supporting approval.",
+      "The applicant maintained a clean credit history (Credit_History: 1.0) supporting approval.",
+      "The loan amount was considered favorable (LoanAmount: nan) supporting approval.",
+      "The applicant's educational background as a graduate (Education_Graduate: 1) supported approval."
+    ],
+    "negative_drivers": [
+      "The absence of coapplicant income (CoapplicantIncome: 0.0) was a factor supporting decline.",
+      "The property area being non-semiurban (Property_Area_Semiurban: 0) was a factor supporting decline.",
+      "Having no dependents (Dependents_0: 1) was a factor supporting decline.",
+      "The applicant's gender being male (Gender_Female: 0) was a factor supporting decline.",
+      "The absence of dependents (Dependents_2: 0) was a factor supporting decline."
+    ],
+    "policy_violations": [],
+    "shap_features": [
+      {
+        "feature": "Total_Income",
+        "value": "$5,849.00",
+        "shap": 1.2258732318878174,
+        "importance": 1.2258732318878174,
+        "direction": "supports_approval",
+        "rank": 1
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "value": 0.0,
+        "shap": -0.819622278213501,
+        "importance": 0.819622278213501,
+        "direction": "supports_decline",
+        "rank": 2
+      },
+      {
+        "feature": "ApplicantIncome",
+        "value": 5849,
+        "shap": 0.7537902593612671,
+        "importance": 0.7537902593612671,
+        "direction": "supports_approval",
+        "rank": 3
+      },
+      {
+        "feature": "Credit_History",
+        "value": 1.0,
+        "shap": 0.5131633877754211,
+        "importance": 0.5131633877754211,
+        "direction": "supports_approval",
+        "rank": 4
+      },
+      {
+        "feature": "Property_Area_Semiurban",
+        "value": 0,
+        "shap": -0.4535203278064728,
+        "importance": 0.4535203278064728,
+        "direction": "supports_decline",
+        "rank": 5
+      },
+      {
+        "feature": "LoanAmount",
+        "value": NaN,
+        "shap": 0.2288675010204315,
+        "importance": 0.2288675010204315,
+        "direction": "supports_approval",
+        "rank": 6
+      },
+      {
+        "feature": "Education_Graduate",
+        "value": 1,
+        "shap": 0.2073119431734085,
+        "importance": 0.2073119431734085,
+        "direction": "supports_approval",
+        "rank": 7
+      },
+      {
+        "feature": "Married_No",
+        "value": 1,
+        "shap": 0.1507820338010788,
+        "importance": 0.1507820338010788,
+        "direction": "supports_approval",
+        "rank": 8
+      },
+      {
+        "feature": "Dependents_0",
+        "value": 1,
+        "shap": -0.1490573585033416,
+        "importance": 0.1490573585033416,
+        "direction": "supports_decline",
+        "rank": 9
+      },
+      {
+        "feature": "Property_Area_Rural",
+        "value": 0,
+        "shap": 0.1012852266430854,
+        "importance": 0.1012852266430854,
+        "direction": "supports_approval",
+        "rank": 10
+      },
+      {
+        "feature": "Gender_Female",
+        "value": 0,
+        "shap": -0.0836081728339195,
+        "importance": 0.0836081728339195,
+        "direction": "supports_decline",
+        "rank": 11
+      },
+      {
+        "feature": "Dependents_2",
+        "value": 0,
+        "shap": -0.081999734044075,
+        "importance": 0.081999734044075,
+        "direction": "supports_decline",
+        "rank": 12
+      },
+      {
+        "feature": "Dependents_1",
+        "value": 0,
+        "shap": 0.0701324716210365,
+        "importance": 0.0701324716210365,
+        "direction": "supports_approval",
+        "rank": 13
+      },
+      {
+        "feature": "DTI",
+        "value": 0.0,
+        "shap": 0.0555150248110294,
+        "importance": 0.0555150248110294,
+        "direction": "supports_approval",
+        "rank": 14
+      },
+      {
+        "feature": "Education_Not Graduate",
+        "value": 0,
+        "shap": 0.0504378862679004,
+        "importance": 0.0504378862679004,
+        "direction": "supports_approval",
+        "rank": 15
+      },
+      {
+        "feature": "Dependents_3+",
+        "value": 0,
+        "shap": -0.0322044603526592,
+        "importance": 0.0322044603526592,
+        "direction": "supports_decline",
+        "rank": 16
+      },
+      {
+        "feature": "Property_Area_Urban",
+        "value": 1,
+        "shap": -0.031732965260744,
+        "importance": 0.031732965260744,
+        "direction": "supports_decline",
+        "rank": 17
+      },
+      {
+        "feature": "Self_Employed_No",
+        "value": 1,
+        "shap": 0.0285693798214197,
+        "importance": 0.0285693798214197,
+        "direction": "supports_approval",
+        "rank": 18
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "value": 360.0,
+        "shap": -0.0144154727458953,
+        "importance": 0.0144154727458953,
+        "direction": "supports_decline",
+        "rank": 19
+      },
+      {
+        "feature": "Gender_Male",
+        "value": 1,
+        "shap": -0.0127483364194631,
+        "importance": 0.0127483364194631,
+        "direction": "supports_decline",
+        "rank": 20
+      },
+      {
+        "feature": "Married_Yes",
+        "value": 0,
+        "shap": -0.0032461676746606,
+        "importance": 0.0032461676746606,
+        "direction": "supports_decline",
+        "rank": 21
+      },
+      {
+        "feature": "Self_Employed_Yes",
+        "value": 0,
+        "shap": -0.0008893716149032,
+        "importance": 0.0008893716149032,
+        "direction": "supports_decline",
+        "rank": 22
+      }
+    ],
+    "features_used": [
+      "Total_Income",
+      "ApplicantIncome",
+      "Credit_History",
+      "LoanAmount",
+      "Education_Graduate",
+      "CoapplicantIncome",
+      "Property_Area_Semiurban",
+      "Dependents_0",
+      "Gender_Female",
+      "Dependents_2"
+    ],
+    "counterfactual_what_if": "If Credit_History changed from 1.0 to 0.0, the decision would flip from approval to decline.",
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "probability_shift": -0.8176,
+        "new_probability": 0.0857,
+        "flipped_prediction": true
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "probability_shift": 0.0121,
+        "new_probability": 0.9153,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": NaN,
+        "changed_to": NaN,
+        "change_description": "increase by 50%",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": NaN,
+        "changed_to": NaN,
+        "change_description": "increase by 100%",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      }
+    ],
+    "used_concepts": false,
+    "business_concepts": [],
+    "provenance": {
+      "llm_model": "gpt-4o",
+      "llm_tokens": 2387,
+      "evidence_items": 27,
+      "target_audience": "technical",
+      "generation_timestamp": "2026-05-10T08:42:09.236831",
+      "model_name": "xgb_monotonic_v1",
+      "xai_method": "TreeSHAP",
+      "kg_loader_version": "neo_loader_v1",
+      "hoge_version": "1.0.0"
+    },
+    "evidence_bundle": [
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Total_Income",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Total_Income)",
+        "value": "$5,849.00",
+        "shap_value": 1.2258732318878174,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:CoapplicantIncome)",
+        "value": 0.0,
+        "shap_value": -0.819622278213501,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "ApplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:ApplicantIncome)",
+        "value": 5849,
+        "shap_value": 0.7537902593612671,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Credit_History)",
+        "value": 1.0,
+        "shap_value": 0.5131633877754211,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Semiurban",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Semiurban)",
+        "value": 0,
+        "shap_value": -0.4535203278064728,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:LoanAmount)",
+        "value": NaN,
+        "shap_value": 0.2288675010204315,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Graduate",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Graduate)",
+        "value": 1,
+        "shap_value": 0.2073119431734085,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_No",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_No)",
+        "value": 1,
+        "shap_value": 0.1507820338010788,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_0",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_0)",
+        "value": 1,
+        "shap_value": -0.1490573585033416,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Rural",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Rural)",
+        "value": 0,
+        "shap_value": 0.1012852266430854,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Female",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Female)",
+        "value": 0,
+        "shap_value": -0.0836081728339195,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_2",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_2)",
+        "value": 0,
+        "shap_value": -0.081999734044075,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_1",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_1)",
+        "value": 0,
+        "shap_value": 0.0701324716210365,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "DTI",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:DTI)",
+        "value": 0.0,
+        "shap_value": 0.0555150248110294,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Not Graduate",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Not Graduate)",
+        "value": 0,
+        "shap_value": 0.0504378862679004,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_3+",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_3+)",
+        "value": 0,
+        "shap_value": -0.0322044603526592,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Urban",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Urban)",
+        "value": 1,
+        "shap_value": -0.031732965260744,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_No",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_No)",
+        "value": 1,
+        "shap_value": 0.0285693798214197,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Loan_Amount_Term)",
+        "value": 360.0,
+        "shap_value": -0.0144154727458953,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Male",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Male)",
+        "value": 1,
+        "shap_value": -0.0127483364194631,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_Yes",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_Yes)",
+        "value": 0,
+        "shap_value": -0.0032461676746606,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_Yes",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_Yes)",
+        "value": 0,
+        "shap_value": -0.0008893716149032,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:Credit_History)",
+        "change_description": "flip",
+        "probability_shift": -0.8176,
+        "flipped": true
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:Loan_Amount_Term)",
+        "change_description": "reduce to 180 months",
+        "probability_shift": 0.0121,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:CoapplicantIncome)",
+        "change_description": "remove co-applicant",
+        "probability_shift": 0.0,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:LoanAmount)",
+        "change_description": "increase by 50%",
+        "probability_shift": 0.0,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:LoanAmount)",
+        "change_description": "increase by 100%",
+        "probability_shift": 0.0,
+        "flipped": false
+      }
+    ],
+    "_cached_at": "2026-05-10T08:42:09.236831",
+    "_cache_key": "LP001002_technical_concepts-False"
+  },
+  "LP001002_executive_concepts-True": {
+    "application_id": "LP001002",
+    "decision": "Approved",
+    "approval_probability": 0.9279430508613586,
+    "summary": "The loan application was approved with a high probability due to strong financial capacity and credit profile.",
+    "narrative": "The loan application was approved with a high probability of 92.8%, primarily due to the applicant's strong financial capacity and credit profile. The total income of $5,849.00 and the applicant's individual income of 5849 were significant positive drivers, indicating that the applicant's financial resources are adequate to cover the loan requirements. Additionally, the applicant's clean credit history (Credit_History: 1.0) demonstrated reliable repayment behavior, further supporting the approval decision. The requested loan amount was within acceptable limits, and the applicant's graduate education level also contributed positively.\n\nHowever, there were some factors that slightly reduced the approval score. The absence of a coapplicant income (CoapplicantIncome: 0.0) was a notable negative factor, as it limited the financial capacity. The property being located in a semiurban area (Property_Area_Semiurban: 0) and having no dependents (Dependents_0: 1) also slightly decreased the approval score. Additionally, the applicant's gender being male (Gender_Female: 0) had a minor negative impact.\n\nNo policy rules were violated in this application, which further supports the approval decision. For future applications, it is recommended to encourage applicants to include coapplicants with income to enhance their financial profile and potentially increase approval probabilities.\n\nIn terms of what-if scenarios, the most impactful change would be if the applicant's credit history changed from 1.0 to 0.0, which would flip the decision to decline. This highlights the importance of maintaining a strong credit profile to secure loan approvals.",
+    "recommendation": "Consider encouraging applicants to include coapplicants with income to strengthen their financial profile.",
+    "positive_drivers": [
+      "The applicant had a strong total income (Total_Income: $5,849.00) supporting approval.",
+      "The applicant's income alone (ApplicantIncome: 5849) was sufficient to support the loan.",
+      "The applicant demonstrated a reliable repayment behavior with a clean credit history (Credit_History: 1.0).",
+      "The loan amount requested was within acceptable limits (LoanAmount: nan).",
+      "The applicant's education level (Education_Graduate: 1) positively influenced the decision."
+    ],
+    "negative_drivers": [
+      "The absence of a coapplicant income (CoapplicantIncome: 0.0) was a negative factor.",
+      "The property area being semiurban (Property_Area_Semiurban: 0) slightly reduced the approval score.",
+      "Having no dependents (Dependents_0: 1) slightly decreased the approval score.",
+      "The applicant's gender being male (Gender_Female: 0) had a minor negative impact."
+    ],
+    "policy_violations": [],
+    "shap_features": [
+      {
+        "feature": "Total_Income",
+        "value": "$5,849.00",
+        "shap": 1.2258732318878174,
+        "importance": 1.2258732318878174,
+        "direction": "supports_approval",
+        "rank": 1
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "value": 0.0,
+        "shap": -0.819622278213501,
+        "importance": 0.819622278213501,
+        "direction": "supports_decline",
+        "rank": 2
+      },
+      {
+        "feature": "ApplicantIncome",
+        "value": 5849,
+        "shap": 0.7537902593612671,
+        "importance": 0.7537902593612671,
+        "direction": "supports_approval",
+        "rank": 3
+      },
+      {
+        "feature": "Credit_History",
+        "value": 1.0,
+        "shap": 0.5131633877754211,
+        "importance": 0.5131633877754211,
+        "direction": "supports_approval",
+        "rank": 4
+      },
+      {
+        "feature": "Property_Area_Semiurban",
+        "value": 0,
+        "shap": -0.4535203278064728,
+        "importance": 0.4535203278064728,
+        "direction": "supports_decline",
+        "rank": 5
+      },
+      {
+        "feature": "LoanAmount",
+        "value": NaN,
+        "shap": 0.2288675010204315,
+        "importance": 0.2288675010204315,
+        "direction": "supports_approval",
+        "rank": 6
+      },
+      {
+        "feature": "Education_Graduate",
+        "value": 1,
+        "shap": 0.2073119431734085,
+        "importance": 0.2073119431734085,
+        "direction": "supports_approval",
+        "rank": 7
+      },
+      {
+        "feature": "Married_No",
+        "value": 1,
+        "shap": 0.1507820338010788,
+        "importance": 0.1507820338010788,
+        "direction": "supports_approval",
+        "rank": 8
+      },
+      {
+        "feature": "Dependents_0",
+        "value": 1,
+        "shap": -0.1490573585033416,
+        "importance": 0.1490573585033416,
+        "direction": "supports_decline",
+        "rank": 9
+      },
+      {
+        "feature": "Property_Area_Rural",
+        "value": 0,
+        "shap": 0.1012852266430854,
+        "importance": 0.1012852266430854,
+        "direction": "supports_approval",
+        "rank": 10
+      },
+      {
+        "feature": "Gender_Female",
+        "value": 0,
+        "shap": -0.0836081728339195,
+        "importance": 0.0836081728339195,
+        "direction": "supports_decline",
+        "rank": 11
+      },
+      {
+        "feature": "Dependents_2",
+        "value": 0,
+        "shap": -0.081999734044075,
+        "importance": 0.081999734044075,
+        "direction": "supports_decline",
+        "rank": 12
+      },
+      {
+        "feature": "Dependents_1",
+        "value": 0,
+        "shap": 0.0701324716210365,
+        "importance": 0.0701324716210365,
+        "direction": "supports_approval",
+        "rank": 13
+      },
+      {
+        "feature": "DTI",
+        "value": 0.0,
+        "shap": 0.0555150248110294,
+        "importance": 0.0555150248110294,
+        "direction": "supports_approval",
+        "rank": 14
+      },
+      {
+        "feature": "Education_Not Graduate",
+        "value": 0,
+        "shap": 0.0504378862679004,
+        "importance": 0.0504378862679004,
+        "direction": "supports_approval",
+        "rank": 15
+      },
+      {
+        "feature": "Dependents_3+",
+        "value": 0,
+        "shap": -0.0322044603526592,
+        "importance": 0.0322044603526592,
+        "direction": "supports_decline",
+        "rank": 16
+      },
+      {
+        "feature": "Property_Area_Urban",
+        "value": 1,
+        "shap": -0.031732965260744,
+        "importance": 0.031732965260744,
+        "direction": "supports_decline",
+        "rank": 17
+      },
+      {
+        "feature": "Self_Employed_No",
+        "value": 1,
+        "shap": 0.0285693798214197,
+        "importance": 0.0285693798214197,
+        "direction": "supports_approval",
+        "rank": 18
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "value": 360.0,
+        "shap": -0.0144154727458953,
+        "importance": 0.0144154727458953,
+        "direction": "supports_decline",
+        "rank": 19
+      },
+      {
+        "feature": "Gender_Male",
+        "value": 1,
+        "shap": -0.0127483364194631,
+        "importance": 0.0127483364194631,
+        "direction": "supports_decline",
+        "rank": 20
+      },
+      {
+        "feature": "Married_Yes",
+        "value": 0,
+        "shap": -0.0032461676746606,
+        "importance": 0.0032461676746606,
+        "direction": "supports_decline",
+        "rank": 21
+      },
+      {
+        "feature": "Self_Employed_Yes",
+        "value": 0,
+        "shap": -0.0008893716149032,
+        "importance": 0.0008893716149032,
+        "direction": "supports_decline",
+        "rank": 22
+      }
+    ],
+    "features_used": [
+      "Total_Income",
+      "ApplicantIncome",
+      "Credit_History",
+      "LoanAmount",
+      "Education_Graduate",
+      "CoapplicantIncome",
+      "Property_Area_Semiurban",
+      "Dependents_0",
+      "Gender_Female"
+    ],
+    "counterfactual_what_if": "If the applicant's credit history changed from 1.0 to 0.0, the decision would flip to decline.",
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "probability_shift": -0.8176,
+        "new_probability": 0.0857,
+        "flipped_prediction": true
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "probability_shift": 0.0121,
+        "new_probability": 0.9153,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": NaN,
+        "changed_to": NaN,
+        "change_description": "increase by 50%",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": NaN,
+        "changed_to": NaN,
+        "change_description": "increase by 100%",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      }
+    ],
+    "used_concepts": true,
+    "business_concepts": [
+      {
+        "concept_name": "Other Factors",
+        "concept_category": "other",
+        "aggregated_shap_value": 1.040900303516537,
+        "overall_direction": "positive",
+        "related_features": [
+          "Total_Income",
+          "Property_Area_Semiurban",
+          "Education_Graduate",
+          "Married_No",
+          "Dependents_0",
+          "Property_Area_Rural",
+          "Gender_Female",
+          "Dependents_2",
+          "Dependents_1",
+          "DTI",
+          "Education_Not Graduate",
+          "Dependents_3+",
+          "Property_Area_Urban",
+          "Self_Employed_No",
+          "Gender_Male",
+          "Married_Yes",
+          "Self_Employed_Yes"
+        ],
+        "business_interpretation": "Other Factors supports approval",
+        "confidence_level": "medium"
+      },
+      {
+        "concept_name": "Financial Capacity",
+        "concept_category": "capacity",
+        "aggregated_shap_value": 0.1486200094223023,
+        "overall_direction": "positive",
+        "related_features": [
+          "CoapplicantIncome",
+          "ApplicantIncome",
+          "LoanAmount",
+          "Loan_Amount_Term"
+        ],
+        "business_interpretation": "Strong financial capacity: Income adequately covers loan requirements",
+        "confidence_level": "medium"
+      },
+      {
+        "concept_name": "Credit Profile",
+        "concept_category": "risk",
+        "aggregated_shap_value": 0.5131633877754211,
+        "overall_direction": "positive",
+        "related_features": [
+          "Credit_History"
+        ],
+        "business_interpretation": "Strong credit history: Demonstrated reliable repayment behavior",
+        "confidence_level": "medium"
+      }
+    ],
+    "provenance": {
+      "llm_model": "gpt-4o",
+      "llm_tokens": 2607,
+      "evidence_items": 27,
+      "target_audience": "executive",
+      "generation_timestamp": "2026-05-10T08:42:21.065252",
+      "model_name": "xgb_monotonic_v1",
+      "xai_method": "TreeSHAP",
+      "kg_loader_version": "neo_loader_v1",
+      "hoge_version": "1.0.0"
+    },
+    "evidence_bundle": [
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Total_Income",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Total_Income)",
+        "value": "$5,849.00",
+        "shap_value": 1.2258732318878174,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:CoapplicantIncome)",
+        "value": 0.0,
+        "shap_value": -0.819622278213501,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "ApplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:ApplicantIncome)",
+        "value": 5849,
+        "shap_value": 0.7537902593612671,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Credit_History)",
+        "value": 1.0,
+        "shap_value": 0.5131633877754211,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Semiurban",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Semiurban)",
+        "value": 0,
+        "shap_value": -0.4535203278064728,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:LoanAmount)",
+        "value": NaN,
+        "shap_value": 0.2288675010204315,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Graduate",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Graduate)",
+        "value": 1,
+        "shap_value": 0.2073119431734085,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_No",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_No)",
+        "value": 1,
+        "shap_value": 0.1507820338010788,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_0",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_0)",
+        "value": 1,
+        "shap_value": -0.1490573585033416,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Rural",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Rural)",
+        "value": 0,
+        "shap_value": 0.1012852266430854,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Female",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Female)",
+        "value": 0,
+        "shap_value": -0.0836081728339195,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_2",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_2)",
+        "value": 0,
+        "shap_value": -0.081999734044075,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_1",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_1)",
+        "value": 0,
+        "shap_value": 0.0701324716210365,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "DTI",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:DTI)",
+        "value": 0.0,
+        "shap_value": 0.0555150248110294,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Not Graduate",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Not Graduate)",
+        "value": 0,
+        "shap_value": 0.0504378862679004,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_3+",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_3+)",
+        "value": 0,
+        "shap_value": -0.0322044603526592,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Urban",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Urban)",
+        "value": 1,
+        "shap_value": -0.031732965260744,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_No",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_No)",
+        "value": 1,
+        "shap_value": 0.0285693798214197,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Loan_Amount_Term)",
+        "value": 360.0,
+        "shap_value": -0.0144154727458953,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Male",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Male)",
+        "value": 1,
+        "shap_value": -0.0127483364194631,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_Yes",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_Yes)",
+        "value": 0,
+        "shap_value": -0.0032461676746606,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_Yes",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_Yes)",
+        "value": 0,
+        "shap_value": -0.0008893716149032,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:Credit_History)",
+        "change_description": "flip",
+        "probability_shift": -0.8176,
+        "flipped": true
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:Loan_Amount_Term)",
+        "change_description": "reduce to 180 months",
+        "probability_shift": 0.0121,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:CoapplicantIncome)",
+        "change_description": "remove co-applicant",
+        "probability_shift": 0.0,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:LoanAmount)",
+        "change_description": "increase by 50%",
+        "probability_shift": 0.0,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:LoanAmount)",
+        "change_description": "increase by 100%",
+        "probability_shift": 0.0,
+        "flipped": false
+      }
+    ],
+    "_cached_at": "2026-05-10T08:42:21.065252",
+    "_cache_key": "LP001002_executive_concepts-True"
+  },
+  "LP001002_business_concepts-True": {
+    "application_id": "LP001002",
+    "decision": "Approved",
+    "approval_probability": 0.9279430508613586,
+    "summary": "The loan application was approved with a high probability of 92.8%.",
+    "narrative": "The loan application was approved with a high probability of 92.8%. This decision was primarily supported by the applicant's strong total income of $5,849.00 and a robust individual income of 5849, which together indicate a strong financial capacity to meet loan obligations. Additionally, the applicant's clean credit history (Credit_History: 1.0) further reinforced the approval by demonstrating reliable repayment behavior. The applicant's status as a graduate (Education_Graduate: 1) also contributed positively to the decision. \n\nOn the other hand, the absence of a coapplicant income (CoapplicantIncome: 0.0) and the property being located in a semiurban area (Property_Area_Semiurban: 0) were factors that slightly supported a decline. However, these were outweighed by the positive drivers. No policy rules were violated in this application, which further facilitated the approval. \n\nFor future applications, it may be beneficial to consider including a coapplicant with income, as this could potentially strengthen the application profile. \n\nIn terms of what-if scenarios, the most impactful change that could flip the decision would be a change in the applicant's credit history from 1.0 to 0.0, which would result in a decline. This highlights the importance of maintaining a strong credit profile.",
+    "recommendation": "Consider including a coapplicant with income to strengthen future applications.",
+    "positive_drivers": [
+      "The applicant had a strong total income (Total_Income: $5,849.00) supporting approval.",
+      "The applicant's income (ApplicantIncome: 5849) was sufficient to cover the loan requirements.",
+      "The applicant demonstrated a strong credit history (Credit_History: 1.0) indicating reliable repayment behavior.",
+      "The applicant's education level (Education_Graduate: 1) positively influenced the decision."
+    ],
+    "negative_drivers": [
+      "The absence of a coapplicant income (CoapplicantIncome: 0.0) slightly supported decline.",
+      "The property area being semiurban (Property_Area_Semiurban: 0) slightly supported decline."
+    ],
+    "policy_violations": [],
+    "shap_features": [
+      {
+        "feature": "Total_Income",
+        "value": "$5,849.00",
+        "shap": 1.2258732318878174,
+        "importance": 1.2258732318878174,
+        "direction": "supports_approval",
+        "rank": 1
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "value": 0.0,
+        "shap": -0.819622278213501,
+        "importance": 0.819622278213501,
+        "direction": "supports_decline",
+        "rank": 2
+      },
+      {
+        "feature": "ApplicantIncome",
+        "value": 5849,
+        "shap": 0.7537902593612671,
+        "importance": 0.7537902593612671,
+        "direction": "supports_approval",
+        "rank": 3
+      },
+      {
+        "feature": "Credit_History",
+        "value": 1.0,
+        "shap": 0.5131633877754211,
+        "importance": 0.5131633877754211,
+        "direction": "supports_approval",
+        "rank": 4
+      },
+      {
+        "feature": "Property_Area_Semiurban",
+        "value": 0,
+        "shap": -0.4535203278064728,
+        "importance": 0.4535203278064728,
+        "direction": "supports_decline",
+        "rank": 5
+      },
+      {
+        "feature": "LoanAmount",
+        "value": NaN,
+        "shap": 0.2288675010204315,
+        "importance": 0.2288675010204315,
+        "direction": "supports_approval",
+        "rank": 6
+      },
+      {
+        "feature": "Education_Graduate",
+        "value": 1,
+        "shap": 0.2073119431734085,
+        "importance": 0.2073119431734085,
+        "direction": "supports_approval",
+        "rank": 7
+      },
+      {
+        "feature": "Married_No",
+        "value": 1,
+        "shap": 0.1507820338010788,
+        "importance": 0.1507820338010788,
+        "direction": "supports_approval",
+        "rank": 8
+      },
+      {
+        "feature": "Dependents_0",
+        "value": 1,
+        "shap": -0.1490573585033416,
+        "importance": 0.1490573585033416,
+        "direction": "supports_decline",
+        "rank": 9
+      },
+      {
+        "feature": "Property_Area_Rural",
+        "value": 0,
+        "shap": 0.1012852266430854,
+        "importance": 0.1012852266430854,
+        "direction": "supports_approval",
+        "rank": 10
+      },
+      {
+        "feature": "Gender_Female",
+        "value": 0,
+        "shap": -0.0836081728339195,
+        "importance": 0.0836081728339195,
+        "direction": "supports_decline",
+        "rank": 11
+      },
+      {
+        "feature": "Dependents_2",
+        "value": 0,
+        "shap": -0.081999734044075,
+        "importance": 0.081999734044075,
+        "direction": "supports_decline",
+        "rank": 12
+      },
+      {
+        "feature": "Dependents_1",
+        "value": 0,
+        "shap": 0.0701324716210365,
+        "importance": 0.0701324716210365,
+        "direction": "supports_approval",
+        "rank": 13
+      },
+      {
+        "feature": "DTI",
+        "value": 0.0,
+        "shap": 0.0555150248110294,
+        "importance": 0.0555150248110294,
+        "direction": "supports_approval",
+        "rank": 14
+      },
+      {
+        "feature": "Education_Not Graduate",
+        "value": 0,
+        "shap": 0.0504378862679004,
+        "importance": 0.0504378862679004,
+        "direction": "supports_approval",
+        "rank": 15
+      },
+      {
+        "feature": "Dependents_3+",
+        "value": 0,
+        "shap": -0.0322044603526592,
+        "importance": 0.0322044603526592,
+        "direction": "supports_decline",
+        "rank": 16
+      },
+      {
+        "feature": "Property_Area_Urban",
+        "value": 1,
+        "shap": -0.031732965260744,
+        "importance": 0.031732965260744,
+        "direction": "supports_decline",
+        "rank": 17
+      },
+      {
+        "feature": "Self_Employed_No",
+        "value": 1,
+        "shap": 0.0285693798214197,
+        "importance": 0.0285693798214197,
+        "direction": "supports_approval",
+        "rank": 18
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "value": 360.0,
+        "shap": -0.0144154727458953,
+        "importance": 0.0144154727458953,
+        "direction": "supports_decline",
+        "rank": 19
+      },
+      {
+        "feature": "Gender_Male",
+        "value": 1,
+        "shap": -0.0127483364194631,
+        "importance": 0.0127483364194631,
+        "direction": "supports_decline",
+        "rank": 20
+      },
+      {
+        "feature": "Married_Yes",
+        "value": 0,
+        "shap": -0.0032461676746606,
+        "importance": 0.0032461676746606,
+        "direction": "supports_decline",
+        "rank": 21
+      },
+      {
+        "feature": "Self_Employed_Yes",
+        "value": 0,
+        "shap": -0.0008893716149032,
+        "importance": 0.0008893716149032,
+        "direction": "supports_decline",
+        "rank": 22
+      }
+    ],
+    "features_used": [
+      "Total_Income",
+      "ApplicantIncome",
+      "Credit_History",
+      "Education_Graduate",
+      "CoapplicantIncome",
+      "Property_Area_Semiurban"
+    ],
+    "counterfactual_what_if": "If the applicant's credit history changed from 1.0 to 0.0, the decision would flip to decline.",
+    "counterfactual_scenarios": [
+      {
+        "feature": "Credit_History",
+        "current_value": 1.0,
+        "changed_to": 0.0,
+        "change_description": "flip",
+        "probability_shift": -0.8176,
+        "new_probability": 0.0857,
+        "flipped_prediction": true
+      },
+      {
+        "feature": "Loan_Amount_Term",
+        "current_value": 360.0,
+        "changed_to": 180.0,
+        "change_description": "reduce to 180 months",
+        "probability_shift": 0.0121,
+        "new_probability": 0.9153,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "CoapplicantIncome",
+        "current_value": 0.0,
+        "changed_to": 0.0,
+        "change_description": "remove co-applicant",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": NaN,
+        "changed_to": NaN,
+        "change_description": "increase by 50%",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      },
+      {
+        "feature": "LoanAmount",
+        "current_value": NaN,
+        "changed_to": NaN,
+        "change_description": "increase by 100%",
+        "probability_shift": 0.0,
+        "new_probability": 0.9032,
+        "flipped_prediction": false
+      }
+    ],
+    "used_concepts": true,
+    "business_concepts": [
+      {
+        "concept_name": "Other Factors",
+        "concept_category": "other",
+        "aggregated_shap_value": 1.040900303516537,
+        "overall_direction": "positive",
+        "related_features": [
+          "Total_Income",
+          "Property_Area_Semiurban",
+          "Education_Graduate",
+          "Married_No",
+          "Dependents_0",
+          "Property_Area_Rural",
+          "Gender_Female",
+          "Dependents_2",
+          "Dependents_1",
+          "DTI",
+          "Education_Not Graduate",
+          "Dependents_3+",
+          "Property_Area_Urban",
+          "Self_Employed_No",
+          "Gender_Male",
+          "Married_Yes",
+          "Self_Employed_Yes"
+        ],
+        "business_interpretation": "Other Factors supports approval",
+        "confidence_level": "medium"
+      },
+      {
+        "concept_name": "Financial Capacity",
+        "concept_category": "capacity",
+        "aggregated_shap_value": 0.1486200094223023,
+        "overall_direction": "positive",
+        "related_features": [
+          "CoapplicantIncome",
+          "ApplicantIncome",
+          "LoanAmount",
+          "Loan_Amount_Term"
+        ],
+        "business_interpretation": "Strong financial capacity: Income adequately covers loan requirements",
+        "confidence_level": "medium"
+      },
+      {
+        "concept_name": "Credit Profile",
+        "concept_category": "risk",
+        "aggregated_shap_value": 0.5131633877754211,
+        "overall_direction": "positive",
+        "related_features": [
+          "Credit_History"
+        ],
+        "business_interpretation": "Strong credit history: Demonstrated reliable repayment behavior",
+        "confidence_level": "medium"
+      }
+    ],
+    "provenance": {
+      "llm_model": "gpt-4o",
+      "llm_tokens": 2451,
+      "evidence_items": 27,
+      "target_audience": "business",
+      "generation_timestamp": "2026-05-10T08:42:27.941232",
+      "model_name": "xgb_monotonic_v1",
+      "xai_method": "TreeSHAP",
+      "kg_loader_version": "neo_loader_v1",
+      "hoge_version": "1.0.0"
+    },
+    "evidence_bundle": [
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Total_Income",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Total_Income)",
+        "value": "$5,849.00",
+        "shap_value": 1.2258732318878174,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:CoapplicantIncome)",
+        "value": 0.0,
+        "shap_value": -0.819622278213501,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "ApplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:ApplicantIncome)",
+        "value": 5849,
+        "shap_value": 0.7537902593612671,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Credit_History)",
+        "value": 1.0,
+        "shap_value": 0.5131633877754211,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Semiurban",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Semiurban)",
+        "value": 0,
+        "shap_value": -0.4535203278064728,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:LoanAmount)",
+        "value": NaN,
+        "shap_value": 0.2288675010204315,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Graduate",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Graduate)",
+        "value": 1,
+        "shap_value": 0.2073119431734085,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_No",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_No)",
+        "value": 1,
+        "shap_value": 0.1507820338010788,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_0",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_0)",
+        "value": 1,
+        "shap_value": -0.1490573585033416,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Rural",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Rural)",
+        "value": 0,
+        "shap_value": 0.1012852266430854,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Female",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Female)",
+        "value": 0,
+        "shap_value": -0.0836081728339195,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_2",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_2)",
+        "value": 0,
+        "shap_value": -0.081999734044075,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_1",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_1)",
+        "value": 0,
+        "shap_value": 0.0701324716210365,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "DTI",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:DTI)",
+        "value": 0.0,
+        "shap_value": 0.0555150248110294,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Education_Not Graduate",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Education_Not Graduate)",
+        "value": 0,
+        "shap_value": 0.0504378862679004,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Dependents_3+",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Dependents_3+)",
+        "value": 0,
+        "shap_value": -0.0322044603526592,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Property_Area_Urban",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Property_Area_Urban)",
+        "value": 1,
+        "shap_value": -0.031732965260744,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_No",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_No)",
+        "value": 1,
+        "shap_value": 0.0285693798214197,
+        "direction": "supports_approval"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Loan_Amount_Term)",
+        "value": 360.0,
+        "shap_value": -0.0144154727458953,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Gender_Male",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Gender_Male)",
+        "value": 1,
+        "shap_value": -0.0127483364194631,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Married_Yes",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Married_Yes)",
+        "value": 0,
+        "shap_value": -0.0032461676746606,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "feature_contribution",
+        "feature": "Self_Employed_Yes",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_SHAP_EXPLANATION]->(ModelExplanation)-[:HAS_CONTRIBUTION]->(FeatureContribution)-[:FOR_FEATURE]->(Feature:Self_Employed_Yes)",
+        "value": 0,
+        "shap_value": -0.0008893716149032,
+        "direction": "supports_decline"
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "Credit_History",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:Credit_History)",
+        "change_description": "flip",
+        "probability_shift": -0.8176,
+        "flipped": true
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "Loan_Amount_Term",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:Loan_Amount_Term)",
+        "change_description": "reduce to 180 months",
+        "probability_shift": 0.0121,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "CoapplicantIncome",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:CoapplicantIncome)",
+        "change_description": "remove co-applicant",
+        "probability_shift": 0.0,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:LoanAmount)",
+        "change_description": "increase by 50%",
+        "probability_shift": 0.0,
+        "flipped": false
+      },
+      {
+        "claim_type": "counterfactual",
+        "feature": "LoanAmount",
+        "kg_path": "(LoanApplication:LP001002)-[:HAS_COUNTERFACTUAL]->(CounterfactualScenario)-[:PERTURBS_FEATURE]->(Feature:LoanAmount)",
+        "change_description": "increase by 100%",
+        "probability_shift": 0.0,
+        "flipped": false
+      }
+    ],
+    "_cached_at": "2026-05-10T08:42:27.941232",
+    "_cache_key": "LP001002_business_concepts-True"
+  }
+}

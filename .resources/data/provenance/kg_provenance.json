@@ -1,16 +1,16 @@
 {
-  "provenance_id": "prov_20260508_143910",
-  "export_timestamp": "2026-05-08T04:39:10.077925+00:00",
+  "provenance_id": "prov_20260508_190411",
+  "export_timestamp": "2026-05-08T09:04:11.336298+00:00",
   "hoge_version": "1.0.0",
   "provenance_schema_version": "2.0",
   "framework_name": "HOGE",
   "framework_description": "Human-Centric Ontology-Grounded Explanation Framework",
   "kg_provenance": {
-    "loaded_at": "2026-05-08T04:39:10.077925+00:00",
+    "loaded_at": "2026-05-08T09:04:11.336298+00:00",
     "kg_loader_version": "1.0.0",
-    "neo4j_uri": "neo4j://127.0.0.1:7687",
-    "neo4j_version": "2026.04.0",
-    "database_name": "neo4j",
+    "neo4j_uri": "neo4j+s://fc0456cc.databases.neo4j.io",
+    "neo4j_version": "5.27-aura",
+    "database_name": "fc0456cc",
     "total_nodes": 24054,
     "total_relationships": 46286,
     "node_counts": {
@@ -29,10 +29,10 @@
       "HAS_COUNTERFACTUAL": 528
     },
     "data_sources": {
-      "applications": "data/raw/df1_loan.csv",
-      "shap_values": "data/processed/shap_long.csv",
+      "applications": "C:\\Users\\dumb_\\Documents\\GitHub\\Phd-Experiment1\\.resources\\data\\raw\\df1_loan.csv",
+      "shap_values": "C:\\Users\\dumb_\\Documents\\GitHub\\Phd-Experiment1\\.resources\\data\\processed\\shap_long.csv",
       "counterfactuals": null
     },
-    "loading_date": "2026-05-08T04:39:10.077925+00:00"
+    "loading_date": "2026-05-08T09:04:11.335299+00:00"
   }
 }
