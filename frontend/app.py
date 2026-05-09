@@ -552,93 +552,87 @@ elif page == "Explain Application":
             st.session_state.current_context = context
             st.session_state.current_loan_id = loan_id
         else:
-            with st.spinner(f"Generating fresh explanation for {loan_id} (calling LLM)..."):
+            # Check if explanation is cached FIRST (before checking API key)
+            cached_explanation = explanation_cache.get_explanation(
+                loan_id,
+                audience=audience,
+                use_concepts=use_concepts
+            )
+
+            if cached_explanation:
+                st.info("📦 Using cached explanation (pre-generated locally)")
+                explanation = cached_explanation
+            else:
+                # Not cached - need to generate with LLM
+                # Get user's API key from session state
+                user_api_key = st.session_state.get('user_openai_key')
+                user_model = st.session_state.get('user_openai_model', 'gpt-4o')
+
+                # Check if user provided API key
+                if not user_api_key:
+                    st.error("⚠️ No cached explanation found. Please provide your OpenAI API key in the sidebar to generate a new explanation.")
+                    st.stop()
+
+                st.info("🤖 Generating new explanation using your OpenAI API key...")
+
                 try:
-                    # Get user's API key from session state
-                    user_api_key = st.session_state.get('user_openai_key')
-                    user_model = st.session_state.get('user_openai_model', 'gpt-4o')
-
-                    # Check if API key is provided
-                    if not user_api_key:
-                        st.error("⚠️ Please provide your OpenAI API key in the sidebar to generate explanations.")
-                        st.stop()
-
-                    # Check if explanation is cached first
-                    cached_explanation = explanation_cache.get_explanation(
-                        loan_id,
+                    # Use ExplanationService (abstraction layer)
+                    request = ExplanationRequest(
+                        application_id=loan_id,
                         audience=audience,
                         use_concepts=use_concepts
                     )
 
-                    if cached_explanation:
-                        st.info("📦 Using cached explanation (pre-generated locally)")
-                        explanation = cached_explanation
-                    else:
-                        # Check if user provided API key
-                        if not user_api_key:
-                            st.error("⚠️ No cached explanation found. Please provide your OpenAI API key in the sidebar to generate a new explanation.")
-                            st.stop()
+                    # Generate explanation via service with user's API key
+                    response = explanation_service.generate_explanation(
+                        request,
+                        api_key=user_api_key,
+                        model=user_model
+                    )
 
-                        st.info("🤖 Generating new explanation using your OpenAI API key...")
+                    # Convert response DTO back to dict format for compatibility with existing UI code
+                    explanation = response.to_dict()
 
-                        # Use ExplanationService (abstraction layer)
-                        request = ExplanationRequest(
-                            application_id=loan_id,
-                            audience=audience,
-                            use_concepts=use_concepts
+                    # Auto-save to cache when running locally (for deployment later)
+                    try:
+                        explanation_cache.set_explanation(
+                            loan_id,
+                            audience,
+                            use_concepts,
+                            explanation
                         )
-
-                        # Generate explanation via service with user's API key
-                        response = explanation_service.generate_explanation(
-                            request,
-                            api_key=user_api_key,
-                            model=user_model
-                        )
-
-                        # Convert response DTO back to dict format for compatibility with existing UI code
-                        explanation = response.to_dict()
-
-                        # Auto-save to cache when running locally (for deployment later)
-                        try:
-                            explanation_cache.set_explanation(
-                                loan_id,
-                                audience,
-                                use_concepts,
-                                explanation
-                            )
-                            st.success("💾 Saved to local cache for future deployment")
-                        except Exception as e:
-                            st.warning(f"Could not save to cache: {e}")
-
-                    # For now, also get raw context for visualizations (TODO: refactor visualizations)
-                    from backend.src.explainability.llm_explainer import get_application_explanation_data
-                    context = get_application_explanation_data(loan_id)
-
-                    # Store in session state
-                    st.session_state.current_explanation = explanation
-                    st.session_state.current_context = context
-                    st.session_state.current_loan_id = loan_id
-
-                    # Cache the response
-                    st.session_state.llm_cache[cache_key] = {
-                        'explanation': explanation,
-                        'context': context,
-                        'loan_id': loan_id,
-                        'audience': audience,
-                        'use_concepts': use_concepts,
-                        'cached_at': datetime.datetime.now().isoformat()
-                    }
-
-                    # Save cache to disk
-                    save_cache_to_disk(st.session_state.llm_cache)
-
-                    st.success(f"✨ Fresh explanation generated and cached!")
+                        st.success("💾 Saved to local cache for future deployment")
+                    except Exception as e:
+                        st.warning(f"Could not save to cache: {e}")
 
                 except Exception as e:
                     st.error(f"❌ Error generating explanation: {str(e)}")
                     import traceback
                     with st.expander("🐛 Error Details"):
                         st.code(traceback.format_exc())
+                    st.stop()
+
+            # For now, also get raw context for visualizations (TODO: refactor visualizations)
+            from backend.src.explainability.llm_explainer import get_application_explanation_data
+            context = get_application_explanation_data(loan_id)
+
+            # Store in session state
+            st.session_state.current_explanation = explanation
+            st.session_state.current_context = context
+            st.session_state.current_loan_id = loan_id
+
+            # Cache the response in session state too
+            st.session_state.llm_cache[cache_key] = {
+                'explanation': explanation,
+                'context': context,
+                'loan_id': loan_id,
+                'audience': audience,
+                'use_concepts': use_concepts,
+                'cached_at': datetime.datetime.now().isoformat()
+            }
+
+            # Save cache to disk
+            save_cache_to_disk(st.session_state.llm_cache)
 
     # Display explanation if available (either freshly generated or from session state)
     if st.session_state.current_explanation is not None:
