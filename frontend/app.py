@@ -159,6 +159,46 @@ with st.sidebar:
     except Exception as e:
         st.error(f"Neo4j Disconnected: {str(e)}")
 
+    st.markdown("---")
+
+    # OpenAI Configuration in sidebar (available on all pages)
+    st.markdown("#### 🤖 OpenAI API Key")
+
+    # Pre-fill with key for local development (try secrets first, then .env)
+    default_key = ""
+    default_model = "gpt-4o"
+
+    # Try Streamlit secrets first
+    try:
+        if hasattr(st, 'secrets') and 'OPENAI_API_KEY' in st.secrets:
+            default_key = st.secrets["OPENAI_API_KEY"]
+            default_model = st.secrets.get("OPENAI_MODEL", "gpt-4o")
+    except:
+        pass
+
+    # Fall back to environment variables
+    if not default_key:
+        default_key = os.getenv("OPENAI_API_KEY", "")
+        default_model = os.getenv("OPENAI_MODEL", "gpt-4o")
+
+    # Show key input
+    openai_key = st.text_input("API Key", type="password", value=default_key,
+                                help="Your OpenAI API key", label_visibility="collapsed")
+
+    model_options = ["gpt-4o", "gpt-4", "gpt-3.5-turbo"]
+    default_index = model_options.index(default_model) if default_model in model_options else 0
+    openai_model = st.selectbox("Model", model_options, index=default_index, label_visibility="collapsed")
+
+    # Store in session state
+    st.session_state['user_openai_key'] = openai_key
+    st.session_state['user_openai_model'] = openai_model
+
+    # Show status
+    if openai_key:
+        st.success("✓ API Key Loaded")
+    else:
+        st.info("ℹ️ Enter API key above")
+
 
 # Main content
 if page == "Home":
