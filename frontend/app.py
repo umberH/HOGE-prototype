@@ -20,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 # Import services (abstraction layer)
 from backend.src.api.services import ExplanationService, ApplicationService
 from backend.src.api.models import ExplanationRequest
+from backend.src.api.adapters.config import get_neo4j_config as get_backend_neo4j_config
 
 # Import backend modules for features not yet in services
 from backend.src.explainability.concept_mapper import ConceptMapper
@@ -60,13 +61,9 @@ def get_neo4j_config():
     except Exception:
         pass
 
-    # Fall back to environment variables (local development)
-    return {
-        'uri': os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687"),
-        'user': os.getenv("NEO4J_USER", "neo4j"),
-        'password': os.getenv("NEO4J_PASSWORD", "test1234"),
-        'database': os.getenv("NEO4J_DATABASE", "neo4j")
-    }
+    # Fall back to backend config adapter (supports USE_REMOTE_NEO4J flag)
+    # This properly handles local vs remote Neo4j based on .env settings
+    return get_backend_neo4j_config()
 
 # Custom CSS
 st.markdown("""
