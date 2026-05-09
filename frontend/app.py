@@ -1903,9 +1903,22 @@ elif page == "Settings":
     # OpenAI settings
     st.markdown("#### 🤖 OpenAI Configuration")
 
-    # Pre-fill with .env key for local development
-    default_key = os.getenv("OPENAI_API_KEY", "")
-    default_model = os.getenv("OPENAI_MODEL", "gpt-4o")
+    # Pre-fill with key for local development (try secrets first, then .env)
+    default_key = ""
+    default_model = "gpt-4o"
+
+    # Try Streamlit secrets first
+    try:
+        if hasattr(st, 'secrets') and 'OPENAI_API_KEY' in st.secrets:
+            default_key = st.secrets["OPENAI_API_KEY"]
+            default_model = st.secrets.get("OPENAI_MODEL", "gpt-4o")
+    except:
+        pass
+
+    # Fall back to environment variables
+    if not default_key:
+        default_key = os.getenv("OPENAI_API_KEY", "")
+        default_model = os.getenv("OPENAI_MODEL", "gpt-4o")
 
     # Debug info
     if default_key:
