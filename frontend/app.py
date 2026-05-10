@@ -1054,29 +1054,32 @@ elif page == "Explain Application":
                     # SHAP Waterfall Chart
                     st.markdown("#### 📊 SHAP Feature Contributions")
 
-                    shap_df = pd.DataFrame(context.get('shap_details', [])[:10])
+                    shap_details = context.get('shap_details', [])
 
-                    # Create interactive bar chart
-                    import plotly.graph_objects as go
+                    if shap_details and len(shap_details) > 0:
+                        shap_df = pd.DataFrame(shap_details[:10])
 
-                    fig = go.Figure()
+                        # Create interactive bar chart
+                        import plotly.graph_objects as go
 
-                    # Separate positive and negative contributions
-                    colors = ['#2ca02c' if x > 0 else '#d62728' for x in shap_df['shap']]
+                        fig = go.Figure()
 
-                    fig.add_trace(go.Bar(
-                        x=shap_df['shap'],
-                        y=shap_df['feature'],
-                        orientation='h',
-                        marker=dict(color=colors),
-                        text=[f"{x:.4f}" for x in shap_df['shap']],
-                        textposition='auto',
-                        hovertemplate='<b>%{y}</b><br>SHAP: %{x:.4f}<br>Value: %{customdata[0]}<extra></extra>',
-                        customdata=shap_df[['value']].values
-                    ))
+                        # Separate positive and negative contributions
+                        colors = ['#2ca02c' if x > 0 else '#d62728' for x in shap_df['shap']]
 
-                    fig.update_layout(
-                        title="Top 10 Feature Contributions (SHAP Values)",
+                        fig.add_trace(go.Bar(
+                            x=shap_df['shap'],
+                            y=shap_df['feature'],
+                            orientation='h',
+                            marker=dict(color=colors),
+                            text=[f"{x:.4f}" for x in shap_df['shap']],
+                            textposition='auto',
+                            hovertemplate='<b>%{y}</b><br>SHAP: %{x:.4f}<br>Value: %{customdata[0]}<extra></extra>',
+                            customdata=shap_df[['value']].values
+                        ))
+
+                        fig.update_layout(
+                            title="Top 10 Feature Contributions (SHAP Values)",
                         xaxis_title="SHAP Value (Impact on Prediction)",
                         yaxis_title="Feature",
                         height=500,
@@ -1084,123 +1087,125 @@ elif page == "Explain Application":
                         yaxis={'categoryorder': 'total ascending'}
                     )
 
-                    st.plotly_chart(fig, width="stretch")
+                        st.plotly_chart(fig, width="stretch")
 
-                    # Feature importance table
-                    st.markdown("#### 📋 Detailed Feature Analysis")
-                    # Clean any currency-formatted values
-                    shap_display_df = shap_df[['feature', 'value', 'shap', 'direction', 'rank']].copy()
-                    if shap_display_df['value'].dtype == 'object':
-                        # Try to clean currency formatting
-                        try:
-                            shap_display_df['value'] = shap_display_df['value'].astype(str).str.replace('$', '').str.replace(',', '')
-                            shap_display_df['value'] = pd.to_numeric(shap_display_df['value'], errors='ignore')
-                        except:
-                            pass  # Keep original if cleaning fails
+                        # Feature importance table
+                        st.markdown("#### 📋 Detailed Feature Analysis")
+                        # Clean any currency-formatted values
+                        shap_display_df = shap_df[['feature', 'value', 'shap', 'direction', 'rank']].copy()
+                        if shap_display_df['value'].dtype == 'object':
+                            # Try to clean currency formatting
+                            try:
+                                shap_display_df['value'] = shap_display_df['value'].astype(str).str.replace('$', '').str.replace(',', '')
+                                shap_display_df['value'] = pd.to_numeric(shap_display_df['value'], errors='ignore')
+                            except:
+                                pass  # Keep original if cleaning fails
 
-                    st.dataframe(
-                        shap_display_df.style.background_gradient(
-                            subset=['shap'], cmap='RdYlGn', vmin=-1, vmax=1
-                        ),
-                        width="stretch"
-                    )
-
-                    # Feature importance pie chart
-                    col1, col2 = st.columns(2)
-
-                    with col1:
-                        st.markdown("#### 🥧 Contribution Distribution")
-
-                        # Pie chart for positive vs negative
-                        pos_sum = sum(shap_df[shap_df['shap'] > 0]['shap'])
-                        neg_sum = abs(sum(shap_df[shap_df['shap'] < 0]['shap']))
-
-                        fig_pie = go.Figure(data=[go.Pie(
-                            labels=['Positive Impact', 'Negative Impact'],
-                            values=[pos_sum, neg_sum],
-                            marker=dict(colors=['#2ca02c', '#d62728']),
-                            hole=0.3
-                        )])
-
-                        fig_pie.update_layout(
-                            title="Net SHAP Contribution",
-                            height=300
+                        st.dataframe(
+                            shap_display_df.style.background_gradient(
+                                subset=['shap'], cmap='RdYlGn', vmin=-1, vmax=1
+                            ),
+                            width="stretch"
                         )
 
-                        st.plotly_chart(fig_pie, width="stretch")
+                        # Feature importance pie chart
+                        col1, col2 = st.columns(2)
 
-                    with col2:
-                        st.markdown("#### 🎯 Top Drivers")
+                        with col1:
+                            st.markdown("#### 🥧 Contribution Distribution")
 
-                        # Top 5 by absolute value
-                        top_5 = shap_df.nlargest(5, 'importance')
+                            # Pie chart for positive vs negative
+                            pos_sum = sum(shap_df[shap_df['shap'] > 0]['shap'])
+                            neg_sum = abs(sum(shap_df[shap_df['shap'] < 0]['shap']))
 
-                        fig_top = go.Figure(data=[go.Bar(
-                            x=top_5['importance'],
-                            y=top_5['feature'],
-                            orientation='h',
-                            marker=dict(color='#1f77b4'),
-                            text=[f"{x:.4f}" for x in top_5['importance']],
-                            textposition='auto'
-                        )])
+                            fig_pie = go.Figure(data=[go.Pie(
+                                labels=['Positive Impact', 'Negative Impact'],
+                                values=[pos_sum, neg_sum],
+                                marker=dict(colors=['#2ca02c', '#d62728']),
+                                hole=0.3
+                            )])
 
-                        fig_top.update_layout(
-                            title="Top 5 by Importance",
-                            xaxis_title="Absolute SHAP Value",
-                            height=300,
-                            showlegend=False
-                        )
+                            fig_pie.update_layout(
+                                title="Net SHAP Contribution",
+                                height=300
+                            )
 
-                        st.plotly_chart(fig_top, width="stretch")
+                            st.plotly_chart(fig_pie, width="stretch")
 
-                    # Features used in LLM explanation
-                    st.markdown("#### 🤖 Features Referenced by LLM")
+                        with col2:
+                            st.markdown("#### 🎯 Top Drivers")
 
-                    llm_features = explanation['features_used']
-                    shap_features = shap_df['feature'].tolist()
+                            # Top 5 by absolute value
+                            top_5 = shap_df.nlargest(5, 'importance')
 
-                    # Show which features were used vs available
-                    coverage_data = []
-                    for feat in shap_features[:10]:
-                        coverage_data.append({
-                            'Feature': feat,
-                            'In SHAP Top 10': '✓',
-                            'Used by LLM': '✓' if feat in llm_features else '✗'
-                        })
+                            fig_top = go.Figure(data=[go.Bar(
+                                x=top_5['importance'],
+                                y=top_5['feature'],
+                                orientation='h',
+                                marker=dict(color='#1f77b4'),
+                                text=[f"{x:.4f}" for x in top_5['importance']],
+                                textposition='auto'
+                            )])
 
-                    coverage_df = pd.DataFrame(coverage_data)
-                    st.dataframe(coverage_df, width="stretch")
+                            fig_top.update_layout(
+                                title="Top 5 by Importance",
+                                xaxis_title="Absolute SHAP Value",
+                                height=300,
+                                showlegend=False
+                            )
 
-                    # Coverage metrics
-                    coverage_rate = len(set(llm_features) & set(shap_features)) / len(shap_features) * 100
-                    st.metric("LLM Coverage of Top 10 SHAP Features", f"{coverage_rate:.0f}%")
+                            st.plotly_chart(fig_top, width="stretch")
 
-                    # Feature vs Concept Comparison (if concepts were used)
-                    if explanation.get("used_concepts"):
-                        st.markdown("#### 🔄 Feature-Level vs Concept-Level Comparison")
+                        # Features used in LLM explanation
+                        st.markdown("#### 🤖 Features Referenced by LLM")
 
-                        comp_col1, comp_col2 = st.columns(2)
+                        llm_features = explanation['features_used']
+                        shap_features = shap_df['feature'].tolist()
 
-                        with comp_col1:
-                            st.markdown("**📊 Feature-Level View**")
-                            st.markdown(f"*{len(context.get('shap_details', []))} individual features*")
+                        # Show which features were used vs available
+                        coverage_data = []
+                        for feat in shap_features[:10]:
+                            coverage_data.append({
+                                'Feature': feat,
+                                'In SHAP Top 10': '✓',
+                                'Used by LLM': '✓' if feat in llm_features else '✗'
+                            })
 
-                            # Show top features
-                            for feat in context.get('shap_details', [])[:5]:
-                                direction_emoji = "✅" if feat.get('shap', 0) > 0 else "❌"
-                                st.markdown(f"{direction_emoji} {feat['feature']}: {feat.get('shap', 0):+.3f}")
+                        coverage_df = pd.DataFrame(coverage_data)
+                        st.dataframe(coverage_df, width="stretch")
 
-                        with comp_col2:
-                            st.markdown("**🧩 Concept-Level View**")
-                            concepts = explanation.get("business_concepts", [])
-                            st.markdown(f"*{len(concepts)} business concepts*")
+                        # Coverage metrics
+                        coverage_rate = len(set(llm_features) & set(shap_features)) / len(shap_features) * 100
+                        st.metric("LLM Coverage of Top 10 SHAP Features", f"{coverage_rate:.0f}%")
 
-                            # Show top concepts
-                            for concept in concepts[:5]:
-                                direction_emoji = "✅" if concept['aggregated_shap_value'] > 0 else "❌"
-                                st.markdown(f"{direction_emoji} {concept['concept_name']}: {concept['aggregated_shap_value']:+.3f}")
+                        # Feature vs Concept Comparison (if concepts were used)
+                        if explanation.get("used_concepts"):
+                            st.markdown("#### 🔄 Feature-Level vs Concept-Level Comparison")
 
-                        st.caption("💡 Concepts aggregate multiple features for simpler understanding")
+                            comp_col1, comp_col2 = st.columns(2)
+
+                            with comp_col1:
+                                st.markdown("**📊 Feature-Level View**")
+                                st.markdown(f"*{len(context.get('shap_details', []))} individual features*")
+
+                                # Show top features
+                                for feat in context.get('shap_details', [])[:5]:
+                                    direction_emoji = "✅" if feat.get('shap', 0) > 0 else "❌"
+                                    st.markdown(f"{direction_emoji} {feat['feature']}: {feat.get('shap', 0):+.3f}")
+
+                            with comp_col2:
+                                st.markdown("**🧩 Concept-Level View**")
+                                concepts = explanation.get("business_concepts", [])
+                                st.markdown(f"*{len(concepts)} business concepts*")
+
+                                # Show top concepts
+                                for concept in concepts[:5]:
+                                    direction_emoji = "✅" if concept['aggregated_shap_value'] > 0 else "❌"
+                                    st.markdown(f"{direction_emoji} {concept['concept_name']}: {concept['aggregated_shap_value']:+.3f}")
+
+                            st.caption("💡 Concepts aggregate multiple features for simpler understanding")
+                    else:
+                        st.info("📊 SHAP visualizations require live Neo4j data. These are not available for cached explanations.")
 
             # TAB: MECHANISTIC DEEP DIVE (only for technical audience)
             if audience_key == "technical":
