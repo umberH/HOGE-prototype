@@ -624,8 +624,12 @@ elif page == "Explain Application":
                     'application_id': loan_id,
                     'model_prediction': explanation.get('decision', 'Unknown'),
                     'prediction_probability': explanation.get('probability', 0),
+                    'approval_probability': explanation.get('probability', 0),
                     'features': {},
-                    'shap_values': {}
+                    'shap_values': {},
+                    'violated_rules': [],
+                    'counterfactuals': [],
+                    'shap_explanations': []
                 }
 
             # Store in session state
