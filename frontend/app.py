@@ -1225,13 +1225,15 @@ elif page == "Explain Application":
                                 import pandas as pd
                                 import joblib
 
-                                # Load model and data
-                                MODEL_PATH = "models/loan_xgb_monotonic.joblib"
+                                # Get model and data paths from centralized config
+                                from backend.src.config import get_paths
+                                paths = get_paths()
+                                MODEL_PATH = str(paths.MODEL_XGB_MONOTONIC)
+                                data_file = str(paths.RAW_DATA_LOAN)
 
-                                # Try multiple data sources
                                 import os
-                                if os.path.exists("data/raw/df1_loan.csv"):
-                                    df = pd.read_csv("data/raw/df1_loan.csv")
+                                if os.path.exists(data_file):
+                                    df = pd.read_csv(data_file)
                                     df = df.drop(columns=["Unnamed: 0"], errors="ignore")
 
                                     # Clean ALL currency and numeric columns thoroughly
@@ -1247,8 +1249,8 @@ elif page == "Explain Application":
                                     # Add DTI
                                     df["DTI"] = df["LoanAmount"] / (df["ApplicantIncome"] + df["CoapplicantIncome"] + 1)
                                 else:
-                                    st.error("Raw data file not found: data/raw/df1_loan.csv")
-                                    raise FileNotFoundError("data/raw/df1_loan.csv")
+                                    st.error(f"Raw data file not found: {data_file}")
+                                    raise FileNotFoundError(data_file)
 
                                 app_data = df[df['Loan_ID'] == loan_id]
 
@@ -1487,7 +1489,9 @@ elif page == "Batch Analysis":
 
     # Load available applications
     try:
-        df = pd.read_csv("data/raw/df1_loan.csv")
+        from backend.src.config import get_paths
+        paths = get_paths()
+        df = pd.read_csv(str(paths.RAW_DATA_LOAN))
         app_ids = df['Loan_ID'].tolist()[:20]  # First 20 for demo
 
         selected_apps = st.multiselect(
