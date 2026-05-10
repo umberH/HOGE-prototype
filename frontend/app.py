@@ -723,7 +723,7 @@ elif page == "Explain Application":
             with tabs[0]:
                 st.markdown('<div class="sub-header">📋 Your Loan Decision</div>', unsafe_allow_html=True)
 
-                decision = context['model_prediction']
+                decision = context.get('model_prediction', 'Unknown')
                 color = "green" if decision == "Approved" else "red"
                 st.markdown(f"### Decision: <span style='color:{color};'>{decision}</span>", unsafe_allow_html=True)
 
@@ -779,7 +779,7 @@ elif page == "Explain Application":
                     # Show simple improvement suggestions
                     if context.get('counterfactual_scenarios'):
                         st.markdown("### 🔧 What Could Help")
-                        for i, cf in enumerate(context['counterfactual_scenarios'][:3], 1):
+                        for i, cf in enumerate(context.get('counterfactual_scenarios', [])[:3], 1):
                             if cf.get('flipped_prediction'):
                                 st.markdown(f"**{i}. {cf.get('change_description', 'Make a change')}**")
                                 st.markdown(f"   - This could change the decision to **Approved**")
@@ -794,15 +794,15 @@ elif page == "Explain Application":
                 col1, col2, col3, col4 = st.columns(4)
 
                 with col1:
-                    decision = context['model_prediction']
+                    decision = context.get('model_prediction', 'Unknown')
                     st.metric("Decision", decision)
 
                 with col2:
-                    prob = context['approval_probability']
+                    prob = context.get('approval_probability', 0)
                     st.metric("Confidence", f"{prob*100:.0f}%")
 
                 with col3:
-                    num_violations = len(context['violated_rules'])
+                    num_violations = len(context.get('violated_rules', []))
                     st.metric("Policy Issues", num_violations)
 
                 with col4:
@@ -873,7 +873,7 @@ elif page == "Explain Application":
                 st.caption("Technical details for deeper investigation if needed")
 
                 with st.expander("📊 Feature Importance"):
-                    shap_df = pd.DataFrame(context['shap_details'][:10])
+                    shap_df = pd.DataFrame(context.get('shap_details', [])[:10])
                     st.dataframe(shap_df[['feature', 'value', 'shap', 'direction']], use_container_width=True)
 
                 with st.expander("🔮 What-If Scenarios"):
@@ -888,17 +888,17 @@ elif page == "Explain Application":
                 col1, col2, col3 = st.columns(3)
 
                 with col1:
-                    decision = context['model_prediction']
+                    decision = context.get('model_prediction', 'Unknown')
                     color = "green" if decision == "Approved" else "red"
                     st.markdown(f"**Decision:** <span style='color:{color}; font-size:1.5rem;'>{decision}</span>",
                                unsafe_allow_html=True)
 
                 with col2:
-                    prob = context['approval_probability']
+                    prob = context.get('approval_probability', 0)
                     st.metric("Approval Probability", f"{prob*100:.1f}%")
 
                 with col3:
-                    num_violations = len(context['violated_rules'])
+                    num_violations = len(context.get('violated_rules', []))
                     st.metric("Policy Violations", num_violations)
 
                 # Summary
@@ -956,7 +956,7 @@ elif page == "Explain Application":
                     st.markdown("---")
                     st.markdown("**Detailed Counterfactual Scenarios:**")
 
-                    for i, cf in enumerate(context['counterfactual_scenarios'][:5], 1):
+                    for i, cf in enumerate(context.get('counterfactual_scenarios', [])[:5], 1):
                         impact_color = "green" if cf.get('probability_shift', 0) > 0 else "red"
                         flip_badge = "🔄 **Decision Flip!**" if cf.get('flipped_prediction') else ""
 
@@ -1054,7 +1054,7 @@ elif page == "Explain Application":
                     # SHAP Waterfall Chart
                     st.markdown("#### 📊 SHAP Feature Contributions")
 
-                    shap_df = pd.DataFrame(context['shap_details'][:10])
+                    shap_df = pd.DataFrame(context.get('shap_details', [])[:10])
 
                     # Create interactive bar chart
                     import plotly.graph_objects as go
@@ -1183,10 +1183,10 @@ elif page == "Explain Application":
 
                         with comp_col1:
                             st.markdown("**📊 Feature-Level View**")
-                            st.markdown(f"*{len(context['shap_details'])} individual features*")
+                            st.markdown(f"*{len(context.get('shap_details', []))} individual features*")
 
                             # Show top features
-                            for feat in context['shap_details'][:5]:
+                            for feat in context.get('shap_details', [])[:5]:
                                 direction_emoji = "✅" if feat.get('shap', 0) > 0 else "❌"
                                 st.markdown(f"{direction_emoji} {feat['feature']}: {feat.get('shap', 0):+.3f}")
 
@@ -1556,9 +1556,9 @@ elif page == "Batch Analysis":
 
                         results.append({
                             'Application ID': app_id,
-                            'Decision': context['model_prediction'],
-                            'Probability': f"{context['approval_probability']*100:.1f}%",
-                            'Policy Violations': len(context['violated_rules']),
+                            'Decision': context.get('model_prediction', 'Unknown'),
+                            'Probability': f"{context.get('approval_probability', 0)*100:.1f}%",
+                            'Policy Violations': len(context.get('violated_rules', [])),
                             'Summary': explanation['summary']
                         })
                     except Exception as e:
