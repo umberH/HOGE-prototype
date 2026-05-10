@@ -54,8 +54,14 @@ driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 # ============================================================
 
 def run_query(q, params=None):
-    with driver.session(database=NEO4J_DATABASE) as session:
-        session.run(q, params or {})
+    # For Neo4j Aura Free, don't specify database (it only has one default database)
+    # For local Neo4j, specify the database name
+    if neo4j_config['environment'] == 'REMOTE':
+        with driver.session() as session:  # Aura: use default database
+            session.run(q, params or {})
+    else:
+        with driver.session(database=NEO4J_DATABASE) as session:  # Local: specify database
+            session.run(q, params or {})
 
 
 # ============================================================

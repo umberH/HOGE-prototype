@@ -619,7 +619,8 @@ elif page == "Explain Application":
                 context = get_application_explanation_data(loan_id)
             except Exception as e:
                 # If Neo4j is unavailable, use minimal context from cached explanation
-                st.warning(f"⚠️ Could not connect to Neo4j for additional context. Using cached data only.")
+                st.warning(f"⚠️ Could not connect to Neo4j for additional context: {str(e)}")
+                st.caption("Using cached data only.")
                 context = {
                     'application_id': loan_id,
                     'model_prediction': explanation.get('decision', 'Unknown'),
@@ -629,7 +630,8 @@ elif page == "Explain Application":
                     'shap_values': {},
                     'violated_rules': [],
                     'counterfactuals': [],
-                    'shap_explanations': []
+                    'shap_explanations': [],
+                    'shap_details': []
                 }
 
             # Store in session state
@@ -700,12 +702,11 @@ elif page == "Explain Application":
                 "🔬 Technical Details"
             ]
         else:  # technical
-            # Technical: Full detailed view with all tabs
+            # Technical: Full detailed view with advanced tabs only
             tab_list = [
                 "📋 Overview",
                 "🎯 Key Factors",
                 "🔮 What-If Scenarios",
-                "🔬 Technical Analysis",
                 "🌲 Mechanistic Deep Dive",
                 "🕸️ Knowledge Graph",
                 "📊 Evidence & Provenance"
@@ -1209,7 +1210,7 @@ elif page == "Explain Application":
 
             # TAB: MECHANISTIC DEEP DIVE (only for technical audience)
             if audience_key == "technical":
-                with tabs[4]:  # Tab 5 for technical audience
+                with tabs[3]:  # Tab 4 for technical audience
                     st.markdown("**Deep mechanistic analysis of XGBoost decision-making**")
                     st.caption("Understand how the model makes decisions at the tree level, including decision paths, feature interactions, and ensemble patterns.")
                     st.markdown("---")
@@ -1309,7 +1310,7 @@ elif page == "Explain Application":
 
             # TAB: KNOWLEDGE GRAPH (only for technical audience)
             if audience_key == "technical":
-                with tabs[5]:  # Tab 6 for technical audience
+                with tabs[4]:  # Tab 5 for technical audience
                     st.markdown("**Knowledge Graph Network Visualization**")
                     st.caption("Ontology-grounded evidence showing the relationships between this loan, SHAP values, policy rules, and counterfactuals.")
                     st.markdown("---")
@@ -1362,7 +1363,7 @@ elif page == "Explain Application":
 
             # TAB: EVIDENCE & PROVENANCE (only for technical audience)
             if audience_key == "technical":
-                with tabs[6]:  # Last tab for technical audience
+                with tabs[5]:  # Tab 6 (last) for technical audience
                     st.markdown("**Full Traceability & Reproducibility**")
                     st.markdown("- Complete provenance metadata for all pipeline components")
                     st.markdown("- Download options for explanation, context, and provenance")
