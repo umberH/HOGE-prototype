@@ -1907,14 +1907,29 @@ elif page == "Evaluation Dashboard":
                     st.json(human_eval)
 
             st.markdown("---")
-            st.info("📊 For detailed evaluation, check: `data/evaluation/hoge_evaluation_workbook.xlsx`")
+
+            # Download Excel workbook
+            st.markdown("### 📥 Download Full Evaluation Report")
+            workbook_path = ".resources/data/evaluation/hoge_evaluation_workbook_100.xlsx"
+            try:
+                with open(workbook_path, "rb") as f:
+                    st.download_button(
+                        label="📊 Download Excel Workbook",
+                        data=f,
+                        file_name="hoge_evaluation_workbook.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        help="Download complete evaluation results with all metrics and detailed analysis"
+                    )
+                st.caption("Contains faithfulness, hallucination, retrieval, and human evaluation results")
+            except FileNotFoundError:
+                st.info("📊 Excel workbook not available. Run full evaluation to generate it.")
 
         except FileNotFoundError:
             st.warning("Run human evaluation first:")
             st.code("python backend/src/evaluation/evaluation_human.py --n-samples 10", language="bash")
 
             st.markdown("---")
-            st.info("📊 Alternatively, check the Excel workbook: `data/evaluation/hoge_evaluation_workbook.xlsx`")
+            st.info("📊 Excel workbook will be generated after running evaluations")
 
 
 elif page == "Settings":
