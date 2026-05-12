@@ -21,13 +21,23 @@ except ImportError:
 load_dotenv()
 
 # ============================================================
-# CONFIG  (credentials via environment variables)
+# CONFIG - Use centralized config adapter
 # ============================================================
 
-NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
-NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
-NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
+try:
+    from backend.src.api.adapters.config import get_neo4j_config, get_openai_config
+    # Get Neo4j config (supports both .env and Streamlit secrets)
+    _neo4j_config = get_neo4j_config()
+    NEO4J_URI = _neo4j_config['uri']
+    NEO4J_USER = _neo4j_config['user']
+    NEO4J_PASSWORD = _neo4j_config['password']
+    NEO4J_DATABASE = _neo4j_config['database']
+except ImportError:
+    # Fallback to environment variables if config adapter not available
+    NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
+    NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
+    NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "test1234")
+    NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
