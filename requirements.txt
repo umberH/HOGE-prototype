@@ -4,11 +4,11 @@
 # Core ML & Data Science
 numpy>=1.24.0,<2.0.0
 pandas>=2.0.0
-scikit-learn>=1.5.0
-xgboost>=2.0.0
+scikit-learn==1.3.2
+xgboost==1.7.6
 
 # SHAP for explainability
-shap>=0.45.0
+shap==0.44.0
 
 # Neo4j knowledge graph
 neo4j>=5.14.0
