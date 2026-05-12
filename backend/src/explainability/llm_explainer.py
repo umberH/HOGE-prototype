@@ -52,10 +52,17 @@ PROVENANCE = {
 
 
 # ============================================================
-# NEO4J HELPER
+# NEO4J HELPER - Lazy driver initialization
 # ============================================================
 
-driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+_driver = None
+
+def get_neo4j_driver():
+    """Get or create Neo4j driver (lazy initialization for Streamlit Cloud)"""
+    global _driver
+    if _driver is None:
+        _driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+    return _driver
 
 
 def get_application_explanation_data(application_id: str):
@@ -72,6 +79,7 @@ def get_application_explanation_data(application_id: str):
     Returns a dict ready to feed into the LLM (Component C).
     """
 
+    driver = get_neo4j_driver()
     with driver.session(database=NEO4J_DATABASE) as session:
         # ---------- 1) Prediction + SHAP rows ----------
         shap_query = """
