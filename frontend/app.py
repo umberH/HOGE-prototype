@@ -1624,7 +1624,7 @@ elif page == "Evaluation Dashboard":
 
         # Try to load the combined evaluation file
         try:
-            with open("data/evaluation/eval_system_all.json", "r") as f:
+            with open(".resources/data/evaluation/eval_system_all.json", "r") as f:
                 eval_all = json.load(f)
 
             st.success(f"Evaluation data loaded (timestamp: {eval_all.get('evaluation_timestamp', 'N/A')})")
@@ -1671,7 +1671,7 @@ elif page == "Evaluation Dashboard":
 
         except FileNotFoundError:
             st.warning("No evaluation data found. Run evaluations first:")
-            st.code("python src/evaluation/evaluation_system.py --all --n-samples 10", language="bash")
+            st.code("python backend/src/evaluation/evaluation_system.py --all --n-samples 10", language="bash")
 
     # Tab 2: Faithfulness
     with eval_tabs[1]:
@@ -1682,7 +1682,7 @@ elif page == "Evaluation Dashboard":
         """)
 
         try:
-            with open("data/evaluation/eval_faithfulness.json", "r") as f:
+            with open(".resources/data/evaluation/eval_faithfulness.json", "r") as f:
                 faith_eval = json.load(f)
 
             results = faith_eval.get("results", [])
@@ -1726,7 +1726,7 @@ elif page == "Evaluation Dashboard":
 
         except FileNotFoundError:
             st.warning("Run faithfulness evaluation first:")
-            st.code("python src/evaluation/evaluation_system.py --faithfulness --n-samples 10", language="bash")
+            st.code("python backend/src/evaluation/evaluation_system.py --faithfulness --n-samples 10", language="bash")
 
     # Tab 3: Hallucination & Grounding
     with eval_tabs[2]:
@@ -1739,7 +1739,7 @@ elif page == "Evaluation Dashboard":
         """)
 
         try:
-            with open("data/evaluation/eval_hallucination.json", "r") as f:
+            with open(".resources/data/evaluation/eval_hallucination.json", "r") as f:
                 hall_eval = json.load(f)
 
             results = hall_eval.get("results", [])
@@ -1794,7 +1794,7 @@ elif page == "Evaluation Dashboard":
 
         except FileNotFoundError:
             st.warning("Run hallucination evaluation first:")
-            st.code("python src/evaluation/evaluation_system.py --hallucination --n-samples 10", language="bash")
+            st.code("python backend/src/evaluation/evaluation_system.py --hallucination --n-samples 10", language="bash")
 
     # Tab 4: Retrieval Accuracy
     with eval_tabs[3]:
@@ -1805,7 +1805,7 @@ elif page == "Evaluation Dashboard":
         """)
 
         try:
-            with open("data/evaluation/eval_retrieval.json", "r") as f:
+            with open(".resources/data/evaluation/eval_retrieval.json", "r") as f:
                 retr_eval = json.load(f)
 
             results = retr_eval.get("results", [])
@@ -1859,7 +1859,7 @@ elif page == "Evaluation Dashboard":
 
         except FileNotFoundError:
             st.warning("Run retrieval evaluation first:")
-            st.code("python src/evaluation/evaluation_system.py --retrieval --n-samples 10", language="bash")
+            st.code("python backend/src/evaluation/evaluation_system.py --retrieval --n-samples 10", language="bash")
 
     # Tab 5: Human Evaluation
     with eval_tabs[4]:
@@ -1870,7 +1870,7 @@ elif page == "Evaluation Dashboard":
         """)
 
         try:
-            with open("data/evaluation/eval_human_results.json", "r") as f:
+            with open(".resources/data/evaluation/eval_human_results.json", "r") as f:
                 human_eval = json.load(f)
 
             # Show key metrics in a clean format instead of raw JSON
@@ -1911,7 +1911,7 @@ elif page == "Evaluation Dashboard":
 
         except FileNotFoundError:
             st.warning("Run human evaluation first:")
-            st.code("python src/evaluation/evaluation_human.py --n-samples 10", language="bash")
+            st.code("python backend/src/evaluation/evaluation_human.py --n-samples 10", language="bash")
 
             st.markdown("---")
             st.info("📊 Alternatively, check the Excel workbook: `data/evaluation/hoge_evaluation_workbook.xlsx`")
