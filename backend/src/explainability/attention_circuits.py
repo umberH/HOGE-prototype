@@ -104,9 +104,12 @@ Avoid technical jargon like "layer", "head", "entropy".
     except Exception as e:
         # Fallback if API fails
         if audience == "technical":
-            return f"Top attention heads: {', '.join([f'L{h["layer"]}H{h["head"]}' for h in top_heads[:3]])}. Focus on: {', '.join([w['word'] for w in focus_words[:3]])}."
+            head_names = ', '.join([f"L{h['layer']}H{h['head']}" for h in top_heads[:3]])
+            word_names = ', '.join([w['word'] for w in focus_words[:3]])
+            return f"Top attention heads: {head_names}. Focus on: {word_names}."
         else:
-            return f"The model focused on: {', '.join([w['word'] for w in focus_words[:3]])}."
+            word_names = ', '.join([w['word'] for w in focus_words[:3]])
+            return f"The model focused on: {word_names}."
 
 
 # ============================================================================
