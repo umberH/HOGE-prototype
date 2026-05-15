@@ -85,7 +85,14 @@ def get_neo4j_config() -> Dict[str, str]:
         uri = get_config("NEO4J_REMOTE_URI") or get_config("neo4j.uri")
         user = get_config("NEO4J_REMOTE_USER") or get_config("neo4j.user", "neo4j")
         password = get_config("NEO4J_REMOTE_PASSWORD") or get_config("neo4j.password")
-        database = get_config("NEO4J_REMOTE_DATABASE") or get_config("neo4j.database", "neo4j")
+        # Aura uses instance ID as database name
+        database = get_config("NEO4J_REMOTE_DATABASE") or get_config("neo4j.database")
+        if not database and uri:
+            # Extract database from URI if not specified (e.g., fc0456cc from neo4j+s://fc0456cc.databases.neo4j.io)
+            import re
+            match = re.search(r'//([^.]+)\.', uri)
+            if match:
+                database = match.group(1)
         environment = "REMOTE"
     else:
         # Local Neo4j (development)

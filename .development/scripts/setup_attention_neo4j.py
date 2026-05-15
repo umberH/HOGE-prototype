@@ -26,11 +26,19 @@ if use_remote:
     uri = os.getenv("NEO4J_REMOTE_URI")
     user = os.getenv("NEO4J_REMOTE_USER", "neo4j")
     password = os.getenv("NEO4J_REMOTE_PASSWORD")
-    system_db = "system"  # Neo4j Aura uses 'neo4j' as default
-    attention_db = "neo4j"  # Aura doesn't support multiple databases, use default
+    # Extract database name from URI or use from config
+    attention_db = os.getenv("NEO4J_REMOTE_DATABASE")
+    if not attention_db and uri:
+        import re
+        match = re.search(r'//([^.]+)\.', uri)
+        if match:
+            attention_db = match.group(1)
+    if not attention_db:
+        attention_db = "neo4j"
+    system_db = "system"
     print("\n[INFO] Using Neo4j Aura (Remote)")
     print("[WARN] Neo4j Aura doesn't support multiple databases")
-    print("[INFO] Will use default 'neo4j' database with label prefix 'Attention_'")
+    print(f"[INFO] Will use database '{attention_db}' with label prefix 'Attention_'")
 else:
     uri = os.getenv("NEO4J_URI", "neo4j://localhost:7687")
     user = os.getenv("NEO4J_USER", "neo4j")
@@ -78,7 +86,7 @@ try:
     # Create constraints and indexes
     print(f"\n[2/3] Creating constraints...")
 
-    db_to_use = attention_db if not use_remote else "neo4j"
+    db_to_use = attention_db  # Use detected database name for both local and remote
     prefix = "" if not use_remote else "Attention_"
 
     constraints = [
