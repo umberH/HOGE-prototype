@@ -15,9 +15,19 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 import sys
+import os
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Import novel research modules
+from backend.src.explainability.attention_circuits import (
+    analyze_attention_mechanisms,
+    generate_attention_narrative,
+    detect_induction_heads,
+    discover_attention_circuits,
+    classify_attention_head_type
+)
 
 # Page config
 st.set_page_config(
@@ -33,28 +43,73 @@ st.markdown("Explore how BERT attention mechanisms process different texts")
 # Sidebar
 st.sidebar.markdown("## ⚙️ Settings")
 
+# Model selection
+st.sidebar.markdown("## 🤖 Model Selection")
+model_options = {
+    "BERT-base": "bert-base-uncased",
+    "RoBERTa-base": "roberta-base",
+    "DistilBERT": "distilbert-base-uncased",
+    "ALBERT-base": "albert-base-v2"
+}
+selected_model_name = st.sidebar.selectbox(
+    "Choose transformer model",
+    list(model_options.keys()),
+    help="Different models have different attention patterns"
+)
+selected_model_path = model_options[selected_model_name]
+
 # Cache model loading
 @st.cache_resource
-def load_model():
-    """Load BERT model and tokenizer"""
-    with st.spinner("Loading BERT model..."):
-        tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        model = BertModel.from_pretrained('bert-base-uncased', attn_implementation="eager")
+def load_model(model_path):
+    """Load transformer model and tokenizer"""
+    with st.spinner(f"Loading {model_path}..."):
+        from transformers import AutoTokenizer, AutoModel
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        model = AutoModel.from_pretrained(model_path, attn_implementation="eager")
         model.eval()
-    return tokenizer, model
+    return tokenizer, model, model_path
 
-tokenizer, model = load_model()
-st.sidebar.success("✓ Model loaded!")
+tokenizer, model, loaded_model = load_model(selected_model_path)
+st.sidebar.success(f"✓ {selected_model_name} loaded!")
+
+# Detect model architecture
+num_layers = model.config.num_hidden_layers
+num_heads = model.config.num_attention_heads
+st.sidebar.info(f"📊 Architecture: {num_layers} layers, {num_heads} heads per layer")
 
 # Layer and head selection
 st.sidebar.markdown("### Visualization Options")
-selected_layer = st.sidebar.slider("Layer", 0, 11, 6, help="BERT has 12 layers (0-11)")
-selected_head = st.sidebar.slider("Head", 0, 11, 3, help="Each layer has 12 attention heads")
+selected_layer = st.sidebar.slider("Layer", 0, num_layers-1, num_layers//2, help=f"Model has {num_layers} layers")
+selected_head = st.sidebar.slider("Head", 0, num_heads-1, num_heads//4, help=f"Each layer has {num_heads} attention heads")
 
 # Analysis mode
 analysis_mode = st.sidebar.radio(
     "Analysis Mode",
     ["Single Text", "Compare Two Texts", "Batch Analysis"]
+)
+
+# Research features (novel contributions)
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 🚀 Research Features (PhD Contributions)")
+enable_llm_narrative = st.sidebar.checkbox(
+    "LLM Narrative Generation (RC2)",
+    value=True,
+    help="Use GPT-4 to generate human-readable explanations"
+)
+enable_circuit_discovery = st.sidebar.checkbox(
+    "Circuit Discovery",
+    value=True,
+    help="Find attention paths from input -> prediction"
+)
+enable_induction_heads = st.sidebar.checkbox(
+    "Induction Head Detection",
+    value=True,
+    help="Detect heads that copy patterns (Olsson et al., 2022)"
+)
+explanation_audience = st.sidebar.radio(
+    "Explanation Style",
+    ["non-technical", "technical"],
+    help="Technical: entropy, layer numbers. Non-technical: simple language"
 )
 
 st.sidebar.markdown("---")
@@ -147,14 +202,40 @@ if analysis_mode == "Single Text":
             tokens = result['tokens']
             attentions = result['attention']
 
-        st.success(f"✓ Analyzed {len(tokens)} tokens across 144 attention heads")
+        # Run comprehensive analysis with research features
+        with st.spinner("Running mechanistic analysis (circuit discovery, induction heads, LLM narratives)..."):
+            analysis = analyze_attention_mechanisms(
+                tokens=tokens,
+                attentions=attentions,
+                prediction=None,  # Could add sentiment classifier here
+                audience=explanation_audience,
+                enable_llm_narrative=enable_llm_narrative,
+                enable_circuit_discovery=enable_circuit_discovery
+            )
+
+        st.success(f"✓ Analyzed {len(tokens)} tokens across {num_layers * num_heads} attention heads")
+
+        # Show LLM-generated narrative (RC2)
+        if analysis['narrative']:
+            st.markdown("### 🤖 AI-Generated Explanation")
+            st.info(analysis['narrative'])
+            st.caption(f"Audience: {explanation_audience} | Generated using {os.getenv('OPENAI_MODEL', 'gpt-4o')}")
 
         # Show tokens
         st.markdown("### Tokens")
         st.code(" | ".join(tokens))
 
-        # Create tabs
-        tab1, tab2, tab3 = st.tabs(["📊 Attention Heatmap", "📈 Head Importance", "🎯 Sentiment Focus"])
+        # Create tabs with new research features
+        tabs = ["📊 Attention Heatmap", "📈 Head Importance", "🎯 Focus Words"]
+        if enable_circuit_discovery:
+            tabs.append("🔗 Attention Circuits")
+        if enable_induction_heads:
+            tabs.append("🔄 Induction Heads")
+
+        tab_objects = st.tabs(tabs)
+        tab1 = tab_objects[0]
+        tab2 = tab_objects[1]
+        tab3 = tab_objects[2]
 
         with tab1:
             st.markdown(f"### Attention Pattern: Layer {selected_layer}, Head {selected_head}")
@@ -220,11 +301,35 @@ if analysis_mode == "Single Text":
             st.plotly_chart(fig_heads, use_container_width=True)
 
         with tab3:
-            st.markdown("### Sentiment Word Focus")
+            st.markdown("### Focus Words Analysis")
 
-            # Find sentiment words
+            # Use analysis results
+            focus_words_data = analysis['focus_words']
+
+            st.markdown("#### Most Attended Tokens")
+            focus_df = pd.DataFrame(focus_words_data)
+            st.dataframe(focus_df, use_container_width=True)
+
+            st.markdown("#### Head Type Classification (RC4)")
+            st.info("""
+            **Novel Contribution**: Automatic head taxonomy
+            - **Sentiment heads**: Focus on emotional words
+            - **Syntax heads**: Focus on grammatical structure
+            - **Induction heads**: Copy patterns
+            - **Broadcast heads**: Attend uniformly
+            """)
+
+            # Show head types from analysis
+            head_types = {}
+            for head_info in analysis['top_heads'][:10]:
+                head_type = head_info.get('type', 'unknown')
+                head_types[head_type] = head_types.get(head_type, 0) + 1
+
+            st.bar_chart(pd.DataFrame({'Count': head_types}))
+
+            # Find sentiment words for backward compatibility
             sentiment_words = ['love', 'amazing', 'wonderful', 'great', 'fantastic',
-                             'hate', 'terrible', 'awful', 'horrible', 'bad']
+                             'hate', 'terrible', 'awful', 'horrible', 'bad', 'pathetic']
             sentiment_indices = [i for i, token in enumerate(tokens)
                                if token.lower() in sentiment_words]
 
@@ -282,6 +387,66 @@ if analysis_mode == "Single Text":
 
             else:
                 st.warning("No sentiment words found in this text. Try adding words like 'love', 'hate', 'amazing', etc.")
+
+        # New research tabs
+        if enable_circuit_discovery and len(tab_objects) > 3:
+            with tab_objects[3]:
+                st.markdown("### 🔗 Attention Circuits (Novel Contribution)")
+                st.info("""
+                **Research Contribution**: Circuit discovery inspired by Anthropic's work (Wang et al., 2023)
+
+                Traces attention paths from input tokens → heads → prediction
+                """)
+
+                circuits_data = analysis['circuits']
+                if circuits_data:
+                    for i, circuit in enumerate(circuits_data):
+                        with st.expander(f"Circuit {i+1}: {circuit['input_token']} (total attention: {circuit['total_attention']:.3f})"):
+                            st.markdown(f"**Input token**: `{circuit['input_token']}`")
+                            st.markdown(f"**Path depth**: {circuit['depth']} layers")
+
+                            # Show path
+                            path_str = " → ".join([
+                                f"L{p['layer']}H{p['head']} ({p['attention']:.2f})"
+                                for p in circuit['path']
+                            ])
+                            st.code(path_str)
+                else:
+                    st.warning("No strong circuits detected. Try text with clear sentiment words.")
+
+        if enable_induction_heads and len(tab_objects) > 4:
+            with tab_objects[4]:
+                st.markdown("### 🔄 Induction Heads (Olsson et al., 2022)")
+                st.info("""
+                **Research Contribution**: Detection of induction heads in transformers
+
+                Induction heads perform pattern matching: [A][B] ... [A] → predict [B]
+
+                These are key to in-context learning abilities.
+                """)
+
+                induction_data = analysis['induction_heads']
+                if induction_data:
+                    induction_df = pd.DataFrame(induction_data)
+                    st.dataframe(induction_df, use_container_width=True)
+
+                    st.markdown("#### Induction Score Distribution")
+                    fig_induction = go.Figure(data=[
+                        go.Bar(
+                            x=[f"L{h['layer']}H{h['head']}" for h in induction_data],
+                            y=[h['induction_score'] for h in induction_data],
+                            marker_color='lightgreen'
+                        )
+                    ])
+                    fig_induction.update_layout(
+                        title="Induction Head Scores",
+                        xaxis_title="Head",
+                        yaxis_title="Induction Score",
+                        height=400
+                    )
+                    st.plotly_chart(fig_induction, use_container_width=True)
+                else:
+                    st.warning("No induction heads detected. Try text with repeated patterns.")
 
 elif analysis_mode == "Compare Two Texts":
     st.markdown("## 🔄 Compare Two Texts")
