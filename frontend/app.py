@@ -1624,7 +1624,23 @@ elif page == "Evaluation Dashboard":
 
         # Try to load the combined evaluation file
         try:
-            with open(".resources/data/evaluation/eval_system_all.json", "r") as f:
+            # Try multiple path resolutions
+            eval_file_paths = [
+                Path(".resources/data/evaluation/eval_system_all.json"),
+                Path(__file__).resolve().parent.parent / ".resources/data/evaluation/eval_system_all.json",
+                Path(os.getcwd()) / ".resources/data/evaluation/eval_system_all.json"
+            ]
+
+            eval_file = None
+            for path in eval_file_paths:
+                if path.exists():
+                    eval_file = path
+                    break
+
+            if eval_file is None:
+                raise FileNotFoundError(f"eval_system_all.json not found. Tried: {[str(p) for p in eval_file_paths]}")
+
+            with open(eval_file, "r") as f:
                 eval_all = json.load(f)
 
             st.success(f"Evaluation data loaded (timestamp: {eval_all.get('evaluation_timestamp', 'N/A')})")
@@ -1682,7 +1698,8 @@ elif page == "Evaluation Dashboard":
         """)
 
         try:
-            with open(".resources/data/evaluation/eval_faithfulness.json", "r") as f:
+            eval_path = Path(__file__).resolve().parent.parent / ".resources/data/evaluation/eval_faithfulness.json"
+            with open(eval_path, "r") as f:
                 faith_eval = json.load(f)
 
             results = faith_eval.get("results", [])
@@ -1739,7 +1756,8 @@ elif page == "Evaluation Dashboard":
         """)
 
         try:
-            with open(".resources/data/evaluation/eval_hallucination.json", "r") as f:
+            eval_path = Path(__file__).resolve().parent.parent / ".resources/data/evaluation/eval_hallucination.json"
+            with open(eval_path, "r") as f:
                 hall_eval = json.load(f)
 
             results = hall_eval.get("results", [])
@@ -1805,7 +1823,8 @@ elif page == "Evaluation Dashboard":
         """)
 
         try:
-            with open(".resources/data/evaluation/eval_retrieval.json", "r") as f:
+            eval_path = Path(__file__).resolve().parent.parent / ".resources/data/evaluation/eval_retrieval.json"
+            with open(eval_path, "r") as f:
                 retr_eval = json.load(f)
 
             results = retr_eval.get("results", [])
@@ -1870,7 +1889,8 @@ elif page == "Evaluation Dashboard":
         """)
 
         try:
-            with open(".resources/data/evaluation/eval_human_results.json", "r") as f:
+            eval_path = Path(__file__).resolve().parent.parent / ".resources/data/evaluation/eval_human_results.json"
+            with open(eval_path, "r") as f:
                 human_eval = json.load(f)
 
             # Show key metrics in a clean format instead of raw JSON
