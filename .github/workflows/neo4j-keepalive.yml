@@ -30,4 +30,4 @@ jobs:
           NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
           NEO4J_DATABASE: ${{ secrets.NEO4J_DATABASE }}
         run: |
-          python scripts/ping_neo4j.py
+          python .development/scripts/ping_neo4j.py
